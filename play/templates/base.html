@@ -1,24 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Battlesnake</title>
 
   {% load static %}
-  <link rel="stylesheet" href="{% static 'application.css' %}">
+
+  <link href='http://fonts.googleapis.com/css?family=Roboto:300italic,400italic,300,400,500,700,900' rel='stylesheet' type='text/css'/>
+  <link type="text/css" rel="stylesheet" href="{% static 'theme/css/bootstrap.css' %}" />
+  <link type="text/css" rel="stylesheet" href="{% static 'theme/css/materialadmin.css' %}" />
+  <link type="text/css" rel="stylesheet" href="{% static 'theme/css/font-awesome.min.css' %}" />
+
   <link rel="shortcut icon" href="{% static 'favicon.ico' %}" />
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
-  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
   {% block extra_css %}{% endblock %}
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.1/clipboard.min.js" integrity="sha256-hIvIxeqhGZF+VVeM55k0mJvWpQ6gTkWk3Emc+NmowYA=" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/domready/1.0.8/ready.min.js" integrity="sha256-z7v8HmIeZylwLaPn0X0Ym8dFyV0vkFVe4BkVW/iuwmQ=" crossorigin="anonymous"></script>
-  {% block extra_js %}{% endblock %}
-
 </head>
+
 <body>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="/">Battlesnake</a>
@@ -85,55 +83,68 @@
     {% block content %}{% endblock %}
   </main>
   {% block outside_content %}{% endblock %}
-</body>
-<script>
-  domready(function () {
-    /**
-     * ClipboardJS integration on buttons
-     */
-    $('[data-clipboard-text]').tooltip({
-      trigger: 'click',
-      placement: 'top'
-    })
 
-    function setTooltip (triggerElem, message) {
-      $(triggerElem)
-        .tooltip('hide')
-        .attr('data-original-title', message)
-        .tooltip('show')
-    }
+  <script src="{% static 'theme/js/libs/jquery/jquery-1.11.2.min.js' %}" />
+  <script src="{% static 'theme/js/libs/bootstrap/bootstrap.min.js' %}" />
 
-    function hideTooltip () {
-      setTimeout(function () {
-        // Blanket-hide all
-        $('[data-clipboard-text]').tooltip('hide')
-      }, 1000)
-    }
+  <!-- Do we actually need these? -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.1/clipboard.min.js" integrity="sha256-hIvIxeqhGZF+VVeM55k0mJvWpQ6gTkWk3Emc+NmowYA=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/domready/1.0.8/ready.min.js" integrity="sha256-z7v8HmIeZylwLaPn0X0Ym8dFyV0vkFVe4BkVW/iuwmQ=" crossorigin="anonymous"></script>
+  <!-- Do we actually need these? -->
 
-    var clipboard = new ClipboardJS('[data-clipboard-text]')
+  {% block extra_js %}{% endblock %}
 
-    clipboard.on('success', function (event) {
-      setTooltip(event.trigger, 'Copied!')
-      hideTooltip()
-    })
+  <script>
+    domready(function () {
+      /**
+      * ClipboardJS integration on buttons
+      */
+      // $('[data-clipboard-text]').tooltip({
+      //   trigger: 'click',
+      //   placement: 'top'
+      // })
 
-    clipboard.on('error', function (event) {
-      setTooltip('Failed to copy!')
-      hideTooltip()
-    })
+      // function setTooltip (triggerElem, message) {
+      //   $(triggerElem)
+      //     .tooltip('hide')
+      //     .attr('data-original-title', message)
+      //     .tooltip('show')
+      // }
 
-    window.__battlesnake = {
-      settings: {
-        ENGINE_URL: '{{ENGINE_URL}}'
+      // function hideTooltip () {
+      //   setTimeout(function () {
+      //     // Blanket-hide all
+      //     $('[data-clipboard-text]').tooltip('hide')
+      //   }, 1000)
+      // }
+
+      // var clipboard = new ClipboardJS('[data-clipboard-text]')
+
+      // clipboard.on('success', function (event) {
+      //   setTooltip(event.trigger, 'Copied!')
+      //   hideTooltip()
+      // })
+
+      // clipboard.on('error', function (event) {
+      //   setTooltip('Failed to copy!')
+      //   hideTooltip()
+      // })
+
+      window.__battlesnake = {
+        settings: {
+          ENGINE_URL: '{{ENGINE_URL}}'
+        }
       }
-    }
 
 
-    /**
-     * Individual page JS
-     */
+      /**
+      * Individual page JS
+      */
 
-    {% block js_dom_ready %}{% endblock %}
-  })
-</script>
+      {% block js_dom_ready %}{% endblock %}
+    })
+  </script>
+
+</body>
 </html>
