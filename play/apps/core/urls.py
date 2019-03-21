@@ -1,7 +1,7 @@
 from django.shortcuts import redirect
 from django.urls import path
 
-from apps.core.views import game, home, profile, profiles, snake, stats
+from apps.core.views import game, home, profile, snake, stats
 from util.routing import method_dispatch as route
 
 
@@ -11,8 +11,8 @@ urlpatterns = [
         route(GET=profile.edit, PUT=profile.update, DELETE=profile.delete),
         name="settings",
     ),
-    path("u/by-games-snake/<game_snake_id>", route(GET=profiles.show_by_game_snake)),
-    path("u/<username>/", route(GET=profiles.show), name="u"),
+    path("u/by-games-snake/<game_snake_id>", route(GET=profile.show_by_game_snake)),
+    path("u/<username>/", route(GET=profile.show), name="u"),
     path("", route(GET=home.index), name="home"),
     path("s/new/", route(GET=snake.new, POST=snake.create), name="new_snake"),
     path("s/<snake_id>/", route(GET=snake.show, DELETE=snake.delete), name="snake"),

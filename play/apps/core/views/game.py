@@ -86,8 +86,9 @@ def show(request, engine_id):
         request,
         "core/game/show.html",
         {
-            "url": game_board_url,
             "game_image": f"https://exporter.battlesnake.io/games/{game.engine_id}/gif",
+            "game_description": False,  # TODO: Show who created the game here
+            "url": game_board_url,
             "game": game,
         },
     )

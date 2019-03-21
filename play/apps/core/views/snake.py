@@ -14,7 +14,16 @@ def show(request, snake_id):
         .order_by("-created")
         .prefetch_related("gamesnake_set__snake")[:10]
     )
-    return render(request, "core/snake/show.html", {"snake": snake, "games": games})
+    return render(
+        request,
+        "core/snake/show.html",
+        {
+            "snake_image": True,
+            "snake_description": f"{snake.profile.username} / {snake.name} on Battlesnake. Do you have what it takes to battle {snake.name}?",
+            "snake": snake,
+            "games": games,
+        },
+    )
 
 
 @login_required

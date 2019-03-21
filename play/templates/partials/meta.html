@@ -1,0 +1,55 @@
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Bringing developers of all skill levels together in a friendly, co-operative environment. Our goal is to provide educational resources to developers and grow the tech community through collaboration and competition.">
+<meta name="theme-color" content="#F64A91">
+
+<meta property="og:url" content="{{ request.build_absolute_uri }}">
+<meta property="og:title" content="Battlesnake">
+
+{% if game_description %}
+  <meta property="og:description" content="{{ game_description }}">
+{% elif snake_description %}
+  <meta property="og:description" content="{{ snake_description }}">
+{% elif profile_description %}
+  <meta property="og:description" content="{{ profile_description }}">
+{% else %}
+  <meta property="og:description" content="Bringing developers of all skill levels together in a friendly, co-operative environment. Our goal is to provide educational resources to developers and grow the tech community through collaboration and competition.">
+{% endif %}
+
+{% if game_image %}
+  <meta property="og:image" content="{{ game_image }}">
+{% elif profile_image %}
+  {% if profile.username == 'battlesnake' %}
+    <meta property="og:image" content="{% static 'img/battlesnake-thumb.png' %}">
+  {% else %}
+    <meta property="og:image" content="https://github.com/{{ profile.username }}.png?size=150">
+  {% endif %}
+{% else %}
+  <meta property="og:image" content="{% static 'img/social-banner.png' %}">
+{% endif %}
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@battlesnakeio">
+<meta name="twitter:title" content="Battlesnake">
+
+{% if game_description %}
+  <meta name="twitter:description" content="{{ game_description }}">
+{% elif snake_description %}
+  <meta name="twitter:description" content="{{ snake_description }}">
+{% elif profile_description %}
+  <meta name="twitter:description" content="{{ profile_description }}">
+{% else %}
+  <meta name="twitter:description" content="Bringing developers of all skill levels together in a friendly, co-operative environment. Our goal is to provide educational resources to developers and grow the tech community through collaboration and competition.">
+{% endif %}
+
+{% if game_image %}
+  <meta name="twitter:image" content="{{ game_image }}">
+{% elif profile_image %}
+  {% if profile.username == 'battlesnake' %}
+    <meta name="twitter:image" content="{% static 'img/battlesnake-thumb.png' %}">
+  {% else %}
+    <meta name="twitter:image" content="https://github.com/{{ profile.username }}.png?size=150">
+  {% endif %}
+{% else %}
+  <meta name="twitter:image" content="{% static 'img/social-banner.png' %}">
+{% endif %}
+
