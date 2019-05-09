@@ -2,11 +2,16 @@ from django.conf import settings
 from django.db import transaction
 from django.http import JsonResponse, Http404
 from django.shortcuts import render, redirect
+from django.utils.http import urlencode
 
 from apps.core.forms import GameForm
 from apps.core.middleware import profile_required
 from apps.core.models import Snake, Game
-from apps.utils.helpers import generate_game_url, generate_exporter_url
+from apps.utils.helpers import (
+    generate_game_url,
+    generate_game_query_string,
+    generate_exporter_url,
+)
 
 
 @profile_required
@@ -66,31 +71,10 @@ def show(request, engine_id):
         raise Http404
 
     profile = request.user.profile
-    board_settings = profile.board_settings
-
     game_board_url = generate_game_url(game)
-
-    if request.GET.get("enableLinks"):
-        game_board_url = f"{game_board_url}&enableLinks=true"
-
-    if request.GET.get("autoplay"):
-        game_board_url = f"{game_board_url}&autoplay=true"
-
-    turn = request.GET.get("turn")
-    if turn:
-        game_board_url = f"{game_board_url}&turn={turn}"
-
-    frame_rate = request.GET.get("frameRate")
-    if frame_rate:
-        game_board_url = f"{game_board_url}&frameRate={frame_rate}"
-    elif board_settings["frame_rate"]:
-        game_board_url = f"{game_board_url}&frameRate={board_settings['frame_rate']}"
-
-    board_theme = request.GET.get("boardTheme")
-    if board_theme:
-        game_board_url = f"{game_board_url}&boardTheme={board_theme}"
-    elif board_settings["theme"]:
-        game_board_url = f"{game_board_url}&boardTheme={board_settings['theme']}"
+    query_string_data = generate_game_query_string(request)
+    game_query_string = urlencode(query_string_data)
+    game_board_url = f"{game_board_url}&{game_query_string}"
 
     return render(
         request,
