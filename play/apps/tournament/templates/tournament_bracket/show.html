@@ -202,13 +202,7 @@
 {% endblock %}
 
 {% block js_dom_ready %}
-if (location.hash !== '') {
-  $('a[href="' + location.hash + '"]').tab('show');
-}
-
-$('a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
-  history.pushState(null, null, '#'+$(e.target).attr('href').substr(1));
-});
+persistTabsInHistory()
 
 $(".js-cast-game").on('click', function (e) {
   var $button = $(this)

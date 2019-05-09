@@ -9,3 +9,6 @@ run:
 
 migrate:
 	cd play && ENV=local ./manage.py migrate
+
+shell:
+	cd play && ENV=local ./manage.py shell_plus

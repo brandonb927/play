@@ -1,3 +1,5 @@
+import json
+from django.contrib.postgres.fields import JSONField
 from django.db import models
 
 from apps.authentication.models import User
@@ -8,6 +10,7 @@ class Profile(BaseModel):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
     # Has opted in to marketing emails and communications.
     optin_marketing = models.BooleanField(default=True, null=False)
+    board_settings = JSONField(default=dict)
 
     @property
     def email(self):

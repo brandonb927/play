@@ -65,13 +65,15 @@ def show(request, engine_id):
     except Game.DoesNotExist:
         raise Http404
 
+    profile = request.user.profile
+    board_settings = profile.board_settings
+
     game_board_url = generate_game_url(game)
 
     if request.GET.get("enableLinks"):
         game_board_url = f"{game_board_url}&enableLinks=true"
 
-    autoplay = request.GET.get("autoplay")
-    if autoplay:
+    if request.GET.get("autoplay"):
         game_board_url = f"{game_board_url}&autoplay=true"
 
     turn = request.GET.get("turn")
@@ -81,6 +83,14 @@ def show(request, engine_id):
     frame_rate = request.GET.get("frameRate")
     if frame_rate:
         game_board_url = f"{game_board_url}&frameRate={frame_rate}"
+    elif board_settings["frame_rate"]:
+        game_board_url = f"{game_board_url}&frameRate={board_settings['frame_rate']}"
+
+    board_theme = request.GET.get("boardTheme")
+    if board_theme:
+        game_board_url = f"{game_board_url}&boardTheme={board_theme}"
+    elif board_settings["theme"]:
+        game_board_url = f"{game_board_url}&boardTheme={board_settings['theme']}"
 
     return render(
         request,

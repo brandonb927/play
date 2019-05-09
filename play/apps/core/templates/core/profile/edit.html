@@ -40,13 +40,35 @@
 <form method="post" action="">
   {% csrf_token %}
   <input type="hidden" name="_method" value="PUT">
+  {% include "partials/forms/hidden_fields.html" with form=form %}
 
   <div class="card">
-    <h5 class="card-header">Notifications</h5>
     <div class="card-body">
-      {% include "partials/forms/hidden_fields.html" with form=form %}
-      {% include "partials/forms/field.html" with field=form.email label="Email Address" %}
-      {% include "partials/forms/checkbox.html" with field=form.optin_marketing label="Send me information about new features and upcoming events" %}
+      <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+          <a href="#settings_notifications" class="nav-link active" data-toggle="tab" role="tab"
+            aria-controls="account-settings" aria-selected="true">
+            Notifications
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#settings_game_board" class="nav-link" data-toggle="tab" role="tab" aria-controls="account-settings"
+            aria-selected="true">
+            Game Board
+          </a>
+        </li>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane active" id="settings_notifications" role="tabpanel" aria-labelledby="account-settings-tab">
+          {% include "partials/forms/field.html" with field=form.email label="Email Address" %}
+          {% include "partials/forms/checkbox.html" with field=form.optin_marketing label="Send me information about new features and upcoming events" %}
+        </div>
+        <div class="tab-pane" id="settings_game_board" role="tabpanel" aria-labelledby="account-settings-board-tab">
+          <h2>Game Board Settings</h2>
+          {% include "partials/forms/field.html" with field=form.board_setting_frame_rate label="Frame Rate" %}
+          {% include "partials/forms/field.html" with field=form.board_setting_theme label="Theme" %}
+        </div>
+      </div>
     </div>
 
     <div class="card-footer bg-light">
