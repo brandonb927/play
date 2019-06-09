@@ -17,10 +17,12 @@ jobs:
     - stage: docker-hub
       script:
         - docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASSWORD
+        - docker build -t battlesnakeio/play:latest .
         - docker push battlesnakeio/play:latest
     - stage: deploy
       script:
         - docker login -u _json_key -p "`echo $GCLOUD_SERVICE_KEY | base64 --decode`" https://gcr.io
+        - docker build -t battlesnakeio/play:latest .
         - docker tag battlesnakeio/play:latest gcr.io/battlesnake-io/play:${TRAVIS_TAG}
         - docker push gcr.io/battlesnake-io/play:${TRAVIS_TAG}
 
