@@ -23,6 +23,7 @@ class SnakeLeaderboard(BaseModel):
     snake = models.ForeignKey(Snake, null=True, on_delete=models.CASCADE)
     mu = models.FloatField(null=True)
     sigma = models.FloatField(null=True)
+    unhealthy_counter = models.IntegerField(null=True)
 
     @property
     def rank(self):
@@ -35,6 +36,22 @@ class SnakeLeaderboard(BaseModel):
 
     def __str__(self):
         return f"{self.snake.name}"
+
+    def reset_unhealthy_counter(self):
+        if self.unhealthy_counter is not None and self.unhealthy_counter > 0:
+            self.unhealthy_counter = 0
+            self.save(update_fields=["unhealthy_counter"])
+
+    def is_unhealthy(self):
+        if self.unhealthy_counter is not None and self.unhealthy_counter > 5:
+            return True
+        return False
+
+    def increase_unhealthy_counter(self):
+        if self.unhealthy_counter is None:
+            self.unhealthy_counter = 0
+        self.unhealthy_counter += 1
+        self.save(update_fields=["unhealthy_counter"])
 
     class Meta:
         app_label = "leaderboard"

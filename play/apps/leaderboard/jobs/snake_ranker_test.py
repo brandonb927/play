@@ -61,10 +61,13 @@ def test_create_rankings_tie():
     assert [0, 0, 1, 2, 3, 4, 4] == rankings
 
 
+@mock.patch("apps.core.models.snake.Snake.update_healthy")
 @mock.patch("apps.core.engine.status")
 @mock.patch("apps.core.engine.create")
 @mock.patch("apps.core.engine.run")
-def test_update_leaderboard_game(run_mock, create_mock, status_mock):
+def test_update_leaderboard_game(
+    run_mock, create_mock, status_mock, update_healthy_mock
+):
 
     create_mock.return_value = str(uuid.uuid4())
 
@@ -72,6 +75,7 @@ def test_update_leaderboard_game(run_mock, create_mock, status_mock):
         n=10, commit=True, profile=user_factory.basic(commit=True).profile
     )
     for s in snakes:
+        s.healthy = True
         s.save()
         SnakeLeaderboard.objects.get_or_create(snake=s)
 
