@@ -21,6 +21,7 @@ blog = "https://medium.com/battlesnake"
 docs = "https://docs.battlesnake.io"
 events = "https://events.battlesnake.io"
 github = "https://github.com/battlesnakeio"
+highlights = "https://www.youtube.com/watch?v=d9ARbSzBKxc"
 slack = "https://join.slack.com/t/battlesnake/shared_invite/enQtMzQ1MjIyNDAzNzgxLTJkYTQyZGM5NTYyMjI3MGZkN2U4ZTEyMGFhYjM2MzQ3NzEyOTM1N2ZhZjgwMGFlZDM0YWNiZmRhMmVkMDZkOGE"
 twitter = "https://twitter.com/battlesnakeio"
 twitch = "https://twitch.tv/battlesnakeio"
@@ -49,6 +50,7 @@ urlpatterns = [
     path("events/", direct(events), name="events"),
     path("events/sponsors/", direct(f"{events}/sponsorship"), name="sponsors"),
     path("github/", direct(f"{github}/community"), name="github"),
+    path("highlights/", direct(highlights), name="highlights"),
     path("slack/", direct(slack), name="slack"),
     path("twitch/", direct(twitch), name="twitch"),
     path("twitter/", direct(twitter), name="twitter"),
