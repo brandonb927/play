@@ -1,4 +1,4 @@
-workflow "Build Docker Image" {
+workflow "Build Image" {
   resolves = [
     "Run Docker Build",
   ]
@@ -10,7 +10,7 @@ action "Run Docker Build" {
   args = "build -t battlesnake/play ."
 }
 
-workflow "Push Release Image to GCR" {
+workflow "Release to GCR" {
   resolves = [
     "Push Image to GCR",
   ]
@@ -25,7 +25,7 @@ action "Tags Only" {
 
 action "Tag Image for GCR" {
   uses = "actions/docker/tag@master"
-  args = "battlesnake/play gcr.io/battlesnake-com/battlesnake/play:$GITHUB_REF"
+  args = "battlesnake/play gcr.io/battlesnake-com/battlesnake/play"
   needs = ["Tags Only"]
 }
 
