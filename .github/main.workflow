@@ -1,6 +1,6 @@
 workflow "Build and Push to GCR" {
+  resolves = ["Build Image", "Push Image to GCR"]
   on = "push"
-  resolves = ["Push Image to GCR"]
 }
 
 action "Build Docker Image" {
