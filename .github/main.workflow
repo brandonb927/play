@@ -26,7 +26,7 @@ action "Master Branch Only" {
 action "Tag Image for GCR" {
   uses = "actions/docker/tag@master"
   needs = ["Master Branch Only"]
-  args = "battlesnake/play gcr.io/battlesnake-com/battlesnake/play"
+  args = "battlesnake/play gcr.io/battlesnake-com/battlesnake/play:$GITHUB_REF"
 }
 
 action "Auth Google Cloud" {
@@ -47,4 +47,3 @@ action "Push Image to GCR" {
   runs = "sh -c"
   args = ["docker push gcr.io/battlesnake-com/battlesnake/play"]
 }
-
