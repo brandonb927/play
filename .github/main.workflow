@@ -3,14 +3,14 @@ workflow "Build and Push to GCR" {
   on = "push"
 }
 
-action "Build Docker Image" {
+action "Build Image" {
   uses = "actions/docker/cli@master"
   args = "build -t battlesnake/play ."
 }
 
 action "Master Branch Only" {
   uses = "actions/bin/filter@master"
-  needs = ["Build Docker Image"]
+  needs = ["Build Image"]
   args = "branch master"
 }
 
