@@ -65,11 +65,11 @@ Fill in the following:
 - URL = <http://localhost:8000>
 - Callback = <http://localhost:8000/oauth/complete/github>
 
-Copy the generated secrets in to your `.env` (described below)
+Copy the generated secrets in to your environment variables (described below)
 
-### Secrets
+### Environment Variables
 
-Your `.env` file should contain the following:
+You need the following environment variables set:
 
 ```bash
 ENV=local
@@ -77,6 +77,7 @@ ENV=local
 BATTLESNAKEIO_SECRET=battlesnakeio
 BATTLESNAKEIO_GITHUB_CLIENT_ID=...
 BATTLESNAKEIO_GITHUB_CLIENT_SECRET=...
+BATTLESNAKEIO_DOMAIN=localhost
 ```
 
 If using postgres locally (instead of SQLite), you'll also need:

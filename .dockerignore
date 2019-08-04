@@ -1,4 +1,4 @@
-play/db.sqlite3
-play/.pytest_cache
-play/.*env
+src/db.sqlite3
+src/.pytest_cache
+src/.*env
 **/__pycache__

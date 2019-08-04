@@ -1,11 +1,11 @@
 install:
-	pip install -r requirements.dev.txt
+	pip install -r src/requirements.dev.txt
 
 test:
-	cd play && ENV=local pytest
+	cd src && ENV=local pytest
 
 run:
-	cd play && ENV=local ./manage.py runserver
+	cd src && ENV=local ./manage.py runserver
 
 migrate:
-	cd play && ENV=local ./manage.py migrate
+	cd src && ENV=local ./manage.py migrate

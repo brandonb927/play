@@ -16,18 +16,15 @@ RUN apk add --no-cache \
 
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
-    PYTHONPATH="${PYTHONPATH}:/app" \
+    PYTHONPATH="${PYTHONPATH}:/app/src" \
     DJANGO_SETTINGS_MODULE="settings.base"
 
-WORKDIR /app
+COPY ./src /app/src
+COPY entrypoint.sh /app/entrypoint.sh
 
-ADD requirements.dev.txt /app/requirements.dev.txt
-ADD requirements.txt /app/requirements.txt
-RUN pip install -r /app/requirements.dev.txt
+WORKDIR /app/src
 
-COPY ./play \
-    ./entrypoint.sh \
-    /app/
+RUN pip install -r requirements.dev.txt
 
 EXPOSE 8000
 
