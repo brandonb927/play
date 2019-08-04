@@ -17,22 +17,22 @@ workflow "Push Release Image to GCR" {
   on = "release"
 }
 
-action "Master Branch Only" {
+action "Tags Only" {
   uses = "actions/bin/filter@master"
-  args = "branch master"
+  args = "tag v*"
   needs = ["Run Docker Build"]
 }
 
 action "Tag Image for GCR" {
   uses = "actions/docker/tag@master"
-  needs = ["Master Branch Only"]
   args = "battlesnake/play gcr.io/battlesnake-com/battlesnake/play:$GITHUB_REF"
+  needs = ["Tags Only"]
 }
 
 action "Auth Google Cloud" {
   uses = "actions/gcloud/auth@master"
-  needs = ["Master Branch Only"]
   secrets = ["GCLOUD_AUTH"]
+  needs = ["Tags Only"]
 }
 
 action "Add GCR to Docker" {
