@@ -20,7 +20,7 @@ ENV PYTHONUNBUFFERED=1 \
     DJANGO_SETTINGS_MODULE="settings.base"
 
 COPY ./src /app/src
-COPY entrypoint.sh /app/entrypoint.sh
+COPY ./bin /app/bin
 
 WORKDIR /app/src
 
@@ -28,4 +28,4 @@ RUN pip install -r requirements.dev.txt
 
 EXPOSE 8000
 
-CMD [ "/app/entrypoint.sh" ]
+CMD [ "/app/bin/entrypoint.sh" ]
