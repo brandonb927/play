@@ -1,19 +1,20 @@
-# editor scruff
-.cmd
+# editor
 .idea*
 .vscode
 
-# language scruff
+# python
 *.pyc
-Pipfile.lock
-db.sqlite3
-.*env
 .pytest_cache
 .coverage
+Pipfile.lock
 
-# env stuff
-venv*
-.docker-data
+# sqlite
+*.sqlite3
 
-# cypress video output
+# cypress
 cypress/output
+
+# dev things
+.cmd
+.docker-data
+venv*

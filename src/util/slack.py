@@ -5,8 +5,6 @@ from django.conf import settings
 
 logger = logging.getLogger(__name__)
 
-events_slack_url = settings.SLACK_EVENTS_URL
-
 
 def format(user, title, message, color, fallback):
     return {
@@ -23,8 +21,11 @@ def format(user, title, message, color, fallback):
 
 
 def log_event(**kwargs):
+    if not settings.SLACK_EVENTS_URL:
+        return
+
     try:
-        response = requests.post(events_slack_url, json=format(**kwargs))
+        response = requests.post(settings.SLACK_EVENTS_URL, json=format(**kwargs))
         response.raise_for_status()
     except Exception:
         logger.exception("failed to send message to slack")

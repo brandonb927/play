@@ -72,22 +72,11 @@ Copy the generated secrets in to your environment variables (described below)
 You need the following environment variables set:
 
 ```bash
-ENV=local
+DJANGO_SETTINGS_MODULE=settings.local
+DJANGO_SECRET_KEY=<RANDOM_32_CHARACTERS>
 
-BATTLESNAKEIO_SECRET=battlesnakeio
-BATTLESNAKEIO_GITHUB_CLIENT_ID=...
-BATTLESNAKEIO_GITHUB_CLIENT_SECRET=...
-BATTLESNAKEIO_DOMAIN=localhost
-```
-
-If using postgres locally (instead of SQLite), you'll also need:
-
-```bash
-POSTGRES_HOST=...
-POSTGRES_PORT=...
-POSTGRES_DB=...
-POSTGRES_USER=...
-POSTGRES_PASSWORD=...
+GITHUB_CLIENT_ID=<CLIENT_ID>
+GITHUB_CLIENT_SECRET=<CLIENT_SECRET>
 ```
 
 ## Docker
