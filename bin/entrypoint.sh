@@ -21,8 +21,7 @@ http {
                     application/x-font-ttf font/opentype image/svg+xml
                     image/x-icon;
   server {
-    listen 8000;
-    server_name play.battlesnake.io;
+    listen 8000 default_server;
     location /static/ {
       alias /static/;
     }
