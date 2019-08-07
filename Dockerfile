@@ -14,11 +14,6 @@ RUN apk add --no-cache \
     if [[ ! -e /usr/bin/python ]]; then ln -sf /usr/bin/python3 /usr/bin/python; fi && \
     rm -r /root/.cache
 
-ENV PYTHONUNBUFFERED=1 \
-    PYTHONDONTWRITEBYTECODE=1 \
-    PYTHONPATH="${PYTHONPATH}:/app/src" \
-    DJANGO_SETTINGS_MODULE="settings.base"
-
 COPY ./src /app/src
 COPY ./bin /app/bin
 
@@ -26,6 +21,18 @@ WORKDIR /app/src
 
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
+
+
+
+
+
+ENV DJANGO_SETTINGS_MODULE=settings.production
+ENV DJANGO_SECRET_KEY=barf
+ENV GITHUB_CLIENT_ID=barf
+ENV GITHUB_CLIENT_SECRET=barf
+RUN ./manage.py migrate
+
+
 
 EXPOSE 8000
 
