@@ -1,5 +1,17 @@
 from settings.base import *  # noqa
 
+import os
+
+# bvanvugt: Temporary until it's working.
+ALLOWED_HOSTS = ["*"]
+DEBUG = True
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
+    }
+}
+
 
 # Forwarding through the proxy
 USE_X_FORWARDED_HOST = True
@@ -9,6 +21,7 @@ USE_X_FORWARDED_PROTO = True
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 SECURE_HSTS_SECONDS = 3600  # just 1 hour to start to make sure it works correctly
+
 
 # import sentry_sdk
 # from sentry_sdk.integrations.django import DjangoIntegration
