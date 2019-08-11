@@ -3,16 +3,18 @@ from settings.base import *  # noqa
 import os
 
 # bvanvugt: Temporary until it's working.
-ALLOWED_HOSTS = ["*"]
-DEBUG = True
+
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
-        "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
+        "NAME": os.path.join(BASE_DIR, "db.sqlite3"),  # noqa
     }
 }
 
 
+# Request handling
+
+ALLOWED_HOSTS = ["play.battlesnake.com"]
 # Forwarding through the proxy
 USE_X_FORWARDED_HOST = True
 USE_X_FORWARDED_PROTO = True
