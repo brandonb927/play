@@ -4,17 +4,30 @@ import os
 
 # bvanvugt: Temporary until it's working.
 
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.sqlite3",
+#         "NAME": os.path.join(BASE_DIR, "db.sqlite3"),  # noqa
+#     }
+# }
+DEBUG = True
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": os.path.join(BASE_DIR, "db.sqlite3"),  # noqa
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "NAME": get_environment_variable("POSTGRES_DB"),
+        "USER": get_environment_variable("POSTGRES_USER"),
+        "PASSWORD": get_environment_variable("POSTGRES_PASSWORD"),
+        "HOST": get_environment_variable("POSTGRES_HOST"),
+        "PORT": get_environment_variable("POSTGRES_PORT"),
     }
 }
+
+# bvanvugt: Temporary until it's working.
 
 
 # Request handling
 
-ALLOWED_HOSTS = ["play.battlesnake.com"]
+ALLOWED_HOSTS = [get_environment_variable("BATTLESNAKE_PLAY_HOST")]  # noqa
 # Forwarding through the proxy
 USE_X_FORWARDED_HOST = True
 USE_X_FORWARDED_PROTO = True
@@ -33,11 +46,6 @@ SECURE_HSTS_SECONDS = 3600  # just 1 hour to start to make sure it works correct
 #     sentry_sdk.init(dsn=SENTRY_KEY, integrations=[DjangoIntegration()], environment=ENV)
 
 # SLACK_EVENTS_URL = get_env("SLACK_EVENTS_URL", "")
-
-
-# bvanvugt: Do we need this?
-# if is_production_env():
-#     ALLOWED_HOSTS = [get_env("BATTLESNAKEIO_DOMAIN", None, False)]
 
 
 # bvanvugt: Temporary

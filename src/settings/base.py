@@ -55,7 +55,6 @@ INSTALLED_APPS = [
     "apps.authentication",
     "apps.core",
     "apps.leaderboard",
-    "apps.ops",
     "apps.pages",
     "apps.tournament",
     "util",

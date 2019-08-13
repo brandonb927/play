@@ -1,3 +1,4 @@
+import logging
 import random
 
 from django.shortcuts import render
@@ -5,6 +6,9 @@ from django.shortcuts import render
 from apps.core.middleware import profile_required
 from apps.core.models import Game
 from apps.utils.helpers import generate_game_url
+
+
+logger = logging.getLogger(__name__)
 
 
 @profile_required

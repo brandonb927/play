@@ -22,18 +22,33 @@ http {
                     image/x-icon;
   server {
     listen 8000 default_server;
+
+    location /healthz/ready {
+      add_header Content-Type text/plain;
+      return 200 'ready';
+    }
+    location /healthz/alive {
+      add_header Content-Type text/plain;
+      return 200 'alive';
+    }
+
     location /static/ {
+      if (\$http_x_forwarded_proto != "https") {
+        return 301 https://\$host\$request_uri;
+      }
+
       alias /static/;
     }
     location / {
+      if (\$http_x_forwarded_proto != "https") {
+        return 301 https://\$host\$request_uri;
+      }
+
       include uwsgi_params;
       proxy_pass          http://127.0.0.1:8080/;
       proxy_redirect      off;
-      proxy_set_header    Host \$host;
-      proxy_set_header    X-Forwarded-Host \$server_name;
-      # For testing locally
-      # proxy_set_header    X-Forwarded-Host 127.0.0.1:8000;
-      proxy_set_header    X-Forwarded-Proto \$scheme;
+      proxy_set_header    X-Forwarded-Host \$host;
+      proxy_set_header    X-Forwarded-Proto \$http_x_forwarded_proto;
     }
   }
 }

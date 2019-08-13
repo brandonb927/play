@@ -22,18 +22,6 @@ WORKDIR /app/src
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
-
-
-
-
-ENV DJANGO_SETTINGS_MODULE=settings.production
-ENV DJANGO_SECRET_KEY=barf
-ENV GITHUB_CLIENT_ID=barf
-ENV GITHUB_CLIENT_SECRET=barf
-RUN ./manage.py migrate
-
-
-
 EXPOSE 8000
 
 CMD [ "/app/bin/entrypoint.sh" ]
