@@ -1,16 +1,6 @@
 from settings.base import *  # noqa
 
-import os
 
-# bvanvugt: Temporary until it's working.
-
-# DATABASES = {
-#     "default": {
-#         "ENGINE": "django.db.backends.sqlite3",
-#         "NAME": os.path.join(BASE_DIR, "db.sqlite3"),  # noqa
-#     }
-# }
-DEBUG = True
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
@@ -22,20 +12,20 @@ DATABASES = {
     }
 }
 
-# bvanvugt: Temporary until it's working.
-
-
 # Request handling
 
 ALLOWED_HOSTS = [get_environment_variable("BATTLESNAKE_PLAY_HOST")]  # noqa
-# Forwarding through the proxy
+# Accept proxy headers
 USE_X_FORWARDED_HOST = True
 USE_X_FORWARDED_PROTO = True
-# This cannot be enabled in prod because the pods are behind an SSL termination point at the ingress
-# SECURE_SSL_REDIRECT = True
+# Redirect if proxy doesn't indicate HTTPS
+SECURE_SSL_REDIRECT = True
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+# Ask browsers to force HTTPS
+SECURE_HSTS_SECONDS = 3600  # just 1 hour to start to make sure it works correctly
+# Only accept cookies over HTTPS
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
-SECURE_HSTS_SECONDS = 3600  # just 1 hour to start to make sure it works correctly
 
 
 # import sentry_sdk
@@ -48,26 +38,4 @@ SECURE_HSTS_SECONDS = 3600  # just 1 hour to start to make sure it works correct
 # SLACK_EVENTS_URL = get_env("SLACK_EVENTS_URL", "")
 
 
-# bvanvugt: Temporary
-# if is_production_env() or get_env("POSTGRES_HOST", None, True) is not None:
-#     """
-#     Only enable the PG config if we're running in production
-#     """
-#     DATABASES = {
-#         "default": {
-#             "ENGINE": "django.db.backends.postgresql_psycopg2",
-#             "NAME": get_env("POSTGRES_DB", "battlesnakeio_play", True),
-#             "USER": get_env("POSTGRES_USER", None, False),
-#             "PASSWORD": get_env("POSTGRES_PASSWORD", None, False),
-#             "HOST": get_env("POSTGRES_HOST", None, False),
-#             "PORT": get_env("POSTGRES_PORT", None, False),
-#         }
-#     }
-
 SOCIAL_AUTH_REDIRECT_IS_HTTPS = True
-
-
-# bvanvugt: Do we need this?
-# if is_production_env():
-#     domain = get_env("BATTLESNAKEIO_DOMAIN", "play.battlesnake.io", True)
-#     STATIC_URL = f"https://{domain}/static/"
