@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
 from apps.tournament.forms import TeamForm
-from apps.tournament.middleware import with_current_team
+from apps.tournament.decorators import with_current_team
 
 
 @login_required

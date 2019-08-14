@@ -33,12 +33,10 @@ SECRET_KEY = get_environment_variable("DJANGO_SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
+# These should be configured in environment-specific settings
 ALLOWED_HOSTS = []
+DATABASES = None
 
-# Security options
-SECURE_CONTENT_TYPE_NOSNIFF = True
-SECURE_BROWSER_XSS_FILTER = True
-X_FRAME_OPTIONS = "SAMEORIGIN"
 
 # Application definition
 INSTALLED_APPS = [
@@ -60,6 +58,8 @@ INSTALLED_APPS = [
     "util",
 ]
 
+ROOT_URLCONF = "urls"
+
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "debug_toolbar.middleware.DebugToolbarMiddleware",
@@ -70,10 +70,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "social_django.middleware.SocialAuthExceptionMiddleware",
-    "apps.tournament.middleware.tournament_notifications_middleware",
 ]
-
-ROOT_URLCONF = "urls"
 
 TEMPLATES = [
     {
@@ -96,31 +93,32 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "wsgi.application"
 
+LANGUAGE_CODE = "en-us"
+TIME_ZONE = "UTC"
+USE_I18N = True
+USE_L10N = True
+USE_TZ = True
 
-# Database
-# https://docs.djangoproject.com/en/2.0/ref/settings/#databases
-
-DATABASES = None
-
+# -----------------------------------------------------------------------------
+# Everything past this point is specific to us.
+# -----------------------------------------------------------------------------
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
 
 AUTH_USER_MODEL = "authentication.User"
 
-# bvanvugt: Right now we only support GitHub OAuth2
+# bvanvugt: Right now we only support GitHub OAuth, disable everything else.
 AUTHENTICATION_BACKENDS = (
     "social_core.backends.github.GithubOAuth2",
     # "django.contrib.auth.backends.ModelBackend",
 )
-
-AUTH_PASSWORD_VALIDATORS = []
-# {
-#     "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"
-# },
-# {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
-# {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
-# {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
+AUTH_PASSWORD_VALIDATORS = [
+    # {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
+    # {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
+    # {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
+    # {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
+]
 
 SOCIAL_AUTH_GITHUB_KEY = get_environment_variable("GITHUB_CLIENT_ID")
 SOCIAL_AUTH_GITHUB_SECRET = get_environment_variable("GITHUB_CLIENT_SECRET")
@@ -143,12 +141,6 @@ LOGIN_URL = "login"
 LOGOUT_URL = "logout"
 LOGIN_REDIRECT_URL = "home"
 
-# i18n
-LANGUAGE_CODE = "en-us"
-TIME_ZONE = "UTC"
-USE_I18N = True
-USE_L10N = True
-USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
@@ -160,7 +152,6 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 
 # Silencing system checks that are unneeded.
 # https://docs.djangoproject.com/en/2.1/ref/checks/
-
 SILENCED_SYSTEM_CHECKS = ["fields.W342"]
 
 
@@ -207,19 +198,3 @@ BOARD_URL = get_environment_variable("BOARD_URL", "https://board.battlesnake.io"
 EXPORTER_URL = get_environment_variable(
     "EXPORTER_URL", "https://exporter.battlesnake.io"
 )
-
-# bvanvugt: Remove me.
-# tournament options
-# TOURNAMENT_CONFERENCE_IPS = get_env("BATTLESNAKE_TOURNAMENT_CONFERENCE_IPS", "").split(
-#     ","
-# )
-# TOURNAMENT_START_TIME = get_env("BATTLESNAKE_TOURNAMENT_START_TIME", "4 pm")
-# TOURNAMENT_DATE = None
-# TOURNAMENT_REGISTRATION_CLOSE = get_env(
-#     "BATTLESNAKE_TOURNAMENT_REGISTRATION_CLOSE", "3 pm"
-# )
-# start_date = get_env("BATTLESNAKE_TOURNAMENT_DATE", None)
-# if start_date is not None:
-#     TOURNAMENT_DATE = datetime.fromtimestamp(
-#         time.mktime(time.strptime(start_date, "%Y-%m-%d"))
-#     )

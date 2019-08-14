@@ -15,6 +15,10 @@ SECURE_SSL_REDIRECT = True
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 # Ask browsers to force HTTPS
 SECURE_HSTS_SECONDS = 3600  # just 1 hour to start to make sure it works correctly
+# Disallow XSS
+SECURE_CONTENT_TYPE_NOSNIFF = True
+SECURE_BROWSER_XSS_FILTER = True
+X_FRAME_OPTIONS = "SAMEORIGIN"
 # Only accept cookies over HTTPS
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
