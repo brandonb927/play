@@ -5,7 +5,7 @@ from django.conf import settings
 
 def create(config, engine_url=None):
     if engine_url is None:
-        engine_url = settings.ENGINE_URL
+        engine_url = settings.BATTLESNAKE_ENGINE_URL
 
     res = requests.post(f"{engine_url}/games", json=config)
     res.raise_for_status()
@@ -15,7 +15,7 @@ def create(config, engine_url=None):
 
 def run(game_id, engine_url=None):
     if engine_url is None:
-        engine_url = settings.ENGINE_URL
+        engine_url = settings.BATTLESNAKE_ENGINE_URL
 
     res = requests.post(f"{engine_url}/games/{game_id}/start")
     res.raise_for_status()
@@ -23,7 +23,7 @@ def run(game_id, engine_url=None):
 
 def validate_snake(snake_url, engine_url=None):
     if engine_url is None:
-        engine_url = settings.ENGINE_URL
+        engine_url = settings.BATTLESNAKE_ENGINE_URL
 
     res = requests.get(f"{engine_url}/validateSnake?url={snake_url}")
     return res.json()
@@ -34,7 +34,7 @@ def status(engine_id, engine_url=None):
     from apps.core.models import Game
 
     if engine_url is None:
-        engine_url = settings.ENGINE_URL
+        engine_url = settings.BATTLESNAKE_ENGINE_URL
 
     res = requests.get(f"{engine_url}/games/{engine_id}")
     res.raise_for_status()

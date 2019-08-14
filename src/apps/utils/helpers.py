@@ -5,7 +5,7 @@ from apps.core.models import Game
 
 
 def generate_game_url(game: Game):
-    engine_url = settings.ENGINE_URL
+    engine_url = settings.BATTLESNAKE_ENGINE_URL
     if game.engine_url is not None and len(game.engine_url) > 0:
         engine_url = game.engine_url
 

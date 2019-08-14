@@ -64,7 +64,7 @@ class Tournament(models.Model):
     snakes = models.ManyToManyField(
         Snake, through="TournamentSnake", through_fields=("tournament", "snake")
     )
-    engine_url = models.CharField(default=settings.ENGINE_URL, max_length=128)
+    engine_url = models.CharField(default=settings.BATTLESNAKE_ENGINE_URL, max_length=128)
 
     @property
     def brackets(self):

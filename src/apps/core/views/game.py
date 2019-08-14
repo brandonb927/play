@@ -12,7 +12,9 @@ from apps.utils.helpers import generate_game_url, generate_exporter_url
 @profile_required
 def new(request):
     snake_ids = request.GET.get("snake-ids")
-    form = GameForm(initial={"snakes": snake_ids, "engine_url": settings.ENGINE_URL})
+    form = GameForm(
+        initial={"snakes": snake_ids, "engine_url": settings.BATTLESNAKE_ENGINE_URL}
+    )
     return render(request, "core/game/new.html", {"form": form})
 
 

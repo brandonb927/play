@@ -192,9 +192,18 @@ MESSAGE_TAGS = {
     messages.constants.ERROR: "alert-danger",
 }
 
+# Configure other battlesnake services
 
-ENGINE_URL = get_environment_variable("ENGINE_URL", "https://engine.battlesnake.io")
-BOARD_URL = get_environment_variable("BOARD_URL", "https://board.battlesnake.io")
-EXPORTER_URL = get_environment_variable(
-    "EXPORTER_URL", "https://exporter.battlesnake.io"
+BATTLESNAKE_BOARD_HOST = get_environment_variable(
+    "BATTLESNAKE_BOARD_HOST", "board.battlesnake.io"
 )
+BATTLESNAKE_ENGINE_HOST = get_environment_variable(
+    "BATTLESNAKE_ENGINE_HOST", "engine.battlesnake.io"
+)
+BATTLESNAKE_EXPORTER_HOST = get_environment_variable(
+    "BATTLESNAKE_EXPORTER_HOST", "exporter.battlesnake.io"
+)
+
+BATTLESNAKE_BOARD_URL = "https://{}".format(BATTLESNAKE_BOARD_HOST)
+BATTLESNAKE_ENGINE_URL = "https://{}".format(BATTLESNAKE_ENGINE_HOST)
+BATTLESNAKE_EXPORTER_URL = "https://{}".format(BATTLESNAKE_EXPORTER_HOST)
