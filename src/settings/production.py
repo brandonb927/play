@@ -1,20 +1,10 @@
 from settings.base import *  # noqa
 
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration as SentryDjangoIntegration
 
-# Database Config
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": get_environment_variable("POSTGRES_DB"),
-        "USER": get_environment_variable("POSTGRES_USER"),
-        "PASSWORD": get_environment_variable("POSTGRES_PASSWORD"),
-        "HOST": get_environment_variable("POSTGRES_HOST"),
-        "PORT": get_environment_variable("POSTGRES_PORT"),
-    }
-}
-
-# Request handling
+# --- Request Handling ---
 
 ALLOWED_HOSTS = [get_environment_variable("BATTLESNAKE_PLAY_HOST")]  # noqa
 # Accept proxy headers
@@ -30,14 +20,29 @@ SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 
 
-# import sentry_sdk
-# from sentry_sdk.integrations.django import DjangoIntegration
+# --- Database Config ---
 
-# SENTRY_KEY = get_env("SENTRY_KEY", "")
-# if SENTRY_KEY:
-#     sentry_sdk.init(dsn=SENTRY_KEY, integrations=[DjangoIntegration()], environment=ENV)
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "NAME": get_environment_variable("POSTGRES_DB"),
+        "USER": get_environment_variable("POSTGRES_USER"),
+        "PASSWORD": get_environment_variable("POSTGRES_PASSWORD"),
+        "HOST": get_environment_variable("POSTGRES_HOST"),
+        "PORT": get_environment_variable("POSTGRES_PORT"),
+    }
+}
+
+
+# --- Sentry Exception Handling ---
+
+sentry_sdk.init(
+    dsn=get_environment_variable("SENTRY_DSN"), integrations=[SentryDjangoIntegration()]
+)
+
 
 # SLACK_EVENTS_URL = get_env("SLACK_EVENTS_URL", "")
 
+# --- Social Auth Config ---
 
 SOCIAL_AUTH_REDIRECT_IS_HTTPS = True
