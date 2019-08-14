@@ -1,6 +1,8 @@
 from settings.base import *  # noqa
 
 
+# Database Config
+
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",

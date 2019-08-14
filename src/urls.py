@@ -21,7 +21,6 @@ if settings.DEBUG:
     urlpatterns = [path("__debug__/", include(debug_toolbar.urls))] + urlpatterns
 
 
-handler400 = "apps.pages.views.error400"
-handler403 = "apps.pages.views.error403"
-handler404 = "apps.pages.views.error404"
-handler500 = "apps.pages.views.error500"
+handler403 = "apps.pages.views.handle403"
+handler404 = "apps.pages.views.handle404"
+handler500 = "apps.pages.views.handle500"

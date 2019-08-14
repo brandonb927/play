@@ -4,9 +4,11 @@ import os
 import markdown
 
 from django.conf import settings
-from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import PermissionDenied
+from django.http import Http404
+from django.shortcuts import render, redirect
 from util import slack
 
 
@@ -25,6 +27,21 @@ def conduct(request):
     return render(request, "pages/conduct.html")
 
 
+def debug403(request, exception=None):
+    raise PermissionDenied("debug 403 - forbidden")
+
+
+def debug404(request, exception=None):
+    raise Http404("debug 404 - not found")
+
+
+def debug500(request):
+    class DebugException(Exception):
+        pass
+
+    raise DebugException("debug 500 - internal server error")
+
+
 def diversity(request):
     return render(request, "pages/diversity.html")
 
@@ -33,19 +50,15 @@ def faq(request):
     return render(request, "pages/faq.html")
 
 
-def error400(request, exception=None):
-    return _serve_md_page(request, "400.md", status=400)
-
-
-def error403(request, exception=None):
+def handle403(request, exception=None):
     return _serve_md_page(request, "403.md", status=403)
 
 
-def error404(request, exception=None):
+def handle404(request, exception=None):
     return _serve_md_page(request, "404.md", status=404)
 
 
-def error500(request):
+def handle500(request):
     return _serve_md_page(request, "500.md", status=500)
 
 
