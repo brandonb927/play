@@ -103,6 +103,10 @@ USE_TZ = True
 # Everything past this point is specific to us.
 # -----------------------------------------------------------------------------
 
+MAINTENANCE_MODE = bool(
+    get_environment_variable("DJANGO_MAINTENANCE_MODE", "false") == "true"
+)
+
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
 

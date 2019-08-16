@@ -58,6 +58,10 @@ def handle404(request, exception=None):
     return _serve_md_page(request, "404.md", status=404)
 
 
+def handle404_maintenance(request, exception=None):
+    return render(request, "pages/maintenance.html")
+
+
 def handle500(request):
     return _serve_md_page(request, "500.md", status=500)
 
