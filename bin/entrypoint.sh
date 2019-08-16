@@ -23,13 +23,13 @@ http {
   server {
     listen 8000 default_server;
 
-    location /healthz/ready {
-      add_header Content-Type text/plain;
-      return 200 'ready';
-    }
     location /healthz/alive {
       add_header Content-Type text/plain;
       return 200 'alive';
+    }
+    location /healthz/ready {
+      add_header Content-Type text/plain;
+      return 200 'ready';
     }
 
     location /static/ {
@@ -39,6 +39,7 @@ http {
 
       alias /static/;
     }
+
     location / {
       if (\$http_x_forwarded_proto != "https") {
         return 301 https://\$host\$request_uri;
