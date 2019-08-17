@@ -27,7 +27,7 @@ jobs:
       with:
         args: auth configure-docker --quiet
     - name: Push Docker Image
-      run: glcoud auth list
+      run: gcloud auth list
 
 
 # run: docker push gcr.io/${{ secrets.GCLOuD_PROJECT_ID }}/battlesnake/play
