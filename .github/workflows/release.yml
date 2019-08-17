@@ -15,9 +15,17 @@ jobs:
     - name: Build Docker Image
       run: docker build -t battlesnake/play .
     - name: Tag Docker Image
-      run: docker tag battlesnake/play:latest battlesnake/play:WHAT
-    - name: DEBUG
-      run: docker images
+      run: |
+        docker tag battlesnake/play:latest gcr.io/${{ secrets.GCLOuD_PROJECT_ID }}/battlesnake/play:$(GITHUB_REF)
+        docker images
+
+  debug:
+    name: Debugging
+    steps:
+    - uses: actions/checkout@master
+    - run: |
+        docker images
+        echo $GITHUB_REF
 
 
 # workflow "Build Image" {
