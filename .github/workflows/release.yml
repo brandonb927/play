@@ -15,9 +15,10 @@ jobs:
     - name: Build Docker Image
       run: docker build -t battlesnake/play .
     - name: Tag Docker Image
-      run: |
-        docker tag battlesnake/play:latest gcr.io/${{ secrets.GCLOuD_PROJECT_ID }}/battlesnake/play:${{ github.event_name }}
-        docker images
+      users: actions/docker/tag@master
+      with:
+        args: battlesnake/play gcr.io/${{ secrets.GCLOuD_PROJECT_ID }}/battlesnake/play
+    - run: docker images
 
   debug:
     name: Debugging
@@ -25,6 +26,7 @@ jobs:
     needs: [release]
     steps:
     - uses: actions/checkout@master
+
     - run: |
         docker images
         echo GITHUB_REF = $GITHUB_REF
