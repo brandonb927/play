@@ -15,7 +15,7 @@ jobs:
     - name: Build Docker Image
       run: docker build -t battlesnake/play .
     - name: Tag Docker Image
-      users: actions/docker/tag@master
+      uses: actions/docker/tag@master
       with:
         args: battlesnake/play gcr.io/${{ secrets.GCLOuD_PROJECT_ID }}/battlesnake/play
     - run: docker images
