@@ -124,8 +124,10 @@ AUTH_PASSWORD_VALIDATORS = [
     # {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
 ]
 
-SOCIAL_AUTH_GITHUB_KEY = get_environment_variable("GITHUB_CLIENT_ID")
-SOCIAL_AUTH_GITHUB_SECRET = get_environment_variable("GITHUB_CLIENT_SECRET")
+# Set these in environment specific settings
+SOCIAL_AUTH_GITHUB_KEY = None
+SOCIAL_AUTH_GITHUB_SECRET = None
+
 SOCIAL_AUTH_GITHUB_SCOPE = ["user:email"]
 
 SOCIAL_AUTH_PIPELINE = (
@@ -199,13 +201,13 @@ MESSAGE_TAGS = {
 # Configure other battlesnake services
 
 BATTLESNAKE_BOARD_HOST = get_environment_variable(
-    "BATTLESNAKE_BOARD_HOST", "board.battlesnake.io"
+    "BATTLESNAKE_BOARD_HOST", "board.battlesnake.com"
 )
 BATTLESNAKE_ENGINE_HOST = get_environment_variable(
-    "BATTLESNAKE_ENGINE_HOST", "engine.battlesnake.io"
+    "BATTLESNAKE_ENGINE_HOST", "engine.battlesnake.com"
 )
 BATTLESNAKE_EXPORTER_HOST = get_environment_variable(
-    "BATTLESNAKE_EXPORTER_HOST", "exporter.battlesnake.io"
+    "BATTLESNAKE_EXPORTER_HOST", "exporter.battlesnake.com"
 )
 
 BATTLESNAKE_BOARD_URL = "https://{}".format(BATTLESNAKE_BOARD_HOST)

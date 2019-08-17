@@ -1,12 +1,13 @@
 from settings.base import *  # noqa
 
+
 import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration as SentryDjangoIntegration
 
 
 # --- Request Handling ---
 
-ALLOWED_HOSTS = [get_environment_variable("BATTLESNAKE_PLAY_HOST")]  # noqa
+ALLOWED_HOSTS = [get_environment_variable("BATTLESNAKE_PLAY_HOST")]
 # Accept proxy headers
 USE_X_FORWARDED_HOST = True
 USE_X_FORWARDED_PROTO = True
@@ -48,5 +49,7 @@ sentry_sdk.init(
 # SLACK_EVENTS_URL = get_env("SLACK_EVENTS_URL", "")
 
 # --- Social Auth Config ---
+SOCIAL_AUTH_GITHUB_KEY = get_environment_variable("GITHUB_CLIENT_ID")
+SOCIAL_AUTH_GITHUB_SECRET = get_environment_variable("GITHUB_CLIENT_SECRET")
 
 SOCIAL_AUTH_REDIRECT_IS_HTTPS = True
