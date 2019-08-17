@@ -10,7 +10,6 @@ jobs:
   release:
     name: Push Image (GCR)
     runs-on: ubuntu-latest
-    needs: [build]
     steps:
     - uses: actions/checkout@master
     - name: Build Docker Image
