@@ -1,12 +1,12 @@
 # Privacy Policy
-Last Updated: Feb 11, 2019
+Last Updated: Aug 7, 2019
 
-We at Battlesnake (“Battlesnake,” “we,” “us,” “our”) know that our users (“you,” “your”) care about how your personal information is used and shared, and we take your privacy seriously.  Please read the following to learn more about our Privacy Policy.  By visiting or using the battlesnake.io website (the “Website”) or any other features, content, or applications offered from time to time by Battlesnake in connection therewith (collectively, the “Services”) in any manner, you acknowledge that you accept the practices and policies outlined in this Privacy Policy, and you hereby consent that we will collect, use, and share your information in the following ways.
+We at Battlesnake (“Battlesnake,” “we,” “us,” “our”) know that our users (“you,” “your”) care about how your personal information is used and shared, and we take your privacy seriously.  Please read the following to learn more about our Privacy Policy.  By visiting or using the battlesnake.com website (the “Website”) or any other features, content, or applications offered from time to time by Battlesnake in connection therewith (collectively, the “Services”) in any manner, you acknowledge that you accept the practices and policies outlined in this Privacy Policy, and you hereby consent that we will collect, use, and share your information in the following ways.
 
 ### I. What Does This Privacy Policy Cover?
 This Privacy Policy covers our treatment of personally identifiable information (“Personal Information”) that we gather when you are accessing or using our Services.  This policy does not apply to the practices of companies that we do not own or control, or to individuals that we do not employ or manage.
 
-We do not knowingly collect or solicit Personal Information from anyone under the age of 13 or knowingly allow such persons to register for the Services. If you are under 13, please do not attempt to register for the Services or send any information about yourself to us, including your name, address, telephone number, or email address. No one under age 13 may provide any Personal Information to us or on the Services. In the event that we learn that we have collected Personal Information from a child under age 13 without verification of parental consent, we will delete that information as quickly as possible. If you believe that we might have any information from or about a child under 13, please contact us at legal@battlesnake.io.
+We do not knowingly collect or solicit Personal Information from anyone under the age of 13 or knowingly allow such persons to register for the Services. If you are under 13, please do not attempt to register for the Services or send any information about yourself to us, including your name, address, telephone number, or email address. No one under age 13 may provide any Personal Information to us or on the Services. In the event that we learn that we have collected Personal Information from a child under age 13 without verification of parental consent, we will delete that information as quickly as possible. If you believe that we might have any information from or about a child under 13, please contact us at legal@battlesnake.com.
 
 We gather various types of Personal Information from our users, as explained more fully below.  We may use this Personal Information to personalize and improve our services, to contact users, to fulfill your requests for certain products and services, to analyze how users utilize the Services, and as otherwise set forth in this Privacy Policy. We may share certain types of Personal Information with third parties, as described below.
 
@@ -43,17 +43,17 @@ We endeavor to protect the privacy of your Personal Information we hold in our r
 The Services may contain links to other sites. We are not responsible for the privacy policies and/or practices on other sites. When following a link to another site you should read that site’s privacy policy.
 
 ### V. WHAT PERSONAL INFORMATION CAN I ACCESS?
-Our Services give you access to a range of information (including Personal Information) about your account and your interactions with the Services for the purpose of viewing and, in certain cases, updating or deleting that information.  The information you can view, update, and delete may change as the Services change.  If you have any questions about viewing or updating information we have on file about you, please contact us at legal@battlesnake.io.
+Our Services give you access to a range of information (including Personal Information) about your account and your interactions with the Services for the purpose of viewing and, in certain cases, updating or deleting that information.  The information you can view, update, and delete may change as the Services change.  If you have any questions about viewing or updating information we have on file about you, please contact us at legal@battlesnake.com.
 
 ### VI.  What Choices Do I Have?
 You can always opt not to disclose information to use, but keep in mind some information may be needed to register with us or to take advantage of some of our special features.
 
-You may request deletion of your information by emailing us at legal@battlesnake.io. Please note that some information may remain in our records, for example in our archives, after your request of deletion of such information. We may use any aggregated data derived from or incorporating your Personal Information after you update or delete it, but not in a manner that would identify you personally. Please also note that comments you post publicly on our Website, such as comments on our blog posts, will remain visible to the public.
+You may request deletion of your information by emailing us at legal@battlesnake.com. Please note that some information may remain in our records, for example in our archives, after your request of deletion of such information. We may use any aggregated data derived from or incorporating your Personal Information after you update or delete it, but not in a manner that would identify you personally. Please also note that comments you post publicly on our Website, such as comments on our blog posts, will remain visible to the public.
 
-If you have any questions about viewing or updating information we have on file about you, please contact us at legal@battlesnake.io.
+If you have any questions about viewing or updating information we have on file about you, please contact us at legal@battlesnake.com.
 
 ### VII. Changes to this Privacy Policy
 We may amend this Privacy Policy from time to time.  Use of information we collect now is subject to the Privacy Policy in effect at the time such information is used.  If we make changes in the way we use Personal Information, we will notify you by posting an announcement on our Website or sending you a message.  You are bound by any changes to the Privacy Policy when you use the Services after such changes have been first posted.
 
 ### VIII. Questions or Concerns
-If you have any questions or concerns regarding our privacy policies, please send us a detailed message to legal@battlesnake.io, and we will try to resolve your concerns.
+If you have any questions or concerns regarding our privacy policies, please send us a detailed message to legal@battlesnake.com, and we will try to resolve your concerns.

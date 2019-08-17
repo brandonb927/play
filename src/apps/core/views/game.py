@@ -89,7 +89,7 @@ def show(request, engine_id):
         "core/game/show.html",
         {
             "url": game_board_url,
-            "game_image": f"https://exporter.battlesnake.io/games/{game.engine_id}/gif",
+            "game_image": f"https://exporter.battlesnake.com/games/{game.engine_id}/gif",
             "game": game,
         },
     )

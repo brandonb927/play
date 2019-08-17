@@ -12,7 +12,7 @@ class Migration(migrations.Migration):
             model_name="tournament",
             name="engine_url",
             field=models.CharField(
-                default="https://engine.battlesnake.io/", max_length=128
+                default="https://engine.battlesnake.com/", max_length=128
             ),
         )
     ]
