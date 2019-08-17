@@ -24,10 +24,9 @@ jobs:
         GCLOUD_AUTH: ${{ secrets.GCLOUD_AUTH }}
     - name: Add GCR Docker Repository
       uses: actions/gcloud/cli@master
-      with:
-        args: auth configure-docker --quiet
-    - name: Push Docker Image
-      run: gcloud auth list
+      run: |
+        gcloud auth configure-docker --quiet
+        docker push gcr.io/${{ secrets.GCLOuD_PROJECT_ID }}/battlesnake/play
 
 
 # run: docker push gcr.io/${{ secrets.GCLOuD_PROJECT_ID }}/battlesnake/play
