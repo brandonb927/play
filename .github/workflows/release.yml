@@ -27,7 +27,10 @@ jobs:
     - uses: actions/checkout@master
     - run: |
         docker images
-        echo $GITHUB_REF
+        echo GITHUB_REF = $GITHUB_REF
+        echo github.event_name = ${{ github.event_name }}
+        echo github.event.action = ${{ github.event.action }}
+        echo github.event.tag = ${{ github.event.tag }}
 
 
 # workflow "Build Image" {
