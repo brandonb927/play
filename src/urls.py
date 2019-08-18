@@ -24,8 +24,3 @@ else:
     handler403 = apps.pages.views.handle403
     handler404 = apps.pages.views.handle404
     handler500 = apps.pages.views.handle500
-
-if settings.DEBUG:
-    import debug_toolbar
-
-    urlpatterns = [path("__debug__/", include(debug_toolbar.urls))] + urlpatterns
