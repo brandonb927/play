@@ -6,7 +6,6 @@ from django.shortcuts import render, redirect
 from apps.core.forms import GameForm
 from apps.core.middleware import profile_required
 from apps.core.models import Snake, Game
-from apps.utils.helpers import generate_game_url, generate_exporter_url
 
 
 @profile_required
@@ -67,7 +66,7 @@ def show(request, engine_id):
     except Game.DoesNotExist:
         raise Http404
 
-    game_board_url = generate_game_url(game)
+    game_board_url = game.get_board_url()
 
     if request.GET.get("enableLinks"):
         game_board_url = f"{game_board_url}&enableLinks=true"
@@ -101,4 +100,4 @@ def show_gif(request, engine_id):
     except Game.DoesNotExist:
         raise Http404
 
-    return redirect(generate_exporter_url(game.engine_id))
+    return redirect(game.get_gif_url())

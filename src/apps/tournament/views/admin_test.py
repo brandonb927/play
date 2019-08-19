@@ -13,13 +13,13 @@ team_factory = TeamFactory()
 
 
 def test_index(client):
-    user_factory.login_as(client, "dlsteuer@example.com", is_admin=True)
+    user_factory.login_as(client, "dlsteuer@example.com", is_superuser=True)
     response = client.get("/tournament/admin/")
     assert response.status_code == 200
 
 
 def test_find_teams(client):
-    user = user_factory.login_as(client, "dlsteuer@example.com", is_admin=True)
+    user = user_factory.login_as(client, "dlsteuer@example.com", is_superuser=True)
     team = team_factory.basic(user)
     response = client.get(f"/tournament/admin/teams/?q={team.name}")
     assert response.status_code == 200
@@ -29,13 +29,13 @@ def test_find_teams(client):
 
 
 def test_new_team(client):
-    user_factory.login_as(client, "dlsteuer@example.com", is_admin=True)
+    user_factory.login_as(client, "dlsteuer@example.com", is_superuser=True)
     response = client.get("/tournament/admin/teams/new/")
     assert response.status_code == 200
 
 
 def test_edit_team(client):
-    user = user_factory.login_as(client, "dlsteuer@example.com", is_admin=True)
+    user = user_factory.login_as(client, "dlsteuer@example.com", is_superuser=True)
     team = team_factory.basic(user)
     response = client.get(f"/tournament/admin/teams/{team.id}/")
     assert response.status_code == 200
@@ -43,7 +43,7 @@ def test_edit_team(client):
 
 
 def test_update_team_new_team(client):
-    user = user_factory.login_as(client, "dlsteuer@example.com", is_admin=True)
+    user = user_factory.login_as(client, "dlsteuer@example.com", is_superuser=True)
     snake = snake_factory.basic(commit=True, profile=user.profile)
     t = tournament_factory.createEmpty()
     t.date = datetime.now() + timedelta(days=1)
@@ -63,14 +63,14 @@ def test_update_team_new_team(client):
 
 
 def test_update_team_new_team_with_errors(client):
-    user_factory.login_as(client, "dlsteuer@example.com", is_admin=True)
+    user_factory.login_as(client, "dlsteuer@example.com", is_superuser=True)
     response = client.post("/tournament/admin/teams/new/", {})
     assert response.status_code == 200
     assert response.context[-1]["form"].errors is not None
 
 
 def test_update_team_existing_team(client):
-    user = user_factory.login_as(client, "dlsteuer@example.com", is_admin=True)
+    user = user_factory.login_as(client, "dlsteuer@example.com", is_superuser=True)
     team = team_factory.basic(user)
     snake = snake_factory.basic(commit=True, profile=user.profile)
     t = tournament_factory.createEmpty()

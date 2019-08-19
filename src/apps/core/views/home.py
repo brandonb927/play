@@ -5,7 +5,6 @@ from django.shortcuts import render
 
 from apps.core.middleware import profile_required
 from apps.core.models import Game
-from apps.utils.helpers import generate_game_url
 
 
 logger = logging.getLogger(__name__)
@@ -26,7 +25,7 @@ def index(request):
         {
             "games": [
                 {
-                    "url": generate_game_url(g)
+                    "url": g.get_board_url()
                     + "&autoplay=true&hideScoreboard=true&hideMediaControls=true&frameRate=6",
                     "engine_id": g.engine_id,
                 }

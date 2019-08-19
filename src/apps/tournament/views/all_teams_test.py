@@ -14,14 +14,14 @@ ping_checker = Command()
 
 
 def test_index(client):
-    user_factory.login_as(client, "codeallthethingz@example.com", is_admin=True)
+    user_factory.login_as(client, "codeallthethingz@example.com", is_superuser=True)
     tournament = tournament_factory.basic(url="https://dedsnek.herokuapp.com")
     response = client.get("/tournament/" + str(tournament.id) + "/allTeams/")
     assert response.status_code == 200
 
 
 def test_index_no_tournament(client):
-    user_factory.login_as(client, "codeallthethingz@example.com", is_admin=True)
+    user_factory.login_as(client, "codeallthethingz@example.com", is_superuser=True)
     response = client.get("/tournament/" + str("-23342344") + "/allTeams/")
     assert response.status_code == 200
     assert "Could not find tournament" in str(response.content)

@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from util.models import BaseModelAdmin
+from apps.common.models import BaseModelAdmin
 from .models import Game, Profile, Snake
 
 

@@ -1,10 +1,11 @@
-from util.fields import ShortUUIDField
 from django.db import models
 from django.contrib.auth.models import (
     AbstractBaseUser,
     PermissionsMixin,
     UserManager as DjangoUserManager,
 )
+
+from apps.common.fields import ShortUUIDField
 
 
 class UserManager(DjangoUserManager):
@@ -29,10 +30,6 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     class Meta:
         app_label = "authentication"
-
-    @property
-    def is_admin(self):
-        return self.is_superuser
 
     def assigned_to_team(self):
         from apps.tournament.models import TeamMember

@@ -1,4 +1,3 @@
-from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from apps.authentication.decorators import admin_required
 from apps.tournament.models import Tournament
@@ -41,7 +40,6 @@ def create_view_model(tournament_id):
     return result
 
 
-@login_required
 @admin_required
 def show(request, tournament_id):
     return render(request, "all_teams/show.html", create_view_model(tournament_id))

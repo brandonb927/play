@@ -1,7 +1,7 @@
 from django.urls import path
 
 from apps.tournament import views as tournament_views
-from util.routing import method_dispatch as route
+from apps.common.routing import method_dispatch as route
 
 urlpatterns = [
     # NOTE: Commented routes will be enabled in a future update after the tournament

@@ -4,16 +4,16 @@ from datetime import datetime, timedelta
 from django.shortcuts import render
 from pytz import utc
 
+from apps.authentication.decorators import admin_required
 from apps.core.models import Profile
-from apps.utils.decorators import superuser_required
 
 
-@superuser_required
+@admin_required
 def index(request):
     return render(request, "staff/index.html")
 
 
-@superuser_required
+@admin_required
 def user_report(request):
     def now():
         return datetime.utcnow().replace(tzinfo=utc)

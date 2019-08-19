@@ -1,4 +1,3 @@
-from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import render
 
@@ -7,7 +6,6 @@ from apps.authentication.models import User
 from apps.core.models import Snake, Game
 
 
-@login_required
 @admin_required
 def show(request):
     context = {}

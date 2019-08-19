@@ -1,7 +1,6 @@
 from datetime import datetime
 
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
 from django.db import transaction
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
@@ -18,10 +17,8 @@ from apps.tournament.models import (
     Round,
     TournamentSnake,
 )
-from apps.utils.helpers import generate_game_url
 
 
-@login_required
 @admin_required
 def index(request):
     user = request.user
@@ -36,7 +33,6 @@ def index(request):
     )
 
 
-@login_required
 @admin_required
 @transaction.atomic
 def new(request):
@@ -56,7 +52,6 @@ def new(request):
     return render(request, "tournament/new.html", {"form": form})
 
 
-@login_required
 @admin_required
 @transaction.atomic
 def edit(request, tournament_id):
@@ -76,7 +71,6 @@ def edit(request, tournament_id):
     return render(request, "tournament/edit.html", {"form": form})
 
 
-@login_required
 @commentator_required
 def show_current_game(request, tournament_id):
     tournament = Tournament.objects.get(id=tournament_id)
@@ -105,7 +99,6 @@ def show_current_game(request, tournament_id):
     )
 
 
-@login_required
 @admin_required
 @transaction.atomic
 def cast_current_game(request, tournament_id):
@@ -123,7 +116,7 @@ def cast_current_game(request, tournament_id):
         f"{heat_game.heat.round.tournament_bracket.name} / Round {heat_game.heat.round.number} / Group {heat_game.heat.number} / Game {heat_game.number}"
     )
     tournament.casting_uri = (
-        generate_game_url(heat_game.game)
+        heat_game.game.get_board_url()
         + f"&countdown=10&hideMediaControls=true&boardTheme=dark&frameRate=10&title={title}"
     )
     tournament.save()
@@ -148,7 +141,6 @@ def cast_current_game(request, tournament_id):
     )
 
 
-@login_required
 @commentator_required
 def commentator_details(request, tournament_id):
     tournament = Tournament.objects.get(id=tournament_id)

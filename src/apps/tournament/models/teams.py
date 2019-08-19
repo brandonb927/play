@@ -1,7 +1,7 @@
 from django.db import models
 
+from apps.common.fields import ShortUUIDField
 from apps.core.models import Snake, Profile
-from util.fields import ShortUUIDField
 
 
 class Team(models.Model):

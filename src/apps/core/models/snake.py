@@ -1,14 +1,15 @@
 import logging
+import requests
 from urllib.parse import urljoin
 
-import requests
 from django.core.validators import MinLengthValidator, MaxLengthValidator
 from django.db import models
 from django.db.models import Q
 
+from apps.common.fields import ShortUUIDField
+from apps.common.models import BaseModel
 from apps.core.models import Profile
-from util.fields import ShortUUIDField
-from util.models import BaseModel
+
 
 logger = logging.getLogger(__name__)
 

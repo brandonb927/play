@@ -1,7 +1,7 @@
 from django.db import models
 
 from apps.authentication.models import User
-from util.models import BaseModel
+from apps.common.models import BaseModel
 
 
 class Profile(BaseModel):

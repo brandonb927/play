@@ -2,7 +2,7 @@ from django.shortcuts import redirect
 from django.urls import path
 
 from apps.core.views import game, home, profile, profiles, snake, stats
-from util.routing import method_dispatch as route
+from apps.common.routing import method_dispatch as route
 
 
 urlpatterns = [

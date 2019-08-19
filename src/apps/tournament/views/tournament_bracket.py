@@ -1,7 +1,6 @@
 import csv
 
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
 from django.db import transaction
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
@@ -22,7 +21,6 @@ from apps.tournament.models import (
 )
 
 
-@login_required
 @admin_required
 @transaction.atomic
 def new(request, tournament_id):
@@ -47,7 +45,6 @@ def new(request, tournament_id):
     )
 
 
-@login_required
 @admin_required
 @transaction.atomic
 def edit(request, bracket_id):
@@ -72,7 +69,6 @@ def edit(request, bracket_id):
     return render(request, "tournament_bracket/edit.html", {"form": form})
 
 
-@login_required
 @admin_required
 def show(request, bracket_id):
     tournament_bracket = TournamentBracket.objects.get(id=bracket_id)
@@ -84,7 +80,6 @@ def show(request, bracket_id):
     )
 
 
-@login_required
 @admin_required
 def show_csv(request, bracket_id):
     tournament_bracket = TournamentBracket.objects.get(id=bracket_id)
@@ -100,7 +95,6 @@ def show_csv(request, bracket_id):
     return response
 
 
-@login_required
 @admin_required
 def create_next_round(request, bracket_id):
     tournament_bracket = TournamentBracket.objects.get(id=bracket_id)
@@ -113,7 +107,6 @@ def create_next_round(request, bracket_id):
     )
 
 
-@login_required
 @admin_required
 def update_game_statuses(request, bracket_id):
     tournament_bracket = TournamentBracket.objects.get(id=bracket_id)
@@ -123,7 +116,6 @@ def update_game_statuses(request, bracket_id):
     )
 
 
-@login_required
 @admin_required
 def create_game(request, bracket_id, heat_id):
     tournament_bracket = TournamentBracket.objects.get(id=bracket_id)
@@ -144,7 +136,6 @@ def create_game(request, bracket_id, heat_id):
     )
 
 
-@login_required
 @admin_required
 def delete_game(request, bracket_id, heat_id, heat_game_number):
     tournament_bracket = TournamentBracket.objects.get(id=bracket_id)
@@ -155,7 +146,6 @@ def delete_game(request, bracket_id, heat_id, heat_game_number):
     )
 
 
-@login_required
 @admin_required
 def run_heat_game(request, heat_id, heat_game_number):
     heat_game = HeatGame.objects.get(heat_id=heat_id, number=heat_game_number)
@@ -173,7 +163,6 @@ def run_heat_game(request, heat_id, heat_game_number):
     return redirect(reverse("game", kwargs={"engine_id": heat_game.game.engine_id}))
 
 
-@login_required
 @admin_required
 def tree(request, bracket_id):
     tournament_bracket = TournamentBracket.objects.get(id=bracket_id)
@@ -185,7 +174,6 @@ def tree(request, bracket_id):
     )
 
 
-@login_required
 @admin_required
 def cast_page(request, bracket_id):
     tournament_bracket = TournamentBracket.objects.get(id=bracket_id)

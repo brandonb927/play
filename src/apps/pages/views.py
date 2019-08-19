@@ -9,7 +9,6 @@ from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.http import Http404
 from django.shortcuts import render, redirect
-from util import slack
 
 
 def _serve_md_page(request, md_file, status=200):
@@ -92,13 +91,14 @@ def report(request):
     report_content = request.POST.get("report_content")
     report_content = f"url: {report_url}\n{report_content}"
 
-    slack.log_event(
-        user=request.user.id if not request.user.is_anonymous else "anonymous",
-        title="Abuse Report",
-        message=report_content,
-        color="#FF0000",
-        fallback=report_content,
-    )
+    # bvanvugt: This should really be logged in the database. Maybe linked to in Slack.
+    # slack.log_event(
+    #     user=request.user.id if not request.user.is_anonymous else "anonymous",
+    #     title="Abuse Report",
+    #     message=report_content,
+    #     color="#FF0000",
+    #     fallback=report_content,
+    # )
     messages.add_message(
         request,
         messages.INFO,

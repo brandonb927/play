@@ -2,7 +2,7 @@ import shortuuid
 from django.db import models
 from django.db.models import DateTimeField
 
-from util.time import now as time_now
+import util.time
 
 
 class CreatedDateTimeField(DateTimeField):
@@ -14,7 +14,7 @@ class CreatedDateTimeField(DateTimeField):
     def __init__(self, *args, **kwargs):
         kwargs.setdefault("editable", False)
         kwargs.setdefault("blank", True)
-        kwargs.setdefault("default", time_now)
+        kwargs.setdefault("default", util.time.now)
         DateTimeField.__init__(self, *args, **kwargs)
 
     def get_internal_type(self):
@@ -38,7 +38,7 @@ class ModifiedDateTimeField(CreatedDateTimeField):
     """
 
     def pre_save(self, model, add):
-        value = time_now()
+        value = util.time.now()
         setattr(model, self.attname, value)
         return value
 

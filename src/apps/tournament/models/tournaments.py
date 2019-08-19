@@ -4,10 +4,9 @@ from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db import models
 
+from apps.common.fields import ShortUUIDField
 from apps.core.models import Snake, Game, GameSnake
 from apps.tournament.models import Team
-from apps.utils.helpers import generate_game_url
-from util.fields import ShortUUIDField
 
 
 class PreviousGameTiedException(ValidationError):
@@ -224,7 +223,7 @@ class TournamentBracket(models.Model):
                     games.append(
                         {
                             "id": hg.game.id,
-                            "url": generate_game_url(hg.game),
+                            "url": hg.game.get_board_url(),
                             "status": status,
                             "round": r.number,
                             "heat": heat.number,

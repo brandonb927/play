@@ -26,8 +26,7 @@
             <nav class="top-toolbar navbar flex-nowrap">
               <ul class="navbar-nav nav-right">
                 <li class="nav-item dropdown">
-                  <a href="#" data-toggle="dropdown" role="button" aria-haspopup="true"
-                    aria-expanded="false">
+                  <a href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                     About
                   </a>
                   <div class="dropdown-menu dropdown-menu-right">
@@ -150,7 +149,7 @@
               <i class="icon dripicons-trophy"></i><span class="hide-menu">Arena</span>
             </a>
           </li>
-          {% if user.is_admin %}
+          {% if user.is_superuser %}
           <li>
             <a class="text-danger" href="{% url 'tournaments' %}">
               <i class="icon dripicons-to-do text-danger"></i><span class="hide-menu">Tournaments</span>

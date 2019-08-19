@@ -2,7 +2,8 @@
 
 from django.db import migrations, models
 import django.db.models.deletion
-import util.fields
+
+import apps.common.fields
 import util.time
 
 
@@ -27,13 +28,13 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "created",
-                    util.fields.CreatedDateTimeField(
+                    apps.common.fields.CreatedDateTimeField(
                         blank=True, default=util.time.now, editable=False
                     ),
                 ),
                 (
                     "modified",
-                    util.fields.ModifiedDateTimeField(
+                    apps.common.fields.ModifiedDateTimeField(
                         blank=True, default=util.time.now, editable=False
                     ),
                 ),
@@ -63,13 +64,13 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "created",
-                    util.fields.CreatedDateTimeField(
+                    apps.common.fields.CreatedDateTimeField(
                         blank=True, default=util.time.now, editable=False
                     ),
                 ),
                 (
                     "modified",
-                    util.fields.ModifiedDateTimeField(
+                    apps.common.fields.ModifiedDateTimeField(
                         blank=True, default=util.time.now, editable=False
                     ),
                 ),
@@ -89,19 +90,19 @@ class Migration(migrations.Migration):
             fields=[
                 (
                     "created",
-                    util.fields.CreatedDateTimeField(
+                    apps.common.fields.CreatedDateTimeField(
                         blank=True, default=util.time.now, editable=False
                     ),
                 ),
                 (
                     "modified",
-                    util.fields.ModifiedDateTimeField(
+                    apps.common.fields.ModifiedDateTimeField(
                         blank=True, default=util.time.now, editable=False
                     ),
                 ),
                 (
                     "id",
-                    util.fields.ShortUUIDField(
+                    apps.common.fields.ShortUUIDField(
                         max_length=128, primary_key=True, serialize=False
                     ),
                 ),

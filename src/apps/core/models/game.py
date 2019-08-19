@@ -1,9 +1,11 @@
+from django.conf import settings
 from django.db import models, transaction
+from django.utils.http import urlquote
 
+from apps.common.fields import ShortUUIDField
+from apps.common.models import BaseModel
 from apps.core import engine
 from apps.core.models import Snake
-from util.fields import ShortUUIDField
-from util.models import BaseModel
 
 
 class GameQuerySet(models.QuerySet):
@@ -120,6 +122,16 @@ class Game(BaseModel):
             living_snakes = self.alive_game_snakes()
             if living_snakes.count() == 1:
                 return living_snakes.first()
+
+    def get_board_url(self):
+        engine_url = settings.BATTLESNAKE_ENGINE_URL
+        if self.engine_url is not None and len(self.engine_url) > 0:
+            engine_url = self.engine_url
+
+        return f"{settings.BATTLESNAKE_BOARD_URL}/?engine={urlquote(engine_url)}&game={self.engine_id}"
+
+    def get_gif_url(self):
+        return f"{settings.BATTLESNAKE_EXPORTER_URL}/games/{self.engine_id}/gif"
 
 
 class GameSnake(BaseModel):

@@ -1,4 +1,3 @@
-from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 
@@ -10,13 +9,11 @@ from apps.tournament.forms import EditTeamForm
 from apps.tournament.models import Team
 
 
-@login_required
 @admin_required
 def index(request):
     return render(request, "admin/search.html")
 
 
-@login_required
 @admin_required
 def find_teams(request):
     teams = Team.objects.filter(name__icontains=request.GET.get("q", ""))
@@ -25,14 +22,12 @@ def find_teams(request):
     )
 
 
-@login_required
 @admin_required
 def new_team(request):
     form = EditTeamForm()
     return render(request, "admin/edit_team.html", {"form": form})
 
 
-@login_required
 @admin_required
 def edit_team(request, team_id):
     team = Team.objects.get(id=team_id)
@@ -49,7 +44,6 @@ def edit_team(request, team_id):
     return render(request, "admin/edit_team.html", {"form": form})
 
 
-@login_required
 @admin_required
 def update_team(request, team_id=None):
     team = None
@@ -62,7 +56,6 @@ def update_team(request, team_id=None):
     return render(request, "admin/edit_team.html", {"form": form})
 
 
-@login_required
 @admin_required
 def users(request):
     q = request.GET.get("q", "")
@@ -72,7 +65,6 @@ def users(request):
     )
 
 
-@login_required
 @admin_required
 def user_info(request):
     user_ids = request.GET.get("users", "").split(",")
@@ -82,7 +74,6 @@ def user_info(request):
     )
 
 
-@login_required
 @admin_required
 def snakes(request):
     user_ids = request.GET.get("users", "").split(",")
@@ -98,7 +89,6 @@ def snakes(request):
     )
 
 
-@login_required
 @admin_required
 def snake_status(request, snake_id):
     s = Snake.objects.get(id=snake_id)

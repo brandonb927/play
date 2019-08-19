@@ -1,8 +1,8 @@
 from django.db import models
 
+from apps.common.fields import ShortUUIDField
+from apps.common.models import BaseModel
 from apps.core.models import Game, Snake
-from util.models import BaseModel
-from util.fields import ShortUUIDField
 
 
 class GameLeaderboard(BaseModel):

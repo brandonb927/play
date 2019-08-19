@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.db import models
 
-from util.fields import CreatedDateTimeField, ModifiedDateTimeField
+from apps.common.fields import CreatedDateTimeField, ModifiedDateTimeField
 
 
 class BaseManager(models.Manager):

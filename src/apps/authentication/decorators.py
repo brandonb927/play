@@ -10,7 +10,7 @@ def admin_required(
     to the log-in page if necessary.
     """
     actual_decorator = user_passes_test(
-        lambda u: u.is_admin,
+        lambda u: u.is_authenticated and u.is_superuser,
         login_url=login_url,
         redirect_field_name=redirect_field_name,
     )
@@ -27,7 +27,7 @@ def commentator_required(
         to the log-in page if necessary.
         """
     actual_decorator = user_passes_test(
-        lambda u: u.is_commentator or u.is_admin,
+        lambda u: u.is_authenticated and (u.is_commentator or u.is_superuser),
         login_url=login_url,
         redirect_field_name=redirect_field_name,
     )

@@ -11,9 +11,9 @@ class UserFactory:
             user.save()
         return user
 
-    def login_as(self, client, email="test@test.com", is_admin=False):
+    def login_as(self, client, email="test@test.com", is_superuser=False):
         user = self.basic(email=email, commit=True)
-        user.is_superuser = is_admin
+        user.is_superuser = is_superuser
         user.save()
         client.force_login(user)
         return user

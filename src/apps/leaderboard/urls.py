@@ -1,6 +1,6 @@
 from django.urls import path
 from apps.leaderboard import views
-from util.routing import method_dispatch as route
+from apps.common.routing import method_dispatch as route
 
 urlpatterns = [
     path("leaderboard/", route(GET=views.leaderboard.index), name="leaderboard"),
