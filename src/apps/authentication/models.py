@@ -6,6 +6,7 @@ from django.contrib.auth.models import (
 )
 
 from apps.common.fields import ShortUUIDField
+from apps.common.models import BaseModel
 
 
 class UserManager(DjangoUserManager):
@@ -13,25 +14,22 @@ class UserManager(DjangoUserManager):
         return super()._create_user(username, email, password)
 
 
-class User(AbstractBaseUser, PermissionsMixin):
+class User(AbstractBaseUser, PermissionsMixin, BaseModel):
+    USERNAME_FIELD = "username"
+    REQUIRED_FIELDS = []
+
     id = ShortUUIDField(prefix="usr", max_length=128, primary_key=True)
+
     username = models.CharField(
         max_length=39, unique=True
     )  # 39 is max GitHub username length
     email = models.CharField(max_length=512)
+
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
     is_commentator = models.BooleanField(default=False)
 
-    USERNAME_FIELD = "username"
-    REQUIRED_FIELDS = []
-
     objects = UserManager()
 
-    class Meta:
-        app_label = "authentication"
-
-    def assigned_to_team(self):
-        from apps.tournament.models import TeamMember
-
-        return TeamMember.objects.filter(user_id=self.id).exists()
+    def __str__(self):
+        return f"User[{self.username}]"

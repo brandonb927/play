@@ -4,9 +4,12 @@ from django.contrib.auth.models import Group
 from social_django.models import Association, Nonce, UserSocialAuth
 
 from apps.authentication.models import User
+from apps.common.models import BaseModelAdmin
 
 
-class UserAdmin(admin.ModelAdmin):
+@admin.register(User)
+class UserAdmin(BaseModelAdmin):
+    exclude = ("password", "groups", "user_permissions")
     search_fields = ["username"]
     ordering = ["username"]
 
@@ -15,5 +18,3 @@ admin.site.unregister(Association)
 admin.site.unregister(Nonce)
 admin.site.unregister(UserSocialAuth)
 admin.site.unregister(Group)
-
-admin.site.register(User, UserAdmin)

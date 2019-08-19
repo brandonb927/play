@@ -56,6 +56,7 @@ class ModifiedDateTimeField(CreatedDateTimeField):
 
 
 class ShortUUIDField(models.CharField):
+    # Fixed alphabet to (hopefully) prevent bad words.
     ALPHABET = "346789BCDFGHJKMPQRSTVWXYbcdfghjkmpqrtvwxy"  # 41 chars total
 
     def __init__(self, prefix=None, *args, **kwargs):

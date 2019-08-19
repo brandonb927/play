@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
+
 from apps.tournament.forms import TeamForm
 from apps.tournament.decorators import with_current_team
 
@@ -35,7 +36,9 @@ def edit(request):
 def new(request):
     # Don't use the middleware here, check manually.
     # If the user is on a team already, don't let them make a new one.
-    if request.user.assigned_to_team():
+    from apps.tournament.models import TeamMember
+
+    if TeamMember.objects.filter(user_id=request.user.id).exists():
         messages.warning(request, "You're already assigned to a team")
         return redirect("/team")
 

@@ -28,4 +28,4 @@ class BaseModel(models.Model):
 
 
 class BaseModelAdmin(admin.ModelAdmin):
-    readonly_fields = ["created", "modified"]
+    readonly_fields = ("created", "modified")
