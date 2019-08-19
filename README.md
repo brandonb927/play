@@ -21,7 +21,7 @@ This is the platform that allows users to sign up, register snakes, and run game
     - on Linux: `apt-get install python3`
 1. Install the project dependencies:
     ```shell
-    pip3 install -r requirements.txt
+    pip3 install -r requirements.dev.txt
     ```
     - Using pyenv? Use `pip` supplied by your virtualenv instead of `pip3`
     - optionally install via pyenv
@@ -52,7 +52,7 @@ To run tests:
 
 ```shell
 cd play
-ENV=local pytest
+ENV=local ./manage.py test
 ```
 
 ### Github OAuth App Configuration

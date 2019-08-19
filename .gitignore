@@ -4,7 +4,6 @@
 
 # python
 *.pyc
-.pytest_cache
 .coverage
 Pipfile.lock
 

@@ -1,7 +1,12 @@
+import logging
+
 from django import forms
 from django.db.models import Q
 
 from apps.core.models import Snake, Game, GameSnake
+
+
+logger = logging.getLogger(__name__)
 
 
 class GameForm(forms.Form):

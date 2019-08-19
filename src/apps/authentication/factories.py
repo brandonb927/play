@@ -15,5 +15,5 @@ class UserFactory:
         user = self.basic(email=email, commit=True)
         user.is_superuser = is_admin
         user.save()
-        client.force_login(user, "django.contrib.auth.backends.ModelBackend")
+        client.force_login(user)
         return user

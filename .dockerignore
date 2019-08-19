@@ -1,4 +1,2 @@
 src/db.sqlite3
-src/.pytest_cache
-src/.*env
 **/__pycache__
