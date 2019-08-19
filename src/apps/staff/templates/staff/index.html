@@ -1,0 +1,12 @@
+{% extends "staff/_base.html" %}
+
+{% block content %}
+
+<h3>Useful Links</h3>
+<ul>
+    <li><a href="{% url 'home' %}" title="Battlesnake">Homepage</a></li>
+    <li><a href="{% url 'admin:index' %}" title="Battlesnake">Django Admin</a></li>
+    <li><a href="{% url 'staff:user-report' %}">User Report</a></li>
+</ul>
+
+{% endblock content %}

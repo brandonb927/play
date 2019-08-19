@@ -1,3 +1,4 @@
+from django.contrib import admin
 from django.db import models
 
 from util.fields import CreatedDateTimeField, ModifiedDateTimeField
@@ -24,3 +25,7 @@ class BaseModel(models.Model):
 
     def is_saved(self):
         return not self._state.adding
+
+
+class BaseModelAdmin(admin.ModelAdmin):
+    readonly_fields = ["created", "modified"]
