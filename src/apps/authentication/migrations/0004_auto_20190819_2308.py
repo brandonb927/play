@@ -7,19 +7,21 @@ import util.time
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('authentication', '0003_user_is_commentator'),
-    ]
+    dependencies = [("authentication", "0003_user_is_commentator")]
 
     operations = [
         migrations.AddField(
-            model_name='user',
-            name='created',
-            field=apps.common.fields.CreatedDateTimeField(blank=True, default=util.time.now, editable=False),
+            model_name="user",
+            name="created",
+            field=apps.common.fields.CreatedDateTimeField(
+                blank=True, default=util.time.now, editable=False
+            ),
         ),
         migrations.AddField(
-            model_name='user',
-            name='modified',
-            field=apps.common.fields.ModifiedDateTimeField(blank=True, default=util.time.now, editable=False),
+            model_name="user",
+            name="modified",
+            field=apps.common.fields.ModifiedDateTimeField(
+                blank=True, default=util.time.now, editable=False
+            ),
         ),
     ]
