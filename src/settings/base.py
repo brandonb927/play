@@ -55,7 +55,6 @@ INSTALLED_APPS = [
     "apps.pages",
     "apps.staff",
     "apps.tournament",
-    "util",
 ]
 
 ROOT_URLCONF = "urls"
@@ -84,7 +83,7 @@ TEMPLATES = [
                 "django.contrib.messages.context_processors.messages",
                 "social_django.context_processors.backends",
                 "social_django.context_processors.login_redirect",
-                "apps.common.context_processors.window_globals",
+                "apps.common.context_processors.common",
             ]
         },
     }
@@ -104,6 +103,7 @@ APPEND_SLASH = True
 # Everything past this point is specific to us.
 # -----------------------------------------------------------------------------
 
+APP_VERSION = get_environment_variable("APP_VERSION", "UNKNOWN")
 MAINTENANCE_MODE = bool(
     get_environment_variable("DJANGO_MAINTENANCE_MODE", "false") == "true"
 )

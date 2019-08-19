@@ -1,8 +1,9 @@
 from django.conf import settings
 
 
-def window_globals(request):
+def common(request):
     return {
-        "ENGINE_URL": settings.BATTLESNAKE_ENGINE_URL,
+        "APP_VERSION": settings.APP_VERSION,
         "BOARD_URL": settings.BATTLESNAKE_ENGINE_URL,
+        "ENGINE_URL": settings.BATTLESNAKE_ENGINE_URL,
     }
