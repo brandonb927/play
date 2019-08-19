@@ -103,7 +103,7 @@ APPEND_SLASH = True
 # Everything past this point is specific to us.
 # -----------------------------------------------------------------------------
 
-APP_VERSION = get_environment_variable("APP_VERSION", "UNKNOWN")
+APP_VERSION = get_environment_variable("BATTLESNAKE_APP_VERSION", "UNKNOWN")
 MAINTENANCE_MODE = bool(
     get_environment_variable("DJANGO_MAINTENANCE_MODE", "false") == "true"
 )
