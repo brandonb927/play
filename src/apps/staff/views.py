@@ -5,7 +5,9 @@ from django.shortcuts import render
 from pytz import utc
 
 from apps.authentication.decorators import admin_required
+from apps.authentication.models import User
 from apps.core.models import Profile
+import util.time
 
 
 @admin_required
@@ -14,24 +16,42 @@ def index(request):
 
 
 @admin_required
-def user_report(request):
+def histograms(request):
     def now():
         return datetime.utcnow().replace(tzinfo=utc)
 
     def floor_to_month(dt):
         return dt.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
 
-    createds = (
-        Profile.objects.all().order_by("created").values_list("created", flat=True)
-    )
-    results = Counter()
+    profile_createds = [
+        dt.strftime("%Y-%m")
+        for dt in Profile.objects.all()
+        .order_by("created")
+        .values_list("created", flat=True)
+    ]
+    profile_created_histogram = Counter()
 
-    dt = createds[0]
+    user_createds = [
+        dt.strftime("%Y-%m")
+        for dt in User.objects.all()
+        .order_by("created")
+        .values_list("created", flat=True)
+    ]
+    user_created_histogram = Counter()
+
+    dt = util.time.from_unix_timestamp(1546300800)  # Jan 1 2019
     while dt < now():
         dt_str = dt.strftime("%Y-%m")
-        for created in createds:
-            if created.strftime("%Y-%m") == dt_str:
-                results[dt_str] += 1
+        profile_created_histogram[dt_str] = profile_createds.count(dt_str)
+        user_created_histogram[dt_str] = user_createds.count(dt_str)
+
         dt = floor_to_month(dt + timedelta(days=32))
 
-    return render(request, "staff/user_report.html", {"data": list(results.items())})
+    return render(
+        request,
+        "staff/histograms.html",
+        {
+            "profile_created": list(profile_created_histogram.items()),
+            "user_created": list(user_created_histogram.items()),
+        },
+    )

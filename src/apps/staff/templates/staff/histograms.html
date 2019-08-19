@@ -1,0 +1,19 @@
+{% extends "staff/_base.html" %}
+
+{% block content %}
+
+<h3>User.Created Histogram</h3>
+<ul>
+    {% for bucket, count in user_created %}
+    <li>{{ bucket }},{{ count }}</li>
+    {% endfor %}
+</ul>
+
+<h3>Profile.Created Histogram</h3>
+<ul>
+    {% for bucket, count in profile_created %}
+    <li>{{ bucket }},{{ count }}</li>
+    {% endfor %}
+</ul>
+
+{% endblock content %}
