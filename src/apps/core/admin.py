@@ -1,7 +1,12 @@
 from django.contrib import admin
 
 from apps.common.models import BaseModelAdmin
-from .models import Game, Profile, Snake
+from .models import Account, Game, Profile, Snake
+
+
+@admin.register(Account)
+class AccountAdmin(BaseModelAdmin):
+    readonly_fields = BaseModelAdmin.readonly_fields + ("id", "user")
 
 
 @admin.register(Game)

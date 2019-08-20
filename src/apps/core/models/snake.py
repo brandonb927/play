@@ -8,7 +8,7 @@ from django.db.models import Q
 
 from apps.common.fields import ShortUUIDField
 from apps.common.models import BaseModel
-from apps.core.models import Profile
+from .profile import Profile
 
 
 logger = logging.getLogger(__name__)

@@ -5,7 +5,7 @@ from django.utils.http import urlquote
 from apps.common.fields import ShortUUIDField
 from apps.common.models import BaseModel
 from apps.core import engine
-from apps.core.models import Snake
+from .snake import Snake
 
 
 class GameQuerySet(models.QuerySet):

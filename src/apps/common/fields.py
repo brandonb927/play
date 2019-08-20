@@ -20,15 +20,6 @@ class CreatedDateTimeField(DateTimeField):
     def get_internal_type(self):
         return "DateTimeField"
 
-    def south_field_triple(self):
-        "Returns a suitable description of this field for South."
-        # We'll just introspect ourselves, since we inherit.
-        from south.modelsinspector import introspector
-
-        field_class = "django.db.models.fields.DateTimeField"
-        args, kwargs = introspector(self)
-        return (field_class, args, kwargs)
-
 
 class ModifiedDateTimeField(CreatedDateTimeField):
     """
@@ -45,15 +36,6 @@ class ModifiedDateTimeField(CreatedDateTimeField):
     def get_internal_type(self):
         return "DateTimeField"
 
-    def south_field_triple(self):
-        "Returns a suitable description of this field for South."
-        # We'll just introspect ourselves, since we inherit.
-        from south.modelsinspector import introspector
-
-        field_class = "django.db.models.fields.DateTimeField"
-        args, kwargs = introspector(self)
-        return (field_class, args, kwargs)
-
 
 class ShortUUIDField(models.CharField):
     # Fixed alphabet to (hopefully) prevent bad words.
@@ -62,6 +44,11 @@ class ShortUUIDField(models.CharField):
     def __init__(self, prefix=None, *args, **kwargs):
         super(ShortUUIDField, self).__init__(*args, **kwargs)
         self.__prefix = prefix
+
+    def deconstruct(self):
+        name, path, args, kwargs = super().deconstruct()
+        kwargs["prefix"] = self.__prefix
+        return name, path, args, kwargs
 
     def create_uuid(self):
         short_uuid = shortuuid.ShortUUID()

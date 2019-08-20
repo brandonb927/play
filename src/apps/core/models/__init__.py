@@ -1,5 +1,7 @@
-from apps.core.models.profile import Profile
-from apps.core.models.snake import Snake
-from apps.core.models.game import Game, GameSnake
+from .account import Account
+from .game import Game, GameSnake
+from .profile import Profile
+from .snake import Snake
 
-__all__ = ["Profile", "Snake", "Game", "GameSnake"]
+
+__all__ = ["Account", "Game", "GameSnake", "Profile", "Snake"]
