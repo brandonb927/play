@@ -52,8 +52,8 @@ class Snake(BaseModel):
     id = ShortUUIDField(prefix="snk", max_length=128, primary_key=True)
 
     account = models.ForeignKey(
-        Account, on_delete=models.CASCADE, default=None
-    )  # TODO: Remove defaul, null=False
+        Account, on_delete=models.CASCADE, default=None, null=True
+    )  # TODO: Remove default, null=False
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)  # TODO: Remove
 
     name = models.CharField(
