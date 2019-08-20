@@ -117,10 +117,6 @@ class ProfileViewsTestCase(TestCase):
         response = self.client.post("/settings/", {"email": "", "_method": "PUT"})
         self.assertEqual(response.status_code, 400)
 
-    def test_delete(self):
-        response = self.client.delete("/settings/")
-        self.assertEqual(response.status_code, 302)
-
     def test_get(self):
         response = self.client.get(f"/u/{self.user.username}/")
         self.assertEqual(response.status_code, 200)

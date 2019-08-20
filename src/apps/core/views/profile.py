@@ -1,12 +1,9 @@
 from django.contrib import messages
-from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
-from django.db import transaction
 from django.shortcuts import render, redirect
 
 from apps.core.models import Profile
 from apps.core.forms import ProfileForm
-from apps.core.middleware import profile_required
 
 
 @login_required
@@ -34,15 +31,3 @@ def update(request):
         {"form": form, "profile": profile, "show_activation": is_new_profile},
         status=400,
     )
-
-
-@login_required
-@profile_required
-@transaction.atomic
-def delete(request):
-    user = request.user
-    logout(request)
-    user.delete()
-    if hasattr(user, "profile"):
-        user.profile.delete()
-    return redirect("/")

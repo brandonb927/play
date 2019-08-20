@@ -5,11 +5,7 @@ from apps.common.routing import method_dispatch as route
 
 
 urlpatterns = [
-    path(
-        "settings/",
-        route(GET=profile.edit, PUT=profile.update, DELETE=profile.delete),
-        name="settings",
-    ),
+    path("settings/", route(GET=profile.edit, PUT=profile.update), name="settings"),
     path("u/by-games-snake/<game_snake_id>/", route(GET=profiles.show_by_game_snake)),
     path("u/<username>/", route(GET=profiles.show), name="u"),
     path("", route(GET=home.index), name="home"),
