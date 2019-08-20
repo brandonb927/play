@@ -5,12 +5,12 @@
   <div class="d-flex align-items-center">
     <div class="mr-auto">
       <h1>
-        <a href="{% url 'u' username=snake.profile.username %}">
-          {{ snake.profile.username }}
+        <a href="{% url 'u' username=snake.account.user.username %}">
+          {{ snake.account.user.username }}
         </a> / {{ snake.name }}
       </h1>
     </div>
-    {% if snake.profile.user == request.user %}
+    {% if snake.account.user.user == request.user %}
     <ul class="actions top-right">
       <li class="dropdown">
         <a href="#" class="btn btn-fab" data-toggle="dropdown" aria-expanded="false">
@@ -20,17 +20,13 @@
           <div class="dropdown-header">
             Menu
           </div>
-          {% if snake.profile.user == request.user %}
-          <a href="{% url 'snake_edit' snake_id=snake.id %}"
-            class="dropdown-item">
+          {% if snake.account.user == request.user %}
+          <a href="{% url 'snake_edit' snake_id=snake.id %}" class="dropdown-item">
             Edit Snake
           </a>
           {% endif %}
-          {% if snake.profile.user == request.user %}
-          <a href="#delete-modal"
-            class="dropdown-item"
-            data-toggle="modal"
-            data-target="#delete-modal">
+          {% if snake.account.user == request.user %}
+          <a href="#delete-modal" class="dropdown-item" data-toggle="modal" data-target="#delete-modal">
             Delete
           </a>
           {% endif %}
@@ -51,7 +47,7 @@
     <div id="games" class="info-section">
       <div class="card">
         <div class="card-header">
-          {% if snake.is_public or snake.profile.user == request.user %}
+          {% if snake.is_public or snake.account.user == request.user %}
           <div class="pull-right">
             <a class="btn btn-primary btn-sm" href="{% url 'new_game' %}?snake-ids={{ snake.id }}">Play Game</a>
           </div>
@@ -95,24 +91,24 @@
 {% endblock %}
 
 {% block js_dom_ready %}
-  $(".sidenav a").on('click', function() {
-    $(".sidenav a").removeClass("active")
-    $(this).addClass("active")
-    section = $(this).attr("href")
-    showSection(section)
-  })
+$(".sidenav a").on('click', function() {
+$(".sidenav a").removeClass("active")
+$(this).addClass("active")
+section = $(this).attr("href")
+showSection(section)
+})
 
-  function showSection(section) {
-    $(".info-section").addClass("hide")
-    $(section).removeClass("hide")
-  }
+function showSection(section) {
+$(".info-section").addClass("hide")
+$(section).removeClass("hide")
+}
 
-  if (window.location.hash) {
-    showSection(window.location.hash)
-    $(".sidenav a").removeClass("active").each(function(i, a) {
-      if ($(a).attr("href") == window.location.hash) {
-        $(this).addClass("active")
-      }
-    })
-  }
+if (window.location.hash) {
+showSection(window.location.hash)
+$(".sidenav a").removeClass("active").each(function(i, a) {
+if ($(a).attr("href") == window.location.hash) {
+$(this).addClass("active")
+}
+})
+}
 {% endblock %}

@@ -18,8 +18,10 @@
       {% for item in leaderboard %}
       <li class="list-group-item list-group-item-action">
         {{ forloop.counter }}.
-        <a href="{% url 'u' item.snake.profile.username %}">{{ item.snake.profile.username }}</a> / <a href="{% url 'snake' item.snake.id %}">{{ item.snake.name }}</a>
-        <a href="#{{ item.id }}-games" data-toggle="modal" data-target="#{{ item.id }}-games" class="badge badge-secondary badge-pill pull-right ml-2">Games</a>
+        <a href="{% url 'u' item.snake.account.user.username %}">{{ item.snake.account.user.username }}</a> / <a
+          href="{% url 'snake' item.snake.id %}">{{ item.snake.name }}</a>
+        <a href="#{{ item.id }}-games" data-toggle="modal" data-target="#{{ item.id }}-games"
+          class="badge badge-secondary badge-pill pull-right ml-2">Games</a>
         <span class="badge badge-primary badge-pill pull-right">
           {{ item.rank|floatformat:2 }}
         </span>
@@ -29,7 +31,8 @@
   </div>
 
   {% for item in leaderboard %}
-  <div class="modal fade" id="{{ item.id }}-games" tabindex="-1" role="dialog" aria-labelledby="{{ item.id }}-games-label" aria-hidden="true">
+  <div class="modal fade" id="{{ item.id }}-games" tabindex="-1" role="dialog"
+    aria-labelledby="{{ item.id }}-games-label" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -43,7 +46,8 @@
             {% for result in item.results %}
             <li class="list-group-item">
               {{ forloop.counter }}.
-              <a href="{% url 'game' result.game.engine_id %}">Watch</a> ({{ result.game.turn }} turns) - Rating Change: {{ result.mu_change | floatformat:2 }}
+              <a href="{% url 'game' result.game.engine_id %}">Watch</a> ({{ result.game.turn }} turns) - Rating Change:
+              {{ result.mu_change | floatformat:2 }}
             </li>
             {% endfor %}
           </ul>

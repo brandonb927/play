@@ -22,7 +22,7 @@ class GameStatusJobTestCase(TestCase):
         game = self.game_factory.basic()
         game.save()
         snakes = self.snake_factory.basic(
-            n=8, commit=True, profile=self.user_factory.basic(commit=True).profile
+            n=8, commit=True, account=self.user_factory.basic(commit=True).account
         )
 
         game.engine_id = str(uuid.uuid4())

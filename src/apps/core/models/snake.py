@@ -19,19 +19,19 @@ class SnakeQuerySet(models.QuerySet):
     def can_view(self, user):
         filter_query = Q(is_public=True)
         if not user.is_anonymous:
-            filter_query |= Q(profile=user.profile)
+            filter_query |= Q(account=user.account)
         return self.filter(filter_query)
 
     def by_public_name(self, name):
         if "/" in name:
             username, snake_name = name.split("/")
             return self.filter(
-                Q(profile__user__username__icontains=username)
+                Q(account__user__username__icontains=username)
                 | Q(name__icontains=snake_name)
             )
         else:
             return self.filter(
-                Q(profile__user__username__icontains=name) | Q(name__icontains=name)
+                Q(account__user__username__icontains=name) | Q(name__icontains=name)
             )
 
 
@@ -51,7 +51,9 @@ class Snake(BaseModel):
 
     id = ShortUUIDField(prefix="snk", max_length=128, primary_key=True)
 
-    account = models.ForeignKey(Account, on_delete=models.CASCADE)
+    account = models.ForeignKey(
+        Account, on_delete=models.CASCADE, related_name="snakes"
+    )
     profile = models.ForeignKey(
         Profile, on_delete=models.CASCADE, default=None, null=True
     )  # TODO: Remove

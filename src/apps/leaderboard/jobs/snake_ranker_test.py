@@ -72,7 +72,7 @@ def test_update_leaderboard_game(
     create_mock.return_value = str(uuid.uuid4())
 
     snakes = snake_factory.basic(
-        n=10, commit=True, profile=user_factory.basic(commit=True).profile
+        n=10, commit=True, account=user_factory.basic(commit=True).account
     )
     for s in snakes:
         s.healthy = True

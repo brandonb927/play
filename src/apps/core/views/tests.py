@@ -3,7 +3,7 @@ import mock
 from django.test import Client, TestCase
 
 from apps.core.factories import GameFactory, SnakeFactory
-from apps.core.models import GameSnake, Profile, Snake
+from apps.core.models import Account, GameSnake, Snake
 from apps.authentication.factories import UserFactory
 
 
@@ -26,8 +26,8 @@ class GameViewsTestCase(TestCase):
     def test_create(self, create_mock, run_mock):
         create_mock.return_value = "a879f127-55c2-4b0c-99c9-bce09c9fc0cf"
 
-        snake1 = self.snake_factory.basic(n=1, commit=True, profile=self.user.profile)
-        snake2 = self.snake_factory.basic(n=1, commit=True, profile=self.user.profile)
+        snake1 = self.snake_factory.basic(n=1, commit=True, account=self.user.account)
+        snake2 = self.snake_factory.basic(n=1, commit=True, account=self.user.account)
 
         response = self.client.post(
             "/g/new/", {"board_size": "medium", "snakes": f"{snake1.id},{snake2.id}"}
@@ -49,7 +49,7 @@ class GameViewsTestCase(TestCase):
         self.assertIn(url, response.content.decode("utf-8"))
 
     def test_snake_autocomplete(self):
-        snake = self.snake_factory.basic(n=1, profile=self.user.profile)
+        snake = self.snake_factory.basic(n=1, account=self.user.account)
         snake.name = "snaker"
         snake.save()
 
@@ -82,12 +82,12 @@ class HomeViewsTestCase(TestCase):
             n=20, engine_id=engine_id, status="complete", turn=200, commit=True
         )
         game = games[0]
-        profile = self.user_factory.basic(commit=True).profile
+        account = self.user_factory.basic(commit=True).account
         GameSnake.objects.create(
-            game=game, snake=self.snake_factory.basic(profile=profile, commit=True)
+            game=game, snake=self.snake_factory.basic(account=account, commit=True)
         )
         GameSnake.objects.create(
-            game=game, snake=self.snake_factory.basic(profile=profile, commit=True)
+            game=game, snake=self.snake_factory.basic(account=account, commit=True)
         )
         response = self.client.get("/")
 
@@ -95,7 +95,7 @@ class HomeViewsTestCase(TestCase):
         self.assertIn(url, response.content.decode("utf-8"))
 
 
-class ProfileViewsTestCase(TestCase):
+class AccountViewsTestCase(TestCase):
     def setUp(self):
         self.client = Client()
         self.user_factory = UserFactory()
@@ -111,7 +111,7 @@ class ProfileViewsTestCase(TestCase):
             "/settings/", {"email": "my-new-email", "_method": "PUT"}
         )
         self.assertEqual(response.status_code, 302)
-        self.assertEqual(Profile.objects.get(user=self.user).email, "my-new-email")
+        self.assertEqual(Account.objects.get(user=self.user).user.email, "my-new-email")
 
     def test_update_no_email(self):
         response = self.client.post("/settings/", {"email": "", "_method": "PUT"})
@@ -127,12 +127,11 @@ class ProfileViewsTestCase(TestCase):
         self.assertEqual(response.url, f"/u/{self.user.username}/")
 
     def test_snakes_are_returned_in_response(self):
-        Snake.objects.create(
-            profile=self.user.profile, account=self.user.account, name="My Snake"
-        )
+        Snake.objects.create(account=self.user.account, name="My Snake")
         response = self.client.get(f"/u/{self.user.username}/")
         self.assertEqual(
-            response.context[-1]["profile"].user.profile.snakes[0].name, "My Snake"
+            response.context[-1]["account"].user.account.snakes.all()[:1].get().name,
+            "My Snake",
         )
 
 
@@ -150,33 +149,27 @@ class SnakeViewsTestCase(TestCase):
         self.assertEqual(response.status_code, 302)
         self.assertIn(f"/u/{self.user.username}", response["Location"])
 
-        snakes = Snake.objects.filter(profile=self.user.profile)
+        snakes = Snake.objects.filter(account=self.user.account)
         self.assertEqual(snakes.count(), 1)
 
         snake = snakes.first()
         self.assertEqual(snake.name, "My Snake")
         self.assertEqual(snake.url, "https://dedsnek.herokuapp.com")
-        self.assertIsNotNone(snake.profile)
+        self.assertIsNotNone(snake.account)
 
     def test_get(self):
-        snake = Snake.objects.create(
-            profile=self.user.profile, account=self.user.account, name="My Snake"
-        )
+        snake = Snake.objects.create(account=self.user.account, name="My Snake")
         response = self.client.get(f"/s/{snake.id}/")
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.context[-1]["snake"], snake)
 
     def test_edit(self):
-        snake = Snake.objects.create(
-            profile=self.user.profile, account=self.user.account, name="My Snake"
-        )
+        snake = Snake.objects.create(account=self.user.account, name="My Snake")
         response = self.client.get(f"/s/{snake.id}/edit/")
         self.assertEqual(response.status_code, 200)
 
     def test_update(self):
-        snake = Snake.objects.create(
-            profile=self.user.profile, account=self.user.account, name="My Snake"
-        )
+        snake = Snake.objects.create(account=self.user.account, name="My Snake")
         response = self.client.post(
             f"/s/{snake.id}/edit/",
             {"name": "updated-name", "url": "updated-url", "_method": "PUT"},

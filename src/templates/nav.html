@@ -71,13 +71,9 @@
                         </div>
                       </a>
                     </div>
-                    <a class="dropdown-item" href="{% url 'u' username=user.username %}">
-                      <i class="icon dripicons-user"></i>
-                      Your Profile
-                    </a>
                     <a class="dropdown-item" href="{% url 'settings' %}">
                       <i class="icon dripicons-gear"></i>
-                      Account Settings
+                      Account
                     </a>
                     <a class="dropdown-item" href="{% url 'help' %}">
                       <i class="icon dripicons-question"></i>
@@ -86,7 +82,7 @@
                     <div class="dropdown-divider"></div>
                     <a href="#report-modal" data-toggle="modal" data-target="#report-modal" class="dropdown-item">
                       <i class="icon dripicons-flag"></i>
-                      Report Abuse
+                      Report Concern
                     </a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="{% url 'logout' %}">
@@ -171,7 +167,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Report Abusive Content</h5>
+          <h5 class="modal-title">Report Concern</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>

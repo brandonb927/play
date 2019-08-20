@@ -3,14 +3,12 @@ import random
 
 from django.shortcuts import render
 
-from apps.core.middleware import profile_required
 from apps.core.models import Game
 
 
 logger = logging.getLogger(__name__)
 
 
-@profile_required
 def index(request):
     games = list(
         Game.objects.filter(status=Game.Status.COMPLETE, turn__gte=100)

@@ -15,7 +15,7 @@ def index(request):
             "name": snake.name,
             "registered": snake.snakeleaderboard_set.first() is not None,
         }
-        for snake in Snake.objects.filter(profile=request.user.profile)
+        for snake in Snake.objects.filter(account=request.user.account)
     ]
     return render(request, "leaderboard/snakes.html", {"snakes": snakes})
 
@@ -23,7 +23,7 @@ def index(request):
 @login_required
 @transaction.atomic
 def create(request, snake_id):
-    snake = Snake.objects.get(id=snake_id, profile=request.user.profile)
+    snake = Snake.objects.get(id=snake_id, account=request.user.account)
     SnakeLeaderboard.objects.get_or_create(snake=snake)
     return redirect(reverse("leaderboard_snakes"))
 
@@ -31,7 +31,7 @@ def create(request, snake_id):
 @login_required
 @transaction.atomic
 def delete(request, snake_id):
-    snake = Snake.objects.get(id=snake_id, profile=request.user.profile)
+    snake = Snake.objects.get(id=snake_id, account=request.user.account)
     try:
         SnakeLeaderboard.objects.get(snake=snake).delete()
     except SnakeLeaderboard.DoesNotExist:

@@ -1,4 +1,4 @@
-from apps.core.models import Game, Snake, Profile
+from apps.core.models import Account, Game, Snake
 
 
 class GameFactory:
@@ -12,16 +12,13 @@ class GameFactory:
 
 
 class SnakeFactory:
-    def basic(self, n=1, commit=False, profile: Profile = None):
-        if profile is None:
-            raise Exception("user is required")
+    def basic(self, n=1, commit=False, account: Account = None):
+        if account is None:
+            raise Exception("snake.account is required")
         if n > 1:
-            return [self.basic(commit=commit, profile=profile) for _ in range(n)]
+            return [self.basic(commit=commit, account=account) for _ in range(n)]
         snake = Snake(
-            name="test",
-            url="http://foo.bar",
-            profile=profile,
-            account=profile.user.account,
+            name="test", url="http://foo.bar.battkesnake.com", account=account
         )
         if commit:
             snake.save()

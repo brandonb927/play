@@ -3,7 +3,6 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 
 from apps.core.forms import SnakeForm
-from apps.core.middleware import profile_required
 from apps.core.models import Snake
 
 
@@ -18,16 +17,14 @@ def show(request, snake_id):
 
 
 @login_required
-@profile_required
 def new(request):
-    form = SnakeForm(request.user.profile)
+    form = SnakeForm(request.user.account)
     return render(request, "core/snake/new.html", {"form": form})
 
 
 @login_required
-@profile_required
 def create(request):
-    form = SnakeForm(request.user.profile, request.POST)
+    form = SnakeForm(request.user.account, request.POST)
     if form.is_valid():
         snake = form.save()
         messages.add_message(
@@ -38,21 +35,19 @@ def create(request):
 
 
 @login_required
-@profile_required
 def edit(request, snake_id):
     try:
-        snake = request.user.profile.snakes.get(id=snake_id)
-        form = SnakeForm(request.user.profile, instance=snake)
+        snake = request.user.account.snakes.get(id=snake_id)
+        form = SnakeForm(request.user.account, instance=snake)
         return render(request, "core/snake/edit.html", {"form": form})
     except Snake.DoesNotExist:
         return redirect(f"/s/{snake_id}")
 
 
 @login_required
-@profile_required
 def update(request, snake_id):
-    snake = request.user.profile.snakes.get(id=snake_id)
-    form = SnakeForm(request.user.profile, request.POST, instance=snake)
+    snake = request.user.account.snakes.get(id=snake_id)
+    form = SnakeForm(request.user.account, request.POST, instance=snake)
     if form.is_valid():
         snake = form.save()
         messages.add_message(
@@ -63,9 +58,8 @@ def update(request, snake_id):
 
 
 @login_required
-@profile_required
 def delete(request, snake_id):
-    snake = request.user.profile.snakes.get(id=snake_id)
+    snake = request.user.account.snakes.get(id=snake_id)
     snake.delete()
     messages.add_message(
         request, messages.SUCCESS, f"{snake.name} deleted successfully"

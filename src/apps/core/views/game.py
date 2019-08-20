@@ -1,14 +1,14 @@
 from django.conf import settings
+from django.contrib.auth.decorators import login_required
 from django.db import transaction
 from django.http import JsonResponse, Http404
 from django.shortcuts import render, redirect
 
 from apps.core.forms import GameForm
-from apps.core.middleware import profile_required
 from apps.core.models import Snake, Game
 
 
-@profile_required
+@login_required
 def new(request):
     snake_ids = request.GET.get("snake-ids")
     form = GameForm(
@@ -17,7 +17,7 @@ def new(request):
     return render(request, "core/game/new.html", {"form": form})
 
 
-@profile_required
+@login_required
 @transaction.atomic
 def create(request):
     form = GameForm(request.POST)
@@ -30,20 +30,20 @@ def create(request):
     return render(request, "core/game/new.html", {"form": form}, status=400)
 
 
-@profile_required
+@login_required
 def snake_autocomplete(request):
     q = request.GET.get("q")
     snakes = (
         Snake.objects.can_view(request.user)
         .by_public_name(q)
-        .prefetch_related("profile__user")
+        .prefetch_related("account__user")
     )
     return JsonResponse(
         [{"value": snake.id, "text": snake.public_name} for snake in snakes], safe=False
     )
 
 
-@profile_required
+@login_required
 def snake_info(request):
     snake_ids = request.GET.get("snakes", "").split(",")
     snakes = Snake.objects.can_view(request.user).filter(id__in=snake_ids)
@@ -52,14 +52,14 @@ def snake_info(request):
     )
 
 
-@profile_required
+@login_required
 def random_public_snake(request):
     count = int(request.GET.get("count", 1))
     snakes = Snake.objects.filter(is_public=True).order_by("?")[:count]
     return JsonResponse({"snakes": [snake.id for snake in snakes]})
 
 
-@profile_required
+@login_required
 def show(request, engine_id):
     try:
         game = Game.objects.get(engine_id=engine_id)

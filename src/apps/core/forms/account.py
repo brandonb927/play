@@ -1,21 +1,21 @@
 from django import forms
 
-from apps.core.models import Profile
+from apps.core.models import Account
 
 
-class ProfileForm(forms.ModelForm):
+class AccountForm(forms.ModelForm):
     email = forms.CharField(required=True, widget=forms.EmailInput)
 
     class Meta:
-        model = Profile
-        fields = ["optin_marketing"]
+        model = Account
+        fields = ["marketing_optin"]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields["email"].initial = self.instance.user.email
 
     def save(self, *args, **kwargs):
-        profile = super().save(*args, **kwargs)
-        profile.user.email = self.cleaned_data["email"]
-        profile.user.save()
-        return profile
+        account = super().save(*args, **kwargs)
+        account.user.email = self.cleaned_data["email"]
+        account.user.save()
+        return account

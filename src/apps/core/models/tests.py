@@ -21,7 +21,7 @@ class GameModelTestCase(TestCase):
         game.save()
 
         snakes = self.snake_factory.basic(
-            n=8, commit=True, profile=self.user_factory.basic(commit=True).profile
+            n=8, commit=True, account=self.user_factory.basic(commit=True).account
         )
         for snake in snakes:
             game.snakes.add(snake)
@@ -46,7 +46,7 @@ class GameModelTestCase(TestCase):
         game.save()
 
         snakes = self.snake_factory.basic(
-            n=8, commit=True, profile=self.user_factory.basic(commit=True).profile
+            n=8, commit=True, account=self.user_factory.basic(commit=True).account
         )
         for snake in snakes:
             game.snakes.add(snake)
@@ -68,7 +68,7 @@ class GameModelTestCase(TestCase):
         game = self.game_factory.basic()
         game.save()
         snakes = self.snake_factory.basic(
-            n=8, commit=True, profile=self.user_factory.basic(commit=True).profile
+            n=8, commit=True, account=self.user_factory.basic(commit=True).account
         )
 
         game.engine_id = str(uuid.uuid4())
@@ -95,7 +95,7 @@ class GameModelTestCase(TestCase):
         game = self.game_factory.basic()
         game.save()
         snakes = self.snake_factory.basic(
-            n=2, commit=True, profile=self.user_factory.basic(commit=True).profile
+            n=2, commit=True, account=self.user_factory.basic(commit=True).account
         )
 
         game.snakes.add(snakes[0])

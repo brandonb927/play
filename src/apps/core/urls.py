@@ -1,13 +1,13 @@
 from django.urls import path
 
-from apps.core.views import game, home, profile, profiles, snake
+from apps.core.views import account, game, home, snake
 from apps.common.routing import method_dispatch as route
 
 
 urlpatterns = [
-    path("settings/", route(GET=profile.edit, PUT=profile.update), name="settings"),
-    path("u/by-games-snake/<game_snake_id>/", route(GET=profiles.show_by_game_snake)),
-    path("u/<username>/", route(GET=profiles.show), name="u"),
+    path("settings/", route(GET=account.edit, PUT=account.update), name="settings"),
+    path("u/by-games-snake/<game_snake_id>/", route(GET=account.show_by_game_snake)),
+    path("u/<username>/", route(GET=account.show), name="u"),
     path("", route(GET=home.index), name="home"),
     path("s/new/", route(GET=snake.new, POST=snake.create), name="new_snake"),
     path("s/<snake_id>/", route(GET=snake.show, DELETE=snake.delete), name="snake"),

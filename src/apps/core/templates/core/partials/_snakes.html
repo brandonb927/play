@@ -7,10 +7,8 @@
       </a>
     </h4>
   </div>
-  {% if profile.user == user %}
-  <button type="button"
-    class="btn btn-light btn-outline js-show-snake-status pull-right"
-    data-toggle="popover"
+  {% if account.user == user %}
+  <button type="button" class="btn btn-light btn-outline js-show-snake-status pull-right" data-toggle="popover"
     data-snake-url="{{ snake.url }}">
     Status
   </button>
@@ -18,6 +16,7 @@
 </li>
 {% empty %}
 <li class="list-group-item">
-  <p>No snakes here yet{% if profile.user == user %} — <a href="https://docs.battlesnake.io">Learn how to make one</a>!{% endif %}</p>
+  <p>No snakes here yet{% if account.user == user %} — <a href="https://docs.battlesnake.io">Learn how to make
+      one</a>!{% endif %}</p>
 </li>
 {% endfor %}
