@@ -14,6 +14,7 @@ class Migration(migrations.Migration):
             name="account",
             field=models.ForeignKey(
                 default=None,
+                null=True,
                 on_delete=django.db.models.deletion.CASCADE,
                 to="core.Account",
             ),
