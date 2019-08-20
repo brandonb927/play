@@ -1,7 +1,6 @@
-from django.shortcuts import redirect
 from django.urls import path
 
-from apps.core.views import game, home, profile, profiles, snake, stats
+from apps.core.views import game, home, profile, profiles, snake
 from apps.common.routing import method_dispatch as route
 
 
@@ -25,8 +24,4 @@ urlpatterns = [
     path("g/random-public-snake/", route(GET=game.random_public_snake)),
     path("g/<engine_id>/", route(GET=game.show), name="game"),
     path("g/<engine_id>/gif/", route(GET=game.show_gif), name="game_gif"),
-    path("stats/", route(GET=stats.show), name="stats"),
-    # Old redirects
-    path("games/new/", lambda req: redirect("new_game")),
-    path("games/<engine_id>/", lambda req, engine_id: redirect("game", engine_id)),
 ]

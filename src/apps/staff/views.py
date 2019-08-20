@@ -6,13 +6,21 @@ from pytz import utc
 
 from apps.authentication.decorators import admin_required
 from apps.authentication.models import User
-from apps.core.models import Profile
+from apps.core.models import Game, Profile, Snake
 import util.time
 
 
 @admin_required
 def index(request):
-    return render(request, "staff/index.html")
+    num_users = User.objects.all().count()
+    num_snakes = Snake.objects.all().count()
+    num_games = Game.objects.all().count()
+
+    return render(
+        request,
+        "staff/index.html",
+        {"num_users": num_users, "num_snakes": num_snakes, "num_games": num_games},
+    )
 
 
 @admin_required
