@@ -30,7 +30,8 @@ class SnakeForm(forms.ModelForm):
 
     def save(self, commit=True):
         snake = super().save(commit=False)
-        snake.profile = self.profile
+        snake.profile = self.profile  # TODO: Remove
+        snake.account = self.profile.user.account
         if commit is True:
             snake.save()
         return snake

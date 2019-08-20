@@ -8,6 +8,7 @@ from django.db.models import Q
 
 from apps.common.fields import ShortUUIDField
 from apps.common.models import BaseModel
+from .account import Account
 from .profile import Profile
 
 
@@ -46,24 +47,30 @@ class SnakeManager(models.Manager):
 
 
 class Snake(BaseModel):
+    objects = SnakeManager()
+
     id = ShortUUIDField(prefix="snk", max_length=128, primary_key=True)
+
+    account = models.ForeignKey(
+        Account, on_delete=models.CASCADE, default=None
+    )  # TODO: Remove defaul, null=False
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)  # TODO: Remove
+
     name = models.CharField(
         max_length=128, validators=[MinLengthValidator(3), MaxLengthValidator(50)]
     )
     url = models.CharField(max_length=128)
-    healthy = models.BooleanField(
-        default=False, verbose_name="Did this snake respond to /ping"
-    )
-    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
     is_public = models.BooleanField(
         default=False, verbose_name="Allow anyone to add this snake to a game"
     )
 
-    objects = SnakeManager()
+    healthy = models.BooleanField(
+        default=False, verbose_name="Did this snake respond to /ping"
+    )
 
     @property
     def public_name(self):
-        return f"{self.profile.username} / {self.name}"
+        return f"{self.account.user.username} / {self.name}"
 
     def update_healthy(self):
         url = str(self.url)
