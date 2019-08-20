@@ -1,5 +1,5 @@
 from apps.authentication.models import User
-from apps.core.models import Profile
+from apps.core.models import Account, Profile
 
 
 class UserFactory:
@@ -7,7 +7,8 @@ class UserFactory:
         username = email.split("@")[0]
         user = User(username=username, email=email)
         if commit:
-            Profile.objects.create(user=user)
+            user.profile = Profile.objects.create(user=user)
+            user.account = Account.objects.create(user=user)
             user.save()
         return user
 

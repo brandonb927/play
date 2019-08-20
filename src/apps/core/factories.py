@@ -17,7 +17,12 @@ class SnakeFactory:
             raise Exception("user is required")
         if n > 1:
             return [self.basic(commit=commit, profile=profile) for _ in range(n)]
-        snake = Snake(name="test", url="http://foo.bar", profile=profile)
+        snake = Snake(
+            name="test",
+            url="http://foo.bar",
+            profile=profile,
+            account=profile.user.account,
+        )
         if commit:
             snake.save()
         return snake

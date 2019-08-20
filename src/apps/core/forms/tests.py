@@ -56,7 +56,9 @@ class SnakeFormTestCase(TestCase):
 
     def test_update_existing_snake(self):
         user = self.user_factory.basic(commit=True)
-        snake = Snake.objects.create(profile=user.profile, name="DSnek")
+        snake = Snake.objects.create(
+            profile=user.profile, account=user.account, name="DSnek"
+        )
 
         self.assertEqual(snake.url, "")
         self.assertFalse(snake.is_public)
@@ -76,7 +78,7 @@ class SnakeFormTestCase(TestCase):
 
     def test_new_snake_with_name_collision(self):
         user = self.user_factory.basic(commit=True)
-        Snake.objects.create(profile=user.profile, name="DSnek")
+        Snake.objects.create(profile=user.profile, account=user.account, name="DSnek")
         form = SnakeForm(
             user.profile,
             {"name": "DSnek", "url": "https://dsnek.herokuapp.com", "is_public": True},
@@ -87,8 +89,10 @@ class SnakeFormTestCase(TestCase):
 
     def test_update_snake_with_name_collision(self):
         user = self.user_factory.basic(commit=True)
-        Snake.objects.create(profile=user.profile, name="DSnek")
-        snake = Snake.objects.create(profile=user.profile, name="DSnek1")
+        Snake.objects.create(profile=user.profile, account=user.account, name="DSnek")
+        snake = Snake.objects.create(
+            profile=user.profile, account=user.account, name="DSnek1"
+        )
 
         form = SnakeForm(
             user.profile,

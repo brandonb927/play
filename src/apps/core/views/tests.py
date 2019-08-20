@@ -131,7 +131,9 @@ class ProfileViewsTestCase(TestCase):
         self.assertEqual(response.url, f"/u/{self.user.username}/")
 
     def test_snakes_are_returned_in_response(self):
-        Snake.objects.create(profile=self.user.profile, name="My Snake")
+        Snake.objects.create(
+            profile=self.user.profile, account=self.user.account, name="My Snake"
+        )
         response = self.client.get(f"/u/{self.user.username}/")
         self.assertEqual(
             response.context[-1]["profile"].user.profile.snakes[0].name, "My Snake"
@@ -161,18 +163,24 @@ class SnakeViewsTestCase(TestCase):
         self.assertIsNotNone(snake.profile)
 
     def test_get(self):
-        snake = Snake.objects.create(profile=self.user.profile, name="My snake")
+        snake = Snake.objects.create(
+            profile=self.user.profile, account=self.user.account, name="My Snake"
+        )
         response = self.client.get(f"/s/{snake.id}/")
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.context[-1]["snake"], snake)
 
     def test_edit(self):
-        snake = Snake.objects.create(profile=self.user.profile, name="My snake")
+        snake = Snake.objects.create(
+            profile=self.user.profile, account=self.user.account, name="My Snake"
+        )
         response = self.client.get(f"/s/{snake.id}/edit/")
         self.assertEqual(response.status_code, 200)
 
     def test_update(self):
-        snake = Snake.objects.create(profile=self.user.profile, name="My snake")
+        snake = Snake.objects.create(
+            profile=self.user.profile, account=self.user.account, name="My Snake"
+        )
         response = self.client.post(
             f"/s/{snake.id}/edit/",
             {"name": "updated-name", "url": "updated-url", "_method": "PUT"},
