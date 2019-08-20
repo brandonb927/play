@@ -6,14 +6,14 @@ from django.db import migrations
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('leaderboard', '0003_snakeleaderboard_unhealthy_counter'),
-    ]
+    dependencies = [("leaderboard", "0003_snakeleaderboard_unhealthy_counter")]
 
     operations = [
         migrations.AlterField(
-            model_name='snakeleaderboard',
-            name='id',
-            field=apps.common.fields.ShortUUIDField(max_length=128, prefix='slb', primary_key=True, serialize=False),
-        ),
+            model_name="snakeleaderboard",
+            name="id",
+            field=apps.common.fields.ShortUUIDField(
+                max_length=128, prefix="slb", primary_key=True, serialize=False
+            ),
+        )
     ]
