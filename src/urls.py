@@ -19,7 +19,6 @@ else:
         path("", include("apps.core.urls")),
         path("", include("apps.leaderboard.urls")),
         path("", include("apps.pages.urls")),
-        path("", include("apps.tournament.urls")),
     ]
     handler403 = apps.pages.views.handle403
     handler404 = apps.pages.views.handle404
