@@ -3,10 +3,28 @@ import logging
 from django import forms
 from django.db.models import Q
 
-from apps.core.models import Snake, Game, GameSnake
+from .models import Account, Game, GameSnake, Snake
 
 
 logger = logging.getLogger(__name__)
+
+
+class AccountForm(forms.ModelForm):
+    email = forms.CharField(required=True, widget=forms.EmailInput)
+
+    class Meta:
+        model = Account
+        fields = ["marketing_optin"]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["email"].initial = self.instance.user.email
+
+    def save(self, *args, **kwargs):
+        account = super().save(*args, **kwargs)
+        account.user.email = self.cleaned_data["email"]
+        account.user.save()
+        return account
 
 
 class GameForm(forms.Form):
@@ -57,3 +75,36 @@ class GameForm(forms.Form):
             GameSnake.objects.create(snake=snakes.get(id=snake_id), game=game)
         game.save()
         return game
+
+
+class SnakeForm(forms.ModelForm):
+    class Meta:
+        model = Snake
+        fields = ["name", "url", "is_public"]
+
+    def __init__(self, account: Account, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.account = account
+
+    def clean(self):
+        cleaned_data = super().clean()
+        try:
+            name = cleaned_data["name"]
+
+            # need to filter here, in case we already have a Account with multiple snakes with the same name
+            snakes = self.account.snakes.filter(name=name)
+            if self.instance is not None:
+                snakes = snakes.exclude(id=self.instance.id)
+            if snakes.count() > 0:
+                raise forms.ValidationError(
+                    f"{self.account.user.username}/{name} already exists."
+                )
+        except Snake.DoesNotExist:
+            pass
+
+    def save(self, commit=True):
+        snake = super().save(commit=False)
+        snake.account = self.account
+        if commit is True:
+            snake.save()
+        return snake
