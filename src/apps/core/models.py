@@ -8,7 +8,6 @@ from django.db import models, transaction
 from django.db.models import Q
 from django.utils.http import urlquote
 
-from apps.authentication.models import User
 from apps.common.fields import ShortUUIDField
 from apps.common.models import BaseModel
 
@@ -26,33 +25,6 @@ class Account(BaseModel):
 
     def __str__(self):
         return f"Account[{self.id}]"
-
-
-class Profile(BaseModel):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
-    # Has opted in to marketing emails and communications.
-    optin_marketing = models.BooleanField(default=True, null=False)
-
-    # @property
-    # def email(self):
-    #     return self.user.email
-
-    # @property
-    # def username(self):
-    #     return self.user.username
-
-    # @property
-    # def snakes(self):
-    #     return self.snake_set.all()
-
-    # @property
-    # def games(self):
-    #     from .game import Game
-
-    #     return Game.objects.filter(snakes__profile=self.user.profile)
-
-    # def __str__(self):
-    #     return f"Profile ({self.username})"
 
 
 class SnakeQuerySet(models.QuerySet):
@@ -94,9 +66,6 @@ class Snake(BaseModel):
     account = models.ForeignKey(
         Account, on_delete=models.CASCADE, related_name="snakes"
     )
-    # profile = models.ForeignKey(
-    #     Profile, on_delete=models.CASCADE, default=None, null=True
-    # )  # TODO: Remove
 
     name = models.CharField(
         max_length=128, validators=[MinLengthValidator(3), MaxLengthValidator(50)]
