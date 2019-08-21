@@ -94,9 +94,9 @@ class Snake(BaseModel):
     account = models.ForeignKey(
         Account, on_delete=models.CASCADE, related_name="snakes"
     )
-    profile = models.ForeignKey(
-        Profile, on_delete=models.CASCADE, default=None, null=True
-    )  # TODO: Remove
+    # profile = models.ForeignKey(
+    #     Profile, on_delete=models.CASCADE, default=None, null=True
+    # )  # TODO: Remove
 
     name = models.CharField(
         max_length=128, validators=[MinLengthValidator(3), MaxLengthValidator(50)]
