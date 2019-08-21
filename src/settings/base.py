@@ -54,7 +54,6 @@ INSTALLED_APPS = [
     "apps.leaderboard",
     "apps.pages",
     "apps.staff",
-    "apps.tournament",
 ]
 
 ROOT_URLCONF = "urls"
