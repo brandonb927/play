@@ -10,5 +10,4 @@ def blacklist_usernames(backend, details, response, *args, **kwargs):
 
 
 def create_account(backend, details, user, *args, **kwargs):
-    if not Account.objects.filter(user=user).exists():
-        Account.objects.create(user=user)
+    Account.objects.create_for_user(user)

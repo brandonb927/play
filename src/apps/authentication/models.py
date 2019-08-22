@@ -10,8 +10,7 @@ from apps.common.models import BaseModel
 
 
 class UserManager(DjangoUserManager):
-    def _create_user(self, username, email, password, **extra_fields):
-        return super()._create_user(username, email, password)
+    pass
 
 
 class User(AbstractBaseUser, PermissionsMixin, BaseModel):
@@ -27,7 +26,6 @@ class User(AbstractBaseUser, PermissionsMixin, BaseModel):
 
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
-    is_commentator = models.BooleanField(default=False)
 
     objects = UserManager()
 

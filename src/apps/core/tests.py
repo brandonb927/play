@@ -2,9 +2,7 @@ import mock
 
 from django.test import Client, TestCase
 
-from apps.authentication.factories import UserFactory
-
-from .factories import GameFactory, SnakeFactory
+from .factories import GameFactory, SnakeFactory, UserFactory
 from .forms import GameForm, SnakeForm
 from .jobs import GameStatus
 from .models import Account, Game, GameSnake, Snake

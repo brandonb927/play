@@ -9,6 +9,7 @@ from apps.common.models import BaseModelAdmin
 
 @admin.register(User)
 class UserAdmin(BaseModelAdmin):
+    readonly_fields = BaseModelAdmin.readonly_fields + ("id",)
     exclude = ("password", "groups", "user_permissions")
     search_fields = ["username"]
     ordering = ["username"]

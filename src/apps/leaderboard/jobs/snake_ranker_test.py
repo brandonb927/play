@@ -5,8 +5,7 @@ import random
 from apps.leaderboard.jobs.snake_ranker import get_rankings
 from apps.leaderboard.models import SnakeLeaderboard, LeaderboardResult, GameLeaderboard
 from apps.leaderboard.jobs import MatchStarter, SnakeRanker
-from apps.authentication.factories import UserFactory
-from apps.core.factories import SnakeFactory
+from apps.core.factories import SnakeFactory, UserFactory
 from apps.core.models import GameSnake, Game
 
 user_factory = UserFactory()

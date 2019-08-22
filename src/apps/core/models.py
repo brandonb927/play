@@ -17,11 +17,18 @@ from . import engine
 logger = logging.getLogger(__name__)
 
 
+class AccountManager(models.Manager):
+    def create_for_user(self, user):
+        return self.get_or_create(user=user)
+
+
 class Account(BaseModel):
     id = ShortUUIDField(prefix="act", max_length=128, primary_key=True)
 
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     marketing_optin = models.BooleanField(default=True, null=False)
+
+    objects = AccountManager()
 
     def __str__(self):
         return f"Account[{self.id}]"

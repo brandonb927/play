@@ -2,8 +2,7 @@ import mock
 import uuid
 from apps.leaderboard.models import SnakeLeaderboard
 from apps.leaderboard.jobs import MatchStarter
-from apps.authentication.factories import UserFactory
-from apps.core.factories import SnakeFactory
+from apps.core.factories import SnakeFactory, UserFactory
 
 
 user_factory = UserFactory()

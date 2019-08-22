@@ -1,4 +1,4 @@
-from apps.authentication.factories import UserFactory
+from apps.core.factories import UserFactory
 
 user_factory = UserFactory()
 
