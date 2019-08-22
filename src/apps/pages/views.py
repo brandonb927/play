@@ -58,7 +58,7 @@ def handle404(request, exception=None):
 
 
 def handle404_maintenance(request, exception=None):
-    return render(request, "pages/maintenance.html")
+    return render(request, "pages/maintenance.html", status=200)
 
 
 def handle500(request):

@@ -1,10 +1,12 @@
-from django.conf.urls import url, include
+from django.urls import path, include
 from django.contrib.auth import views as auth_views
 
-from apps.authentication import views
+
+login_view = auth_views.LoginView.as_view(template_name="pages/login.html")
+logout_view = auth_views.LogoutView.as_view(next_page="/")
 
 urlpatterns = [
-    url(r"^login/$", auth_views.LoginView.as_view(), name="login"),
-    url(r"^logout/$", views.logout_view, name="logout"),
-    url(r"^oauth/", include("social_django.urls", namespace="social")),
+    path("login/", login_view, name="login"),
+    path("logout/", logout_view, name="logout"),
+    path("oauth/", include("social_django.urls", namespace="social")),
 ]
