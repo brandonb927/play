@@ -18,7 +18,7 @@ def direct(path):
 
 
 blog = "https://medium.com/battlesnake"
-docs = "https://docs.battlesnake.io"
+docs = "https://docs.battlesnake.com"
 events = "https://events.battlesnake.io"
 github = "https://github.com/battlesnakeio"
 highlights = "https://www.youtube.com/watch?v=d9ARbSzBKxc"

@@ -4,34 +4,37 @@
 <div class="row">
   <div class="offset-md-1 col-md-10">
     <header class="page-header">
-      <h1>How can we help?</h1>
+      <h1>Help &amp; Resources</h1>
     </header>
 
     <div class="card">
       <div class="card-body">
-        <h4><a href="{% url 'github' %}">Documentation and Starter Snakes</a></h4>
-        <p class="card-text">
-          Check <a href="{% url 'github' %}" target="_blank">GitHub</a>
-          for starter snakes and the <a href="{% url 'docs' %}" target="_blank">docs</a>
-          for how to get started with the Battlesnake API, including zero to snake guides and tournament rules.
-        </p>
-
-        <h4><a href="{% url 'slack' %}">Public Slack</a></h4>
-        <p class="card-text">
-          Join the <a href="{% url 'slack' %}" target="_blank">Battlesnake Slack workspace</a>
-          to get ask questions and chat with other competitors.
-        </p>
+        <h4>Documentation and Starter Snakes</h4>
+        <ul>
+          <li><a href="{% url 'docs' %}">Official Battlesnake API Docs</a></li>
+          <li><a href="{% url 'github' %}">Starter Snake Projects</a></li>
+        </ul>
 
         <h4>Videos</h4>
-        <p class="card-text"><a href="https://www.youtube.com/watch?v=y9LCQyXWtmk" target="_blank">Remote Tutorial Part I</a>: Introduction to Battlesnake with Jem Bezooyen. </p>
-        <p class="card-text"><a href="https://www.twitch.tv/videos/376409127" target="_blank">Remote Tutorial Part 2</a>: Working on an AI with Jem Bezooyen. </p>
-        <p class="card-text"><a href="https://www.youtube.com/watch?v=vlEgqnxEWdc&amp;list=PLuUddVpCIxLXb-eKKmOJCDbFtXz29Be02&amp;index=2" target="_blank">Slithering Into Our Hearts: How Battlesnake Made us Better Developers</a> with Erika Burdon &amp; Scott Small </p>
-        <div class="text-center m-t-25">
-          <h4 class="m-b-15">Can't find what you need?</h4>
-          <a class="btn btn-primary btn-rounded" href="mailto:battlesnake@sendwithus.com">Send us an email</a>
-        </div>
+        <ul>
+          <li>
+            <a href="https://www.youtube.com/watch?v=y9LCQyXWtmk">
+              Introduction to Battlesnake with Jem Bezooyen
+            </a>
+          </li>
+          <li>
+            <a href="https://www.youtube.com/watch?v=vlEgqnxEWdc&amp;list=PLuUddVpCIxLXb-eKKmOJCDbFtXz29Be02&amp;index=2"">
+                Slithering Into Our Hearts with Erika Burdon &amp; Scott Small</a>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class=" text-center m-t-50 m-b-50">
+              <h4 class="m-b-15">Can't find what you need?</h4>
+              <a class="btn btn-primary btn-rounded" href="mailto:help@battlesnake.com">Send us an email</a>
+
       </div>
     </div>
   </div>
-</div>
-{% endblock %}
+  {% endblock %}
