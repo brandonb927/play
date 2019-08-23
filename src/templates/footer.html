@@ -28,12 +28,13 @@
         <li><a class="text-dark" href="{% url 'mission' %}">Our Mission</a></li>
         <li><a class="text-dark" href="{% url 'conduct' %}">Code of Conduct</a></li>
         <li><a class="text-dark" href="{% url 'diversity' %}">Diversity</a></li>
-        <li><a class="text-dark" href="{% url 'privacy' %}">Privacy Policy</a></li>
-        <li><a class="text-dark" href="{% url 'terms' %}">Terms of Service</a></li>
       </ul>
     </div>
     <div class="offset-lg-1 col-lg-5">
       <h6 class="text-muted">Copyright &copy; {% now 'Y' %} Battlesnake Inc.</h6>
+      <ul class="list-unstyled">
+        <li><a class="text-muted" href="{% url 'privacy' %}">Privacy Policy</a></li>
+        <li><a class="text-muted" href="{% url 'terms' %}">Terms of Service</a></li>
     </div>
   </div>
   <div class="row">
