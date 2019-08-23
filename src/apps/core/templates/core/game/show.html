@@ -25,14 +25,6 @@
       </div>
     </div>
   </div>
-
-  <div class="card-footer text-center d-none d-sm-block" style="height: 150px;">
-    <h3 id="js-snake-highlighted-name"></h3>
-    <a id="js-snake-highlighted-link" href="#"
-      class="btn btn-info btn-outline d-none">
-      View Profile
-    </a>
-  </div>
 </div>
 {% endblock %}
 
@@ -44,8 +36,6 @@ var turnCount = 0
 var clipboard = new ClipboardJS(shareButtonClass)
 var $shareButton = $(shareButtonClass)
 var $gameIframe = $('#' + gameIframeId)
-var snakeName = $('#js-snake-highlighted-name')
-var snakeLink = $('#js-snake-highlighted-link')
 
 var acceptedKeyCodes = [
   'left',
@@ -101,17 +91,6 @@ window.addEventListener('message', function (e) {
     if (!isSmallScreen) {
       turnCount = msg.frame.turn
       $shareButton.attr('data-clipboard-text', pageUrlWithoutQuerystring + '?turn=' + turnCount)
-    }
-  }
-
-  if (msg.action === 'HIGHLIGHT_SNAKE') {
-    if (msg.id) {
-      snakeName.text(msg.name);
-      snakeLink.attr('href', '/u/by-games-snake/' + msg.id);
-      snakeLink.removeClass('d-none');
-    } else {
-      snakeName.text('');
-      snakeLink.addClass('d-none');
     }
   }
 }, false)

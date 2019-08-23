@@ -3,7 +3,7 @@ import logging
 from django import forms
 from django.db.models import Q
 
-from .models import Account, Game, GameSnake, Snake
+from apps.core.models import Account, Game, GameSnake, Snake
 
 
 logger = logging.getLogger(__name__)
@@ -28,10 +28,6 @@ class AccountForm(forms.ModelForm):
 
 
 class GameForm(forms.Form):
-    """
-        GameForm initializes a game and posts this to the engine to start the game.
-    """
-
     board_size = forms.ChoiceField(
         choices=[
             ("small", "Small - 7x7"),
