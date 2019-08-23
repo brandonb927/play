@@ -146,7 +146,9 @@ SOCIAL_AUTH_PIPELINE = (
     "apps.authentication.pipeline.create_account",
 )
 
-# (this is used by social_django)
+# These are used heavily by Django and Django Social Auth
+LOGIN_URL = "login"
+LOGOUT_URL = "logout"
 LOGIN_REDIRECT_URL = "home"
 
 

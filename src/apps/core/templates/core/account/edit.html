@@ -25,21 +25,8 @@
   </div>
 </header>
 
-
-{% if show_activation %}
-<div class="alert alert-primary fade show">
-  <p class="lead">
-    Thanks for signing up!
-  </p>
-  <p>
-    Please review and save your account settings before getting started. Don't worry, you can update these at any time.
-  </p>
-</div>
-{% endif %}
-
 <form method="post" action="">
   {% csrf_token %}
-  <input type="hidden" name="_method" value="PUT">
 
   <div class="card">
     <h5 class="card-header">Notifications</h5>

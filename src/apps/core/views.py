@@ -4,9 +4,11 @@ import random
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import transaction
 from django.http import JsonResponse, Http404
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
+from django.views import View
 
 from apps.core.forms import AccountForm, GameForm, SnakeForm
 from apps.core.models import Account, Game, GameSnake, Snake
@@ -15,84 +17,110 @@ from apps.core.models import Account, Game, GameSnake, Snake
 logger = logging.getLogger(__name__)
 
 
-def index(request):
-    games = list(
-        Game.objects.filter(status=Game.Status.COMPLETE, turn__gte=100)
-        .prefetch_related("gamesnake_set")
-        .order_by("-created")[:40]
-    )
-    random.shuffle(games)
-    games = [g for g in games if g.gamesnake_set.count() > 1]
-    return render(
-        request,
-        "core/home.html",
-        {
-            "games": [
-                {
-                    "url": g.get_board_url()
-                    + "&autoplay=true&hideScoreboard=true&hideMediaControls=true&frameRate=6",
-                    "engine_id": g.engine_id,
-                }
-                for g in games[:4]
-            ]
-        },
-    )
+class HomepageView(View):
+    def get(self, request):
+        games = list(
+            Game.objects.filter(status=Game.Status.COMPLETE, turn__gte=100)
+            .prefetch_related("gamesnake_set")
+            .order_by("-created")[:40]
+        )
+        random.shuffle(games)
+        games = [g for g in games if g.gamesnake_set.count() > 1]
+        return render(
+            request,
+            "core/home.html",
+            {
+                "games": [
+                    {
+                        "url": g.get_board_url()
+                        + "&autoplay=true&hideScoreboard=true&hideMediaControls=true&frameRate=6",
+                        "engine_id": g.engine_id,
+                    }
+                    for g in games[:4]
+                ]
+            },
+        )
 
 
-@login_required
-def account_edit(request):
-    account = Account.objects.get(user=request.user)
-    form = AccountForm(instance=account)
+class AccountSettingsView(LoginRequiredMixin, View):
+    def get(self, request):
+        account = get_object_or_404(Account, user=request.user)
+        form = AccountForm(instance=account)
 
-    return render(
-        request,
-        "core/account/edit.html",
-        {
-            "form": form,
-            "account": account,
-            "show_activation": False,
-        },  # TODO: Remove show_activation
-    )
+        return render(
+            request, "core/account/edit.html", {"form": form, "account": account}
+        )
 
-
-@login_required
-def account_update(request):
-    account = Account.objects.get(user=request.user)
-    form = AccountForm(request.POST, instance=account)
-    if form.is_valid():
-        form.save()
-        messages.add_message(request, messages.INFO, "Account updated!")
-        return redirect("u", account.user.username)
-    return render(
-        request,
-        "core/account/edit.html",
-        {
-            "form": form,
-            "account": account,
-            "show_activation": False,
-        },  # TODO: Remove show_activation
-        status=400,
-    )
+    def post(self, request):
+        account = get_object_or_404(Account, user=request.user)
+        form = AccountForm(request.POST, instance=account)
+        if form.is_valid():
+            form.save()
+            messages.add_message(request, messages.INFO, "Account updated!")
+            return redirect("u", account.user.username)
+        return render(
+            request,
+            "core/account/edit.html",
+            {"form": form, "account": account},
+            status=400,
+        )
 
 
-@login_required
-def account_show(request, username):
-    # Case-insensitive lookup, redirects to correct URL
-    account = Account.objects.get(user__username__iexact=username)
-    if account.user.username != username:
-        return redirect("u", account.user.username)
+class AccountView(View):
+    def get(self, request, username):
+        # Case-insensitive lookup, redirects to correct URL
+        account = get_object_or_404(Account, user__username__iexact=username)
+        if account.user.username != username:
+            return redirect("u", account.user.username)
 
-    games = (
-        Game.objects.filter(snakes__account=account)
-        .watchable()
-        .order_by("-created")
-        .prefetch_related("gamesnake_set__snake")
-        .distinct()[:10]
-    )
+        games = (
+            Game.objects.filter(snakes__account=account)
+            .watchable()
+            .order_by("-created")
+            .prefetch_related("gamesnake_set__snake")
+            .distinct()[:10]
+        )
 
-    return render(
-        request, "core/account/show.html", {"account": account, "games": games}
-    )
+        return render(
+            request, "core/account/show.html", {"account": account, "games": games}
+        )
+
+
+class GameView(View):
+    def get(self, request, engine_id):
+        game = get_object_or_404(Game, engine_id=engine_id)
+        game_board_url = game.get_board_url()
+
+        if request.GET.get("enableLinks"):
+            game_board_url = f"{game_board_url}&enableLinks=true"
+
+        autoplay = request.GET.get("autoplay")
+        if autoplay:
+            game_board_url = f"{game_board_url}&autoplay=true"
+
+        turn = request.GET.get("turn")
+        if turn:
+            game_board_url = f"{game_board_url}&turn={turn}"
+
+        frame_rate = request.GET.get("frameRate")
+        if frame_rate:
+            game_board_url = f"{game_board_url}&frameRate={frame_rate}"
+
+        return render(
+            request,
+            "core/game/show.html",
+            {
+                "url": game_board_url,
+                "game_image": f"https://exporter.battlesnake.com/games/{game.engine_id}/gif",
+                "game": game,
+            },
+        )
+
+
+class GameGIFView(View):
+    def get(self, request, engine_id):
+        game = get_object_or_404(Game, engine_id=engine_id)
+        return redirect(game.get_gif_url())
 
 
 @login_required
@@ -153,50 +181,6 @@ def game_random_public_snake(request):
     count = int(request.GET.get("count", 1))
     snakes = Snake.objects.filter(is_public=True).order_by("?")[:count]
     return JsonResponse({"snakes": [snake.id for snake in snakes]})
-
-
-@login_required
-def game_show(request, engine_id):
-    try:
-        game = Game.objects.get(engine_id=engine_id)
-    except Game.DoesNotExist:
-        raise Http404
-
-    game_board_url = game.get_board_url()
-
-    if request.GET.get("enableLinks"):
-        game_board_url = f"{game_board_url}&enableLinks=true"
-
-    autoplay = request.GET.get("autoplay")
-    if autoplay:
-        game_board_url = f"{game_board_url}&autoplay=true"
-
-    turn = request.GET.get("turn")
-    if turn:
-        game_board_url = f"{game_board_url}&turn={turn}"
-
-    frame_rate = request.GET.get("frameRate")
-    if frame_rate:
-        game_board_url = f"{game_board_url}&frameRate={frame_rate}"
-
-    return render(
-        request,
-        "core/game/show.html",
-        {
-            "url": game_board_url,
-            "game_image": f"https://exporter.battlesnake.com/games/{game.engine_id}/gif",
-            "game": game,
-        },
-    )
-
-
-def game_show_gif(request, engine_id):
-    try:
-        game = Game.objects.get(engine_id=engine_id)
-    except Game.DoesNotExist:
-        raise Http404
-
-    return redirect(game.get_gif_url())
 
 
 def snake_show(request, snake_id):

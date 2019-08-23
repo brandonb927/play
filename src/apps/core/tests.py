@@ -1,5 +1,6 @@
 import mock
 
+from django.conf import settings
 from django.test import Client, TestCase
 
 from .factories import GameFactory, SnakeFactory, UserFactory
@@ -243,6 +244,46 @@ class GameModelTestCase(TestCase):
         self.assertTrue(found)
 
 
+class GameViewTestCase(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.game_factory = GameFactory()
+
+    def test_get(self):
+        engine_id = "a879f127-55c2-4b0c-99c9-bce09c9fc0cf"
+        self.game_factory.basic(engine_id=engine_id, commit=True)
+
+        response = self.client.get(f"/g/{engine_id}/")
+
+        self.assertEqual(response.status_code, 200)
+
+    def test_get_not_found(self):
+        response = self.client.get(f"/g/does-not-exist/")
+
+        self.assertEqual(response.status_code, 404)
+
+
+class GameGIFViewTestCase(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.game_factory = GameFactory()
+
+    def test_get(self):
+        engine_id = "a879f127-55c2-4b0c-99c9-bce09c9fc0cf"
+        self.game_factory.basic(engine_id=engine_id, commit=True)
+
+        response = self.client.get(f"/g/{engine_id}/gif/")
+
+        self.assertEqual(response.status_code, 302)
+        self.assertIn(settings.BATTLESNAKE_EXPORTER_URL, response.url)
+        self.assertIn(engine_id, response.url)
+
+    def test_get_not_found(self):
+        response = self.client.get(f"/g/does-not-exist/gif/")
+
+        self.assertEqual(response.status_code, 404)
+
+
 class GameViewsTestCase(TestCase):
     def setUp(self):
         self.client = Client()
@@ -272,17 +313,6 @@ class GameViewsTestCase(TestCase):
         self.assertEqual(response.status_code, 302)
         self.assertEqual(len(create_mock.call_args_list), 1)
         self.assertEqual(len(run_mock.call_args_list), 1)
-
-    def test_show(self):
-        engine_id = "a879f127-55c2-4b0c-99c9-bce09c9fc0cf"
-        url = "game=" + engine_id
-
-        self.game_factory.basic(engine_id=engine_id, commit=True)
-
-        response = self.client.get(f"/g/{engine_id}/")
-
-        self.assertEqual(response.status_code, 200)
-        self.assertIn(url, response.content.decode("utf-8"))
 
     def test_snake_autocomplete(self):
         snake = self.snake_factory.basic(n=1, account=self.user.account)
@@ -331,40 +361,58 @@ class HomeViewsTestCase(TestCase):
         self.assertIn(url, response.content.decode("utf-8"))
 
 
-class AccountViewsTestCase(TestCase):
+class AccountSettingsViewTestCase(TestCase):
     def setUp(self):
         self.client = Client()
         self.user_factory = UserFactory()
 
-        self.user = self.user_factory.login_as(self.client)
+    def test_anonymous(self):
+        response = self.client.get("/settings/")
 
-    def test_edit(self):
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, "/login/?next=/settings/")
+
+    def test_settings(self):
+        self.user_factory.login_as(self.client)
         response = self.client.get("/settings/")
         self.assertEqual(response.status_code, 200)
 
-    def test_update(self):
-        response = self.client.post(
-            "/settings/", {"email": "my-new-email", "_method": "PUT"}
-        )
-        self.assertEqual(response.status_code, 302)
-        self.assertEqual(Account.objects.get(user=self.user).user.email, "my-new-email")
+    def test_settings_update(self):
+        user = self.user_factory.login_as(self.client)
+        response = self.client.post("/settings/", {"email": "test@test.com"})
 
-    def test_update_no_email(self):
-        response = self.client.post("/settings/", {"email": "", "_method": "PUT"})
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(Account.objects.get(user=user).user.email, "test@test.com")
+
+    def test_settings_update_no_email(self):
+        self.user_factory.login_as(self.client)
+        response = self.client.post("/settings/", {"email": ""})
+
         self.assertEqual(response.status_code, 400)
+
+
+class AccountViewTestCase(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.user_factory = UserFactory()
+
+        self.user = self.user_factory.basic(commit=True)
 
     def test_get(self):
         response = self.client.get(f"/u/{self.user.username}/")
+
         self.assertEqual(response.status_code, 200)
 
     def test_get_case_insensitive(self):
         response = self.client.get(f"/u/{self.user.username.upper()}/")
+
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response.url, f"/u/{self.user.username}/")
 
     def test_snakes_are_returned_in_response(self):
         Snake.objects.create(account=self.user.account, name="My Snake")
         response = self.client.get(f"/u/{self.user.username}/")
+
         self.assertEqual(
             response.context[-1]["account"].user.account.snakes.all()[:1].get().name,
             "My Snake",
