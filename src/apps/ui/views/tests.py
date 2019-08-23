@@ -171,7 +171,7 @@ class CreateGameJSONHelpersViewTestCase(TestCase):
 
     def test_get_random_snakes_no_snakes(self):
         self.user_factory.login_as(self.client)
-        response = self.client.get("/account/games/create/json/random-snakes/")
+        response = self.client.get("/account/games/create/json/random-snake/")
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json(), {"snakes": []})
@@ -181,7 +181,7 @@ class CreateGameJSONHelpersViewTestCase(TestCase):
         self.snake_factory.basic(n=5, commit=True, account=user.account)
         self.assertEqual(Snake.objects.count(), 5)
 
-        response = self.client.get("/account/games/create/json/random-snakes/")
+        response = self.client.get("/account/games/create/json/random-snake/")
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json(), {"snakes": []})
@@ -194,7 +194,7 @@ class CreateGameJSONHelpersViewTestCase(TestCase):
             snake.save()
         snake_ids = [s.id for s in snakes]
 
-        response = self.client.get("/account/games/create/json/random-snakes/")
+        response = self.client.get("/account/games/create/json/random-snake/")
 
         self.assertEqual(response.status_code, 200)
         self.assertIn("snakes", response.json())
@@ -209,7 +209,7 @@ class CreateGameJSONHelpersViewTestCase(TestCase):
             snake.save()
         snake_ids = [s.id for s in snakes]
 
-        response = self.client.get("/account/games/create/json/random-snakes/?count=3")
+        response = self.client.get("/account/games/create/json/random-snake/?count=3")
 
         self.assertEqual(response.status_code, 200)
         self.assertIn("snakes", response.json())
@@ -227,7 +227,7 @@ class CreateGameJSONHelpersViewTestCase(TestCase):
         snake.save()
 
         self.user_factory.login_as(self.client)
-        response = self.client.get("/account/games/create/json/random-snakes/")
+        response = self.client.get("/account/games/create/json/random-snake/")
 
         self.assertEqual(response.status_code, 200)
         self.assertIn("snakes", response.json())
