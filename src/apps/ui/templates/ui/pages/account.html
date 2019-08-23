@@ -1,4 +1,5 @@
-{% extends 'base.html' %}
+{% extends 'ui/layouts/base.html' %}
+
 {% load static %}
 
 {% block content %}
@@ -47,7 +48,7 @@
         {% endif %}
         <h2>Snakes</h2>
       </div>
-      {% include "core/partials/_snakes.html" with snakes=account.snakes.all %}
+      {% include "ui/includes/snakes.html" with snakes=account.snakes.all %}
     </div>
     <div class="card">
       <div class="card-header">
@@ -56,7 +57,7 @@
         {% endif %}
         <h2>Games</h2>
       </div>
-      {% include "core/partials/_games.html" with games=games %}
+      {% include "ui/includes/games.html" with games=games %}
     </div>
   </div>
 </div>

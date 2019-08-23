@@ -21,7 +21,7 @@ class CreateGameView(LoginRequiredMixin, View):
         form = GameForm(
             initial={"snakes": snake_ids, "engine_url": settings.BATTLESNAKE_ENGINE_URL}
         )
-        return render(request, "core/game/new.html", {"form": form})
+        return render(request, "ui/pages/create_game.html", {"form": form})
 
     def post(self, request):
         form = GameForm(request.POST)
@@ -32,7 +32,7 @@ class CreateGameView(LoginRequiredMixin, View):
                 game.gamesnake_set.add()
                 game.run()
             return redirect(f"/g/{game.engine_id}")
-        return render(request, "core/game/new.html", {"form": form}, status=400)
+        return render(request, "ui/pages/create_game.html", {"form": form}, status=400)
 
 
 class CreateGameJSONHelpersView(View):
@@ -78,7 +78,7 @@ class CreateGameJSONHelpersView(View):
 class CreateSnakeView(LoginRequiredMixin, View):
     def get(self, request):
         form = SnakeForm(request.user.account)
-        return render(request, "core/snake/new.html", {"form": form})
+        return render(request, "ui/pages/create_snake.html", {"form": form})
 
     def post(self, request):
         form = SnakeForm(request.user.account, request.POST)
@@ -88,7 +88,7 @@ class CreateSnakeView(LoginRequiredMixin, View):
                 request, messages.SUCCESS, f"{snake.name} created successfully"
             )
             return redirect(f"/u/{request.user.username}")
-        return render(request, "core/snake/edit.html", {"form": form})
+        return render(request, "ui/pages/create_snake.html", {"form": form})
 
 
 class SettingsView(LoginRequiredMixin, View):
@@ -97,7 +97,9 @@ class SettingsView(LoginRequiredMixin, View):
         form = AccountForm(instance=account)
 
         return render(
-            request, "core/account/edit.html", {"form": form, "account": account}
+            request,
+            "ui/pages/account_settings.html",
+            {"form": form, "account": account},
         )
 
     def post(self, request):
@@ -109,7 +111,7 @@ class SettingsView(LoginRequiredMixin, View):
             return redirect("u", account.user.username)
         return render(
             request,
-            "core/account/edit.html",
+            "ui/pages/account_settings.html",
             {"form": form, "account": account},
             status=400,
         )

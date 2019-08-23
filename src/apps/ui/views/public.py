@@ -21,7 +21,7 @@ class HomepageView(View):
         games = [g for g in games if g.gamesnake_set.count() > 1]
         return render(
             request,
-            "core/home.html",
+            "ui/pages/home.html",
             {
                 "games": [
                     {
@@ -51,7 +51,7 @@ class AccountView(View):
         )
 
         return render(
-            request, "core/account/show.html", {"account": account, "games": games}
+            request, "ui/pages/account.html", {"account": account, "games": games}
         )
 
 
@@ -77,7 +77,7 @@ class GameView(View):
 
         return render(
             request,
-            "core/game/show.html",
+            "ui/pages/game.html",
             {
                 "url": game_board_url,
                 "game_image": f"https://exporter.battlesnake.com/games/{game.engine_id}/gif",
@@ -100,4 +100,4 @@ class SnakeView(View):
             .order_by("-created")
             .prefetch_related("gamesnake_set__snake")[:10]
         )
-        return render(request, "core/snake/show.html", {"snake": snake, "games": games})
+        return render(request, "ui/pages/snake.html", {"snake": snake, "games": games})

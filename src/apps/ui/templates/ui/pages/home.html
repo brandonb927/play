@@ -1,5 +1,7 @@
-{% extends 'base.html' %}
+{% extends 'ui/layouts/base.html' %}
+
 {% load static %}
+
 {% block content %}
 <div class="row">
   <div class="col-lg-6 col-md-12 order-2 m-t-30">
@@ -48,7 +50,7 @@
   {% endif %}
   <div class="col-lg-6 order-1 m-t-30">
     <div class="card text-white">
-      <img class="card-img banner-img" src="{% static 'img/battlesnake_splash.png' %}" style="min-height:140px;"
+      <img class="card-img banner-img" src="{% static 'ui/img/battlesnake_splash.png' %}" style="min-height:140px;"
         alt="Rad Battlesnake Logo With Background">
     </div>
   </div>

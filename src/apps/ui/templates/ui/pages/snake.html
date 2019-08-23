@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends 'ui/layouts/base.html' %}
 
 {% block content %}
 <header class="page-header">
@@ -54,7 +54,7 @@
           {% endif %}
           <h2>Latest Games</h2>
         </div>
-        {% include "core/partials/_games.html" with games=games %}
+        {% include "ui/includes/games.html" with games=games %}
       </div>
     </div>
     <div id="badges" class="hide info-section">

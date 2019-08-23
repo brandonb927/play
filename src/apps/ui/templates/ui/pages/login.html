@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'ui/layouts/base.html' %}
 
 {% block nav %}{% endblock %}
 {% block footer %}{% endblock %}
@@ -8,7 +8,7 @@
   <div class="card">
     <div class="card-body">
       <a href="{% url 'home' %}" class="brand text-center d-block m-b-20">
-        {% include 'battlesnake-logo.html' %}
+        {% include 'ui/includes/svgs/battlesnake-logo.html' %}
       </a>
       <h5 class="sign-in-heading text-center m-b-20">
         Welcome to Battlesnake

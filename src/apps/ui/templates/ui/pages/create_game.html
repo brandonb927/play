@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends 'ui/layouts/base.html' %}
 
 {% block content %}
 <div class="row">
@@ -9,17 +9,17 @@
         <form method="post" novalidate action="">
           <h5 class="text-primary m-b-20 m-t-10">1. Select a Board Size</h5>
           {% csrf_token %}
-          {% include "partials/forms/hidden_fields.html" with form=form %}
-          {% include "partials/forms/field.html" with field=form.board_size label="Board Size" %}
+          {% include "ui/includes/forms/hidden_fields.html" with form=form %}
+          {% include "ui/includes/forms/field.html" with field=form.board_size label="Board Size" %}
           <div class="row">
             <div class="col">
-              {% include "partials/forms/field.html" with field=form.width label="Width" %}
+              {% include "ui/includes/forms/field.html" with field=form.width label="Width" %}
             </div>
             <div class="col">
-              {% include "partials/forms/field.html" with field=form.height label="Height" %}
+              {% include "ui/includes/forms/field.html" with field=form.height label="Height" %}
             </div>
           </div>
-          {% include "partials/forms/field.html" with field=form.engine_url label="Engine URL" %}
+          {% include "ui/includes/forms/field.html" with field=form.engine_url label="Engine URL" %}
           <h5 class="text-primary m-b-20 m-t-20">2. Add Snakes to the Pit</h5>
           <div id="snakes-alert" class="alert alert-danger alert-outline alert-dismissible fade hide" role="alert">
             Can't add more than 8 snakes to a game

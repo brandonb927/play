@@ -1,4 +1,5 @@
-{% extends "base.html" %}
+{% extends 'ui/layouts/base.html' %}
+
 {% block content %}
 	<div class="row">
 		<div class="offset-md-1 col-md-10">
@@ -48,7 +49,7 @@
 				<div class="card-body">
 					The Battlesnake Tournament is a one day event where programmers of all skill levels come together to create snake bots and compete for prizes. The Tournament is currently hosted annually in Victoria BC Canada. <a href="{% url 'events' %}">Learn more about the Battlesnake Tournament here.</a>
 				</div>
-			</div>			
+			</div>
 		</div>
 	</div>
 {% endblock %}
