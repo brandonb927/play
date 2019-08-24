@@ -4,7 +4,7 @@ from django.conf import settings
 from django.test import Client, TestCase
 
 from apps.core.factories import GameFactory, SnakeFactory, UserFactory
-from apps.core.models import Account, GameSnake, Snake
+from apps.core.models import Account, ContentReport, GameSnake, Snake
 
 
 class HomepageViewTestCase(TestCase):
@@ -117,6 +117,52 @@ class SnakeViewTestCase(TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.context[-1]["snake"], snake)
+
+
+class CreateContentReportView(TestCase):
+    def setUp(self):
+        self.client = Client()
+
+        self.game_factory = GameFactory()
+        self.snake_factory = SnakeFactory()
+        self.user_factory = UserFactory()
+
+    def test_anonymous(self):
+        response = self.client.get("/account/report/")
+
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, "/login/?next=/account/report/")
+
+        response = self.client.post("/account/report/")
+
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, "/login/?next=/account/report/")
+
+    def test_get_not_allowed(self):
+        self.user_factory.login_as(self.client)
+        response = self.client.get("/account/report/")
+
+        self.assertEqual(response.status_code, 405)
+
+    def test_post(self):
+        self.user_factory.login_as(self.client)
+        self.assertEqual(ContentReport.objects.all().count(), 0)
+
+        response = self.client.post(
+            "/account/report/",
+            {
+                "report_url": "/asdf/qwer/",
+                "report_content": "something is being reported here!",
+            },
+        )
+
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, "/asdf/qwer/")
+        self.assertEqual(ContentReport.objects.all().count(), 1)
+
+        report = ContentReport.objects.get()
+        self.assertEqual(report.url, "/asdf/qwer/")
+        self.assertEqual(report.text, "something is being reported here!")
 
 
 class CreateGameViewTestCase(TestCase):

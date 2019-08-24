@@ -48,7 +48,7 @@ urlpatterns = [
     path(
         "account/games/create/json/<func>/", account.CreateGameJSONHelpersView.as_view()
     ),
-    path("account/report/", account.CreateReportView.as_view()),
+    path("account/report/", account.CreateContentReportView.as_view()),
     path("account/snakes/create/", account.CreateSnakeView.as_view(), name="new_snake"),
     # Static Content URLs
     path("about/conduct/", template("ui/pages/conduct.html"), name="conduct"),

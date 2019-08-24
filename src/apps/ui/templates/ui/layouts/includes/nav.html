@@ -148,9 +148,9 @@
   <!-- END HEADER BOTTOM -->
 </div>
 
-
+{% if user.is_authenticated %}
 <div id="report-modal" class="modal" tabindex="-1" role="dialog">
-  <form method="post" novalidate action="/report/">
+  <form method="post" novalidate action="/account/report/">
     {% csrf_token %}
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -175,3 +175,4 @@
     </div>
   </form>
 </div>
+{% endif %}

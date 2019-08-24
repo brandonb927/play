@@ -15,16 +15,16 @@ class BaseManager(models.Manager):
 
 
 class BaseModel(models.Model):
+    class Meta:
+        abstract = True
+
     created = CreatedDateTimeField()
     modified = ModifiedDateTimeField()
 
     objects = BaseManager()
 
-    class Meta:
-        abstract = True
-
-    def is_saved(self):
-        return not self._state.adding
+    def __str__(self):
+        return f"{self.__class__.__name__}[{self.id}]"
 
 
 class BaseModelAdmin(admin.ModelAdmin):

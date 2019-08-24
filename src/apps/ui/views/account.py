@@ -8,7 +8,7 @@ from django.http import Http404, HttpResponseForbidden, JsonResponse
 from django.shortcuts import get_object_or_404, render, redirect
 from django.views import View
 
-from apps.core.models import Account, Snake
+from apps.core.models import Account, ContentReport, Snake
 from apps.ui.forms import AccountForm, GameForm, SnakeForm
 
 
@@ -75,28 +75,21 @@ class CreateGameJSONHelpersView(View):
         return JsonResponse({"snakes": [snake.id for snake in snakes]})
 
 
-class CreateReportView(LoginRequiredMixin, View):
+class CreateContentReportView(LoginRequiredMixin, View):
     # Accepts POST request from ANY URL
     def post(self, request):
-        reported_url = request.POST.get("report_url")
-        reported_description = request.POST.get("report_content")
+        url = request.POST.get("report_url", "")
+        text = request.POST.get("report_content", "")
 
-        # TODO: This should really be logged in the database. Maybe linked to in Slack.
-        # report_content = f"url: {report_url}\n{report_content}"
-        # slack.log_event(
-        #     user=request.user.id if not request.user.is_anonymous else "anonymous",
-        #     title="Abuse Report",
-        #     message=report_content,
-        #     color="#FF0000",
-        #     fallback=report_content,
-        # )
+        ContentReport.objects.create(account=request.user.account, url=url, text=text)
+        # TODO: This could be logged to Slack, or otherwise put somewhere we'll see it quickly.
 
         messages.add_message(
             request,
             messages.INFO,
             "Your report has been logged. Our team will review shortly.",
         )
-        return redirect(reported_url)
+        return redirect(url)
 
 
 class CreateSnakeView(LoginRequiredMixin, View):
