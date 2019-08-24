@@ -1,25 +1,22 @@
-{% load static %}
-
 <div class="container">
   <div class="row p-b-50">
     <div class="col-sm-4 col-lg-2">
       <h6 class="text-muted">Resources</h6>
       <ul class="list-unstyled">
-        <li><a class="text-dark" href="{% url 'docs' %}">Docs</a></li>
-        <li><a class="text-dark" href="{% url 'help' %}">Get Help</a></li>
-        <li><a class="text-dark" href="{% url 'blog' %}">Blog</a></li>
-        <li><a class="text-dark" href="{% url 'github' %}">GitHub</a></li>
+        <li><a class="text-dark" href="{% url 'help' %}">Help</a></li>
+        <li><a class="text-dark" href="{% url 'external-docs' %}">Docs</a></li>
+        <li><a class="text-dark" href="{% url 'external-blog' %}">Blog</a></li>
+        <li><a class="text-dark" href="{% url 'external-github' %}">GitHub</a></li>
         <li></li>
       </ul>
     </div>
     <div class="col-sm-4 col-lg-2">
       <h6 class="text-muted">Community</h6>
       <ul class="list-unstyled">
-        <li><a class="text-dark" href="{% url 'events' %}">Events</a></li>
-        <li><a class="text-dark" href="{% url 'slack' %}">Slack</a></li>
-        <li><a class="text-dark" href="{% url 'sponsors' %}">Sponsor Info</a></li>
-        <li><a class="text-dark" href="{% url 'twitch' %}">Twitch</a></li>
-        <li><a class="text-dark" href="{% url 'twitter' %}">Twitter</a></li>
+        <li><a class="text-dark" href="{% url 'external-slack' %}">Slack</a></li>
+        <li><a class="text-dark" href="{% url 'external-twitch' %}">Twitch</a></li>
+        <li><a class="text-dark" href="{% url 'external-twitter' %}">Twitter</a></li>
+        <li><a class="text-dark" href="{% url 'external-youtube' %}">YouTube</a></li>
       </ul>
     </div>
     <div class="col-sm-4 col-lg-2">
@@ -33,8 +30,8 @@
     <div class="offset-lg-1 col-lg-5">
       <h6 class="text-muted">Copyright &copy; {% now 'Y' %} Battlesnake Inc.</h6>
       <ul class="list-unstyled">
-        <li><a class="text-muted" href="{% url 'privacy' %}">Privacy Policy</a></li>
-        <li><a class="text-muted" href="{% url 'terms' %}">Terms of Service</a></li>
+        <li><a class="text-dark" href="{% url 'privacy' %}">Privacy Policy</a></li>
+        <li><a class="text-dark" href="{% url 'terms' %}">Terms of Service</a></li>
     </div>
   </div>
   <div class="row">

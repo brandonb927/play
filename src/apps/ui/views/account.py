@@ -75,6 +75,30 @@ class CreateGameJSONHelpersView(View):
         return JsonResponse({"snakes": [snake.id for snake in snakes]})
 
 
+class CreateReportView(LoginRequiredMixin, View):
+    # Accepts POST request from ANY URL
+    def post(self, request):
+        reported_url = request.POST.get("report_url")
+        reported_description = request.POST.get("report_content")
+
+        # TODO: This should really be logged in the database. Maybe linked to in Slack.
+        # report_content = f"url: {report_url}\n{report_content}"
+        # slack.log_event(
+        #     user=request.user.id if not request.user.is_anonymous else "anonymous",
+        #     title="Abuse Report",
+        #     message=report_content,
+        #     color="#FF0000",
+        #     fallback=report_content,
+        # )
+
+        messages.add_message(
+            request,
+            messages.INFO,
+            "Your report has been logged. Our team will review shortly.",
+        )
+        return redirect(reported_url)
+
+
 class CreateSnakeView(LoginRequiredMixin, View):
     def get(self, request):
         form = SnakeForm(request.user.account)

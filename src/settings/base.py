@@ -52,7 +52,6 @@ INSTALLED_APPS = [
     "apps.authentication",
     "apps.core",
     "apps.leaderboard",
-    "apps.pages",
     "apps.ui",
     "apps.staff",
 ]
@@ -84,10 +83,15 @@ TEMPLATES = [
                 "social_django.context_processors.backends",
                 "social_django.context_processors.login_redirect",
                 "apps.common.context_processors.common",
-            ]
+            ],
+            "builtins": [
+                "django.contrib.staticfiles.templatetags.staticfiles",
+                "apps.ui.templatetags.markdown",
+            ],
         },
     }
 ]
+
 
 WSGI_APPLICATION = "wsgi.application"
 

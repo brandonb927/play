@@ -8,15 +8,25 @@ from django_extensions.management.commands.show_urls import Command as ShowUrlsC
 
 
 class URLPatternTestCase(TestCase):
-    def test_url_no_slashes(self):
-        urlconf = __import__(settings.ROOT_URLCONF, {}, {}, [""])
-        view_patterns = ShowUrlsCommand().extract_views_from_urlpatterns(
-            urlconf.urlpatterns
+    def setUp(self):
+        self.client = Client()
+        self.url_patterns = ShowUrlsCommand().extract_views_from_urlpatterns(
+            __import__(settings.ROOT_URLCONF, {}, {}, [""]).urlpatterns
         )
-        for (func, regex, url_name) in view_patterns:
+
+    def test_url_no_slashes(self):
+        for (func, regex, url_name) in self.url_patterns:
             self.assertTrue(
                 regex == "" or regex.endswith("/") or regex.endswith("/$"), regex
             )
+
+    def test_static_pages_200(self):
+        for (func, regex, url_name) in self.url_patterns:
+            # bvanvugt: Is this the best/only way to detect dynamic urls?
+            if "<" in regex or ">" in regex:
+                continue
+            response = self.client.get(regex)
+            self.assertTrue(response.status_code, 200)
 
 
 class AdminLoginTestCase(TestCase):
