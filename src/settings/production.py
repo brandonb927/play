@@ -45,8 +45,9 @@ sentry_sdk.init(
     dsn=get_environment_variable("SENTRY_DSN"), integrations=[SentryDjangoIntegration()]
 )
 
+# --- Slack Messaging ---
+SLACK_API_TOKEN = get_environment_variable("SLACK_API_TOKEN")
 
-# SLACK_EVENTS_URL = get_env("SLACK_EVENTS_URL", "")
 
 # --- Social Auth Config ---
 SOCIAL_AUTH_GITHUB_KEY = get_environment_variable("GITHUB_CLIENT_ID")

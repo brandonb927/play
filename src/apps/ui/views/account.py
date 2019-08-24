@@ -1,5 +1,7 @@
 import logging
 
+import services.slack
+
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -81,14 +83,19 @@ class CreateContentReportView(LoginRequiredMixin, View):
         url = request.POST.get("report_url", "")
         text = request.POST.get("report_content", "")
 
-        ContentReport.objects.create(account=request.user.account, url=url, text=text)
-        # TODO: This could be logged to Slack, or otherwise put somewhere we'll see it quickly.
+        report = ContentReport.objects.create(
+            account=request.user.account, url=url, text=text
+        )
 
         messages.add_message(
             request,
             messages.INFO,
             "Your report has been logged. Our team will review shortly.",
         )
+        services.slack.SlackClient().send_message(
+            f":exclamation: Content Reported: id={report.id}"
+        )
+
         return redirect(url)
 
 
