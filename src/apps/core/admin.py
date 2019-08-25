@@ -1,13 +1,18 @@
 from django.contrib import admin
 
 from apps.common.models import BaseModelAdmin
-from .models import Account, Game, Snake
+from .models import Account, ContentReport, Game, Snake
 
 
 @admin.register(Account)
 class AccountAdmin(BaseModelAdmin):
     readonly_fields = BaseModelAdmin.readonly_fields + ("id", "user")
     search_fields = ("user__username", "id")
+
+
+@admin.register(ContentReport)
+class ContentReportAdmin(BaseModelAdmin):
+    readonly_fields = BaseModelAdmin.readonly_fields + ("id", "account", "url", "text")
 
 
 @admin.register(Game)

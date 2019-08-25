@@ -1,0 +1,42 @@
+<div class="container">
+  <div class="row p-b-50">
+    <div class="col-sm-4 col-lg-2">
+      <h6 class="text-muted">Resources</h6>
+      <ul class="list-unstyled">
+        <li><a class="text-dark" href="{% url 'help' %}">Help</a></li>
+        <li><a class="text-dark" href="{% url 'external-docs' %}">Docs</a></li>
+        <li><a class="text-dark" href="{% url 'external-blog' %}">Blog</a></li>
+        <li><a class="text-dark" href="{% url 'external-github' %}">GitHub</a></li>
+        <li></li>
+      </ul>
+    </div>
+    <div class="col-sm-4 col-lg-2">
+      <h6 class="text-muted">Community</h6>
+      <ul class="list-unstyled">
+        <li><a class="text-dark" href="{% url 'external-slack' %}">Slack</a></li>
+        <li><a class="text-dark" href="{% url 'external-twitch' %}">Twitch</a></li>
+        <li><a class="text-dark" href="{% url 'external-twitter' %}">Twitter</a></li>
+        <li><a class="text-dark" href="{% url 'external-youtube' %}">YouTube</a></li>
+      </ul>
+    </div>
+    <div class="col-sm-4 col-lg-2">
+      <h6 class="text-muted">About</h6>
+      <ul class="list-unstyled">
+        <li><a class="text-dark" href="{% url 'mission' %}">Our Mission</a></li>
+        <li><a class="text-dark" href="{% url 'conduct' %}">Code of Conduct</a></li>
+        <li><a class="text-dark" href="{% url 'diversity' %}">Diversity</a></li>
+      </ul>
+    </div>
+    <div class="offset-lg-1 col-lg-5">
+      <h6 class="text-muted">Copyright &copy; {% now 'Y' %} Battlesnake Inc.</h6>
+      <ul class="list-unstyled">
+        <li><a class="text-dark" href="{% url 'privacy' %}">Privacy Policy</a></li>
+        <li><a class="text-dark" href="{% url 'terms' %}">Terms of Service</a></li>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-4">
+      <p class="small text-muted">v.{{ APP_VERSION }}</p>
+    </div>
+  </div>
+</div>

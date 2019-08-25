@@ -52,7 +52,7 @@ INSTALLED_APPS = [
     "apps.authentication",
     "apps.core",
     "apps.leaderboard",
-    "apps.pages",
+    "apps.ui",
     "apps.staff",
 ]
 
@@ -83,10 +83,15 @@ TEMPLATES = [
                 "social_django.context_processors.backends",
                 "social_django.context_processors.login_redirect",
                 "apps.common.context_processors.common",
-            ]
+            ],
+            "builtins": [
+                "django.contrib.staticfiles.templatetags.staticfiles",
+                "apps.ui.templatetags.markdown",
+            ],
         },
     }
 ]
+
 
 WSGI_APPLICATION = "wsgi.application"
 
@@ -98,6 +103,32 @@ USE_TZ = True
 
 APPEND_SLASH = True
 
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "simple": {"format": "%(message)s"},
+        "standard": {"format": "[%(process)d] [%(levelname)s] %(message)s"},
+    },
+    "handlers": {
+        "console": {
+            "level": "DEBUG",
+            "class": "logging.StreamHandler",
+            "stream": sys.stdout,
+            "formatter": "standard",
+        }
+    },
+    "loggers": {
+        "console": {"handlers": ["console"], "level": "DEBUG", "propagate": False},
+        # Route all logs to console by default.
+        "apps": {"handlers": ["console"], "level": "DEBUG", "propagate": False},
+        "settings": {"handlers": ["console"], "level": "DEBUG", "propagate": False},
+        # Library loggers
+        "gunicorn": {"handlers": ["console"], "level": "INFO", "propagate": False},
+        "requests": {"handlers": ["console"], "level": "WARNING", "propagate": False},
+    },
+}
+
 # -----------------------------------------------------------------------------
 # Everything past this point is specific to us.
 # -----------------------------------------------------------------------------
@@ -108,6 +139,7 @@ APP_VERSION = get_environment_variable("APP_VERSION", "0.0.0")
 MAINTENANCE_MODE = bool(
     get_environment_variable("DJANGO_MAINTENANCE_MODE", "false") == "true"
 )
+
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
@@ -157,41 +189,13 @@ LOGIN_REDIRECT_URL = "home"
 
 STATIC_URL = "/static/"
 STATIC_ROOT = "/static/"
-STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "apps/ui/static")]
 
 
 # Silencing system checks that are unneeded.
 # https://docs.djangoproject.com/en/2.1/ref/checks/
 SILENCED_SYSTEM_CHECKS = ["fields.W342"]
 
-
-# Logging
-
-LOGGING = {
-    "version": 1,
-    "disable_existing_loggers": False,
-    "formatters": {
-        "simple": {"format": "%(message)s"},
-        "standard": {"format": "[%(process)d] [%(levelname)s] %(message)s"},
-    },
-    "handlers": {
-        "console": {
-            "level": "DEBUG",
-            "class": "logging.StreamHandler",
-            "stream": sys.stdout,
-            "formatter": "standard",
-        }
-    },
-    "loggers": {
-        "console": {"handlers": ["console"], "level": "DEBUG", "propagate": False},
-        # Route all logs to console by default.
-        "apps": {"handlers": ["console"], "level": "DEBUG", "propagate": False},
-        "settings": {"handlers": ["console"], "level": "DEBUG", "propagate": False},
-        # Library loggers
-        "gunicorn": {"handlers": ["console"], "level": "INFO", "propagate": False},
-        "requests": {"handlers": ["console"], "level": "WARNING", "propagate": False},
-    },
-}
 
 # Bootstrap alert messaging
 MESSAGE_TAGS = {
@@ -217,3 +221,6 @@ BATTLESNAKE_EXPORTER_HOST = get_environment_variable(
 BATTLESNAKE_BOARD_URL = "https://{}".format(BATTLESNAKE_BOARD_HOST)
 BATTLESNAKE_ENGINE_URL = "https://{}".format(BATTLESNAKE_ENGINE_HOST)
 BATTLESNAKE_EXPORTER_URL = "https://{}".format(BATTLESNAKE_EXPORTER_HOST)
+
+# Slack Service
+SLACK_API_TOKEN = None

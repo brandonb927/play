@@ -11,7 +11,7 @@ class LoginViewTestCase(TestCase):
         response = self.client.get("/login/")
 
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.template_name, ["pages/login.html"])
+        self.assertEqual(response.template_name, ["ui/pages/login.html"])
 
 
 class LogoutViewTestCase(TestCase):

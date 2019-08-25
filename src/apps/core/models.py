@@ -30,8 +30,19 @@ class Account(BaseModel):
 
     objects = AccountManager()
 
-    def __str__(self):
-        return f"Account[{self.id}]"
+
+class ContentReport(BaseModel):
+    class Meta:
+        verbose_name = "Content Report"
+
+    id = ShortUUIDField(max_length=128, primary_key=True)
+
+    account = models.ForeignKey(Account, on_delete=models.DO_NOTHING)
+    # bvanvugt: intentionally not using a URLField here because we want don't want to risk
+    # dropping a report because of some silly validation error.
+    url = models.CharField(max_length=200, default="")
+    # bvanvugt: unlimited length for now.... might hurt us later.
+    text = models.TextField(default="")
 
 
 class SnakeQuerySet(models.QuerySet):
