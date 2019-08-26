@@ -54,7 +54,7 @@ class SnakeQuerySet(models.QuerySet):
 
     def by_public_name(self, name):
         if "/" in name:
-            username, snake_name = name.split("/")
+            username, snake_name = name.split("/", 1)
             return self.filter(
                 Q(account__user__username__icontains=username)
                 | Q(name__icontains=snake_name)
