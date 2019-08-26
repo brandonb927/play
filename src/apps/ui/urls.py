@@ -11,7 +11,7 @@ from apps.ui.views import public
 
 class EXTERNAL_URLS:
     BLOG = "https://medium.com/battlesnake"
-    DOCS = "https://docs.battlesnake.io"
+    DOCS = "https://docs.battlesnake.com"
     GITHUB = "https://github.com/battlesnakeio"
     HIGHLIGHTS = "https://www.youtube.com/watch?v=d9ARbSzBKxc"
     SLACK = "https://join.slack.com/t/battlesnake/shared_invite/enQtNzM4NDQ3MjgyMjI0LWJkZGJkOTg3NTAyNjg2MWVhMzk5OTVlMjk2ZjIzMWUxMWQ3MzYxN2I4YTY4YTE0YTI0MmQ4MzdiODNiZTgyZGE"
