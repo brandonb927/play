@@ -224,3 +224,6 @@ BATTLESNAKE_EXPORTER_URL = "https://{}".format(BATTLESNAKE_EXPORTER_HOST)
 
 # Slack Service
 SLACK_API_TOKEN = None
+
+# Google Analytics
+GOOGLE_ANALYTICS_ID = None
