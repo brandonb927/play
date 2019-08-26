@@ -5,6 +5,8 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.views import View
 
 from apps.core.models import Account, Game, Snake
+from apps.event.models import Event
+import util.time
 
 
 logger = logging.getLogger(__name__)
@@ -101,3 +103,17 @@ class SnakeView(View):
             .prefetch_related("gamesnake_set__snake")[:10]
         )
         return render(request, "ui/pages/snake.html", {"snake": snake, "games": games})
+
+
+class EventsView(View):
+    def get(self, request):
+        events = Event.objects.get_listed_events().order_by("-date")
+        upcoming_events = [e for e in events if e.date is None] + [
+            e for e in events if e.date and e.date >= util.time.today()
+        ]
+        past_events = [e for e in events if e.date and e.date < util.time.today()]
+        return render(
+            request,
+            "ui/pages/events.html",
+            {"upcoming_events": upcoming_events, "past_events": past_events},
+        )

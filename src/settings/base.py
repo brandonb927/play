@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     "widget_tweaks",
     "apps.authentication",
     "apps.core",
+    "apps.event",
     "apps.leaderboard",
     "apps.ui",
     "apps.staff",

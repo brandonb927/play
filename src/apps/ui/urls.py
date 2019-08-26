@@ -42,6 +42,7 @@ urlpatterns = [
     path("g/<engine_id>/gif/", public.GameGIFView.as_view(), name="game_gif"),
     path("s/<snake_id>/", public.SnakeView.as_view(), name="snake"),
     path("u/<username>/", public.AccountView.as_view(), name="u"),
+    path("events/", public.EventsView.as_view(), name="events"),
     # Account Specific URLs
     path("account/settings/", account.SettingsView.as_view(), name="settings"),
     path("account/games/create/", account.CreateGameView.as_view(), name="new_game"),

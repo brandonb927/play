@@ -108,3 +108,8 @@ def hours(num):
 def days(num):
     """ Returns timedelta representing num days. """
     return timedelta(days=num)
+
+
+def today():
+    """ Returns current date as UTC. """
+    return now().date()
