@@ -14,7 +14,7 @@ class EXTERNAL_URLS:
     DOCS = "https://docs.battlesnake.io"
     GITHUB = "https://github.com/battlesnakeio"
     HIGHLIGHTS = "https://www.youtube.com/watch?v=d9ARbSzBKxc"
-    SLACK = "https://join.slack.com/t/battlesnake/shared_invite/enQtMzQ1MjIyNDAzNzgxLTJkYTQyZGM5NTYyMjI3MGZkN2U4ZTEyMGFhYjM2MzQ3NzEyOTM1N2ZhZjgwMGFlZDM0YWNiZmRhMmVkMDZkOGE"
+    SLACK = "https://join.slack.com/t/battlesnake/shared_invite/enQtNzM4NDQ3MjgyMjI0LWJkZGJkOTg3NTAyNjg2MWVhMzk5OTVlMjk2ZjIzMWUxMWQ3MzYxN2I4YTY4YTE0YTI0MmQ4MzdiODNiZTgyZGE"
     TWITTER = "https://twitter.com/battlesnakeio"
     TWITCH = "https://twitch.tv/battlesnakeio"
     YOUTUBE = "https://www.youtube.com/channel/UClaK3LSm3OfsOgfyjWG6SMw"
