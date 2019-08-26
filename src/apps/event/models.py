@@ -19,7 +19,9 @@ class Event(BaseModel):
     id = ShortUUIDField(prefix="evt", max_length=128, primary_key=True)
 
     name = models.CharField(max_length=100)
-    description = models.TextField(default="", blank=True)
+    description = models.TextField(
+        default="", blank=True, help_text="This field supports Markdown."
+    )
 
     date = models.DateField(default=util.time.today, null=True, blank=True)
     location = models.CharField(max_length=100, default="", blank=True)
