@@ -9,26 +9,37 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-        ('event', '0001_initial'),
-    ]
+    dependencies = [("event", "0001_initial")]
 
     operations = [
         migrations.CreateModel(
-            name='Event',
+            name="Event",
             fields=[
-                ('created', apps.common.fields.CreatedDateTimeField(blank=True, default=util.time.now, editable=False)),
-                ('modified', apps.common.fields.ModifiedDateTimeField(blank=True, default=util.time.now, editable=False)),
-                ('id', apps.common.fields.ShortUUIDField(max_length=128, prefix='evt', primary_key=True, serialize=False)),
-                ('name', models.CharField(max_length=100)),
-                ('description', models.TextField()),
-                ('date', models.DateField(default=util.time.today)),
-                ('location', models.CharField(max_length=100)),
-                ('registration_url', models.URLField()),
-                ('is_listed', models.BooleanField(default=False)),
+                (
+                    "created",
+                    apps.common.fields.CreatedDateTimeField(
+                        blank=True, default=util.time.now, editable=False
+                    ),
+                ),
+                (
+                    "modified",
+                    apps.common.fields.ModifiedDateTimeField(
+                        blank=True, default=util.time.now, editable=False
+                    ),
+                ),
+                (
+                    "id",
+                    apps.common.fields.ShortUUIDField(
+                        max_length=128, prefix="evt", primary_key=True, serialize=False
+                    ),
+                ),
+                ("name", models.CharField(max_length=100)),
+                ("description", models.TextField()),
+                ("date", models.DateField(default=util.time.today)),
+                ("location", models.CharField(max_length=100)),
+                ("registration_url", models.URLField()),
+                ("is_listed", models.BooleanField(default=False)),
             ],
-            options={
-                'abstract': False,
-            },
-        ),
+            options={"abstract": False},
+        )
     ]

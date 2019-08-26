@@ -6,14 +6,12 @@ import util.time
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('event', '0002_event'),
-    ]
+    dependencies = [("event", "0002_event")]
 
     operations = [
         migrations.AlterField(
-            model_name='event',
-            name='date',
+            model_name="event",
+            name="date",
             field=models.DateField(default=util.time.today, null=True),
-        ),
+        )
     ]

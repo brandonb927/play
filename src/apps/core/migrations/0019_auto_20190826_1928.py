@@ -5,13 +5,10 @@ from django.db import migrations
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('core', '0018_contentreport'),
-    ]
+    dependencies = [("core", "0018_contentreport")]
 
     operations = [
         migrations.AlterModelOptions(
-            name='contentreport',
-            options={'verbose_name': 'Content Report'},
-        ),
+            name="contentreport", options={"verbose_name": "Content Report"}
+        )
     ]
