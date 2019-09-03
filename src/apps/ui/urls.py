@@ -12,6 +12,7 @@ from apps.ui.views import public
 class EXTERNAL_URLS:
     BLOG = "https://medium.com/battlesnake"
     DOCS = "https://docs.battlesnake.com"
+    FAQ = "https://docs.battlesnake.com/faq"
     GITHUB = "https://github.com/battlesnakeio"
     HIGHLIGHTS = "https://www.youtube.com/watch?v=d9ARbSzBKxc"
     SLACK = "https://join.slack.com/t/battlesnake/shared_invite/enQtNzM4NDQ3MjgyMjI0LWJkZGJkOTg3NTAyNjg2MWVhMzk5OTVlMjk2ZjIzMWUxMWQ3MzYxN2I4YTY4YTE0YTI0MmQ4MzdiODNiZTgyZGE"
@@ -54,7 +55,6 @@ urlpatterns = [
     # Static Content URLs
     path("about/conduct/", template("ui/pages/conduct.html"), name="conduct"),
     path("about/diversity/", template("ui/pages/diversity.html"), name="diversity"),
-    path("about/faq/", template("ui/pages/faq.html"), name="faq"),
     path("about/mission/", template("ui/pages/mission.html"), name="mission"),
     path("help/", template("ui/pages/help.html"), name="help"),
     path("privacy/", template("ui/pages/privacy.html"), name="privacy"),
@@ -62,6 +62,7 @@ urlpatterns = [
     # Exernal Redirect URLs
     path("blog/", external(EXTERNAL_URLS.BLOG), name="external-blog"),
     path("docs/", external(EXTERNAL_URLS.DOCS), name="external-docs"),
+    path("faq/", external(EXTERNAL_URLS.FAQ), name="external-faq"),
     path("github/", external(EXTERNAL_URLS.GITHUB), name="external-github"),
     path("highlights/", external(EXTERNAL_URLS.HIGHLIGHTS), name="external-highlights"),
     path("slack/", external(EXTERNAL_URLS.SLACK), name="external-slack"),
