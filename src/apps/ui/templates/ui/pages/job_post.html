@@ -1,0 +1,33 @@
+{% extends 'ui/layouts/base.html' %}
+
+{% block content %}
+
+<div class="row">
+    <div class="offset-md-1 col-md-10">
+        <header class="page-header">
+            <h1 class="text-primary">{{ job_post.role }}</h1>
+        </header>
+    </div>
+</div>
+
+<div class="row">
+    <div class="offset-md-1 col-md-10">
+        <div class="card">
+            <div class="card-body">
+                <div class="card-text">
+                    {{ job_post.description|markdown }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row m-b-50">
+    <div class="col">
+        <div class="text-center">
+            <a href="mailto:careers@battlesnake.com?subject={{ job_post.role }}" class="btn btn-primary">Apply Now</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

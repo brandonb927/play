@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     "social_django",
     "widget_tweaks",
     "apps.authentication",
+    "apps.jobs",
     "apps.core",
     "apps.event",
     "apps.leaderboard",

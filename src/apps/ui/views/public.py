@@ -6,6 +6,7 @@ from django.views import View
 
 from apps.core.models import Account, Game, Snake
 from apps.event.models import Event
+from apps.jobs.models import JobPost
 import util.time
 
 
@@ -35,6 +36,31 @@ class HomepageView(View):
                 ]
             },
         )
+
+
+class EventsView(View):
+    def get(self, request):
+        events = Event.objects.get_listed_events().order_by("-date")
+        upcoming_events = [e for e in events if e.date is None] + [
+            e for e in events if e.date and e.date >= util.time.today()
+        ]
+        past_events = [e for e in events if e.date and e.date < util.time.today()]
+        return render(
+            request,
+            "ui/pages/events.html",
+            {"upcoming_events": upcoming_events, "past_events": past_events},
+        )
+
+
+class JobsView(View):
+    def get(self, request, job_post_id=None):
+        if job_post_id:
+            job_post = get_object_or_404(JobPost, id=job_post_id)
+            return render(request, "ui/pages/job_post.html", {"job_post": job_post})
+
+        # Return listing page
+        job_posts = JobPost.objects.all().order_by("role")
+        return render(request, "ui/pages/jobs.html", {"job_posts": job_posts})
 
 
 class AccountView(View):
@@ -103,17 +129,3 @@ class SnakeView(View):
             .prefetch_related("gamesnake_set__snake")[:10]
         )
         return render(request, "ui/pages/snake.html", {"snake": snake, "games": games})
-
-
-class EventsView(View):
-    def get(self, request):
-        events = Event.objects.get_listed_events().order_by("-date")
-        upcoming_events = [e for e in events if e.date is None] + [
-            e for e in events if e.date and e.date >= util.time.today()
-        ]
-        past_events = [e for e in events if e.date and e.date < util.time.today()]
-        return render(
-            request,
-            "ui/pages/events.html",
-            {"upcoming_events": upcoming_events, "past_events": past_events},
-        )
