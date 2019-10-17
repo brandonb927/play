@@ -39,11 +39,13 @@ def template(template_name, exception=None):
 urlpatterns = [
     # Public Content URLs
     path("", public.HomepageView.as_view(), name="home"),
+    path("careers/", public.JobsView.as_view(), name="jobs"),
+    path("careers/<job_post_id>/", public.JobsView.as_view(), name="job_post"),
+    path("events/", public.EventsView.as_view(), name="events"),
     path("g/<engine_id>/", public.GameView.as_view(), name="game"),
     path("g/<engine_id>/gif/", public.GameGIFView.as_view(), name="game_gif"),
     path("s/<snake_id>/", public.SnakeView.as_view(), name="snake"),
     path("u/<username>/", public.AccountView.as_view(), name="u"),
-    path("events/", public.EventsView.as_view(), name="events"),
     # Account Specific URLs
     path("account/settings/", account.SettingsView.as_view(), name="settings"),
     path("account/games/create/", account.CreateGameView.as_view(), name="new_game"),

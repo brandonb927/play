@@ -1,0 +1,51 @@
+{% extends 'ui/layouts/base.html' %}
+
+{% block content %}
+
+{% if job_posts %}
+<div class="row">
+    <div class="col">
+        <header class="page-header text-center">
+            <h1>Join Our Team!</h1>
+            <p>We're working hard to make programming fun for everyone!</p>
+        </header>
+    </div>
+</div>
+{% for job_post in job_posts %}
+<div class="row">
+    <div class="offset-md-1 col-md-10">
+        <div class="card">
+            <div class="card-body">
+                <div class="card-text">
+                    <h3 class="text-primary">{{ job_post.role }}</h3>
+                    {{ job_post.short_description|markdown }}
+                </div>
+                <div>
+                    <a href="{% url 'job_post' job_post_id=job_post.id %}" class="btn btn-primary">Learn More and Apply</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% else %}
+<div class="row">
+    <div class="col">
+        <header class="page-header text-center">
+            <h3>Unfortunately we have no open positions right now - check back later!</h3>
+        </header>
+    </div>
+</div>
+{% endif %}
+
+<div class="row">
+    <div class="offset-lg-3 col-lg-6 m-b-50">
+        <p class="text-mary text-center m-b-20 m-t-20">
+            <strong>Interested in joining out team, but don't see a role that fits?</strong> <br/>
+            We'd still love to hear from you! Send your resume and a description of your ideal role to
+            <a href="mailto:careers@battlesnake.com">careers@battlesnake.com</a>.
+        </p>
+    </div>
+</div>
+
+{% endblock %}
