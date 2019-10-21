@@ -32,7 +32,7 @@ class HomepageView(View):
                         + "&autoplay=true&hideScoreboard=true&hideMediaControls=true&frameRate=6",
                         "engine_id": g.engine_id,
                     }
-                    for g in games[:4]
+                    for g in games[:8]
                 ]
             },
         )
