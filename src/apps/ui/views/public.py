@@ -39,7 +39,13 @@ class HomepageView(View):
 
 
 class EventsView(View):
-    def get(self, request):
+    def get(self, request, event_slug=None):
+        if event_slug:
+            event = get_object_or_404(
+                Event.objects.get_listed_events(), slug=event_slug
+            )
+            return render(request, "ui/pages/event.html", {"event": event})
+
         events = Event.objects.get_listed_events().order_by("-date")
         upcoming_events = [e for e in events if e.date is None] + [
             e for e in events if e.date and e.date >= util.time.today()

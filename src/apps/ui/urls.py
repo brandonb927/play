@@ -42,6 +42,7 @@ urlpatterns = [
     path("careers/", public.JobsView.as_view(), name="jobs"),
     path("careers/<job_post_id>/", public.JobsView.as_view(), name="job_post"),
     path("events/", public.EventsView.as_view(), name="events"),
+    path("events/<slug:event_slug>/", public.EventsView.as_view(), name="event"),
     path("g/<engine_id>/", public.GameView.as_view(), name="game"),
     path("g/<engine_id>/gif/", public.GameGIFView.as_view(), name="game_gif"),
     path("s/<snake_id>/", public.SnakeView.as_view(), name="snake"),

@@ -15,19 +15,20 @@
     <div class="offset-md-1 col-md-10">
         <div class="card">
             <div class="card-header">
-                <h3 class="mb-0 text-primary">
-                    {{ event.name }}
-                </h3>
+                <a href="{% url 'event' event_slug=event.slug %}">
+                    <h3 class="mb-0 text-primary">{{ event.name }}</h3>
+                    <p class="m-b-0">{{ event.date|default:"Date TBA" }} - {{ event.location }}</p>
+                </a>
             </div>
             <div class="card-body">
-                <h5 class="card-title">
-                    {{ event.date|default:"TBA" }} - {{ event.location }}
-                </h5>
                 <div class="card-text">
-                    {{ event.description|markdown }}
+                    {{ event.tldr|default:event.description|markdown }}
                 </div>
+            </div>
+            <div class="card-footer">
+                <a href="{% url 'event' event_slug=event.slug %}" class="btn btn-primary">More Information</a>
                 {% if event.allow_registration %}
-                    <a href="{% url 'event-registration' event_slug=event.slug %}" class="btn btn-primary">Register for this Event</a>
+                <a href="{% url 'event-registration' event_slug=event.slug %}" class="btn btn-accent">Register Team</a>
                 {% endif %}
             </div>
         </div>

@@ -4,7 +4,7 @@
 
 <header class="page-header">
     <h1>{{ event.name }}</h2>
-    <p class="text-secondary">{{ event.date }}, {{ event.location }}</p>
+    <p class="text-secondary">{{ event.date|default:"Date TBA" }} - {{ event.location }}</p>
 </header>
 
 {% if not user.is_authenticated %}

@@ -21,6 +21,10 @@ class Event(BaseModel):
 
     name = models.CharField(max_length=100, unique=True)
     slug = models.SlugField(unique=True)
+
+    tldr = models.TextField(
+        default="", blank=True, help_text="This field supports Markdown."
+    )
     description = models.TextField(
         default="", blank=True, help_text="This field supports Markdown."
     )
