@@ -27,8 +27,8 @@ class Event(BaseModel):
 
     date = models.DateField(default=util.time.today, null=True, blank=True)
     location = models.CharField(max_length=100, default="", blank=True)
-    registration_url = models.URLField(default="", blank=True)
 
+    allow_registration = models.BooleanField(default=False)
     is_listed = models.BooleanField(default=False, null=False)
 
     objects = EventManager()

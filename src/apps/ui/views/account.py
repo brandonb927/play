@@ -118,7 +118,7 @@ class CreateSnakeView(LoginRequiredMixin, View):
 
 class EventRegistrationView(View):
     def get(self, request, event_slug):
-        event = get_object_or_404(Event, slug=event_slug)
+        event = get_object_or_404(Event, slug=event_slug, allow_registration=True)
         if not request.user.is_authenticated:
             return render(request, "ui/pages/event_registration.html", {"event": event})
 
@@ -136,7 +136,7 @@ class EventRegistrationView(View):
         )
 
     def post(self, request, event_slug):
-        event = get_object_or_404(Event, slug=event_slug)
+        event = get_object_or_404(Event, slug=event_slug, allow_registration=True)
         if not request.user.is_authenticated:
             return redirect(request.path)
 
