@@ -6,29 +6,29 @@ import util.time
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('event', '0004_auto_20191108_0342'),
-    ]
+    dependencies = [("event", "0004_auto_20191108_0342")]
 
     operations = [
         migrations.AlterField(
-            model_name='oldevent',
-            name='date',
+            model_name="oldevent",
+            name="date",
             field=models.DateField(blank=True, default=util.time.today, null=True),
         ),
         migrations.AlterField(
-            model_name='oldevent',
-            name='description',
-            field=models.TextField(blank=True, default='', help_text='This field supports Markdown.'),
+            model_name="oldevent",
+            name="description",
+            field=models.TextField(
+                blank=True, default="", help_text="This field supports Markdown."
+            ),
         ),
         migrations.AlterField(
-            model_name='oldevent',
-            name='location',
-            field=models.CharField(blank=True, default='', max_length=100),
+            model_name="oldevent",
+            name="location",
+            field=models.CharField(blank=True, default="", max_length=100),
         ),
         migrations.AlterField(
-            model_name='oldevent',
-            name='registration_url',
-            field=models.URLField(blank=True, default=''),
+            model_name="oldevent",
+            name="registration_url",
+            field=models.URLField(blank=True, default=""),
         ),
     ]

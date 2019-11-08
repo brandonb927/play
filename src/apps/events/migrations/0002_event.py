@@ -9,7 +9,7 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [("event", "0005_auto_20191108_0345"), ("events", "0001_initial")]
+    dependencies = [("events", "0001_initial")]
 
     operations = [
         migrations.CreateModel(

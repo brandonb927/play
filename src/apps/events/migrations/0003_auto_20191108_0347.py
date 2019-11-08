@@ -4,21 +4,24 @@ from django.db import migrations
 
 
 def forward_migration(apps, schema_editor):
-    OldEvent = apps.get_model("event", "OldEvent")
-    Event = apps.get_model("events", "Event")
+    pass
 
-    for old_event in OldEvent.objects.all():
-        if not Event.objects.filter(id=old_event.id).exists():
-            new_event = Event(
-                id=old_event.id,
-                name=old_event.name,
-                description=old_event.description,
-                date=old_event.date,
-                location=old_event.location,
-                registration_url=old_event.registration_url,
-                is_listed=old_event.is_listed,
-            )
-            new_event.save()
+    # bvanvugt: This migration is no longer valid since we've removed the old event app.
+    # OldEvent = apps.get_model("event", "OldEvent")
+    # Event = apps.get_model("events", "Event")
+
+    # for old_event in OldEvent.objects.all():
+    #     if not Event.objects.filter(id=old_event.id).exists():
+    #         new_event = Event(
+    #             id=old_event.id,
+    #             name=old_event.name,
+    #             description=old_event.description,
+    #             date=old_event.date,
+    #             location=old_event.location,
+    #             registration_url=old_event.registration_url,
+    #             is_listed=old_event.is_listed,
+    #         )
+    #         new_event.save()
 
 
 def reverse_migration(apps, schema_editor):
