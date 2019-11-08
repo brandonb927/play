@@ -38,8 +38,8 @@ if settings.MAINTENANCE_MODE:
 
 else:
     urlpatterns = [
-        path("admin/", admin.site.urls),
-        path("staff/", include("apps.staff.urls")),
+        path("admin/", include("apps.staff.urls")),
+        path("admin/django/", admin.site.urls),
         path("", include("apps.authentication.urls")),
         path("", include("apps.leaderboard.urls")),
         path("", include("apps.ui.urls")),

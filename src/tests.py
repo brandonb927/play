@@ -34,14 +34,14 @@ class AdminLoginTestCase(TestCase):
         self.client = Client()
 
     def test_login_page(self):
-        response = self.client.get("/admin/login/")
+        response = self.client.get("/admin/django/login/")
 
         self.assertEqual(response.status_code, 302)
         self.assertIsInstance(response, HttpResponseRedirect)
         self.assertEqual(response.url, reverse("login"))
 
     def test_login_page_next_param(self):
-        response = self.client.get("/admin/login/?next=%2Ftest%2Furl")
+        response = self.client.get("/admin/django/login/?next=%2Ftest%2Furl")
 
         self.assertEqual(response.status_code, 302)
         self.assertIsInstance(response, HttpResponseRedirect)
@@ -53,7 +53,7 @@ class AdminLogoutnTestCase(TestCase):
         self.client = Client()
 
     def test_login_page(self):
-        response = self.client.get("/admin/logout/")
+        response = self.client.get("/admin/django/logout/")
 
         self.assertEqual(response.status_code, 302)
         self.assertIsInstance(response, HttpResponseRedirect)
