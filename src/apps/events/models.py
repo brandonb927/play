@@ -19,7 +19,7 @@ class EventManager(BaseManager):
 class Event(BaseModel):
     id = ShortUUIDField(prefix="evt", max_length=128, primary_key=True)
 
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, unique=True)
     slug = models.SlugField(unique=True)
     description = models.TextField(
         default="", blank=True, help_text="This field supports Markdown."
@@ -33,12 +33,22 @@ class Event(BaseModel):
 
     objects = EventManager()
 
+    def is_account_registered(self, account):
+        return Team.objects.filter(event=self, accounts=account).exists()
+
     def is_upcoming(self):
         return not self.date or self.date >= util.time.today()
 
 
+class TeamManager(BaseManager):
+    pass
+
+
 class Team(BaseModel):
-    id = ShortUUIDField(prefix="team_", max_length=128, primary_key=True)
+    class Meta:
+        unique_together = ("event", "name")
+
+    id = ShortUUIDField(prefix="team", max_length=128, primary_key=True)
 
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
 
@@ -49,3 +59,5 @@ class Team(BaseModel):
     bio = models.TextField(default="", blank=True)
     profile_pic_url = models.URLField(default="", blank=True)
     profile_pic_approved = models.BooleanField(default=False)
+
+    objects = TeamManager()

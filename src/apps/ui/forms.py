@@ -4,6 +4,7 @@ from django import forms
 from django.db.models import Q
 
 from apps.core.models import Account, Game, GameSnake, Snake
+from apps.events.models import Event, Team
 
 
 logger = logging.getLogger(__name__)
@@ -104,3 +105,31 @@ class SnakeForm(forms.ModelForm):
         if commit is True:
             snake.save()
         return snake
+
+
+class EventRegistrationForm(forms.Form):
+    snake = forms.ModelChoiceField(queryset=None, empty_label=None)
+
+    team_name = forms.CharField(max_length=100)
+    team_bio = forms.CharField(widget=forms.Textarea)
+    team_profile_pic_url = forms.URLField(required=False)
+
+    def __init__(self, event: Event, account: Account, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.account = account
+        self.event = event
+        # bvanvugt: This feels hacky but apparently is the solution Django suggests.
+        self.fields["snake"].queryset = Snake.objects.filter(account=account)
+
+    def save(self):
+        team = Team.objects.create(
+            name=self.cleaned_data["team_name"],
+            bio=self.cleaned_data["team_bio"],
+            profile_pic_url=self.cleaned_data["team_profile_pic_url"],
+            snake=self.cleaned_data["snake"],
+            event=self.event,
+        )
+        team.accounts.add(self.account)
+
+        return team

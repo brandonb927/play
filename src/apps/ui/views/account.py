@@ -11,7 +11,8 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.views import View
 
 from apps.core.models import Account, ContentReport, Snake
-from apps.ui.forms import AccountForm, GameForm, SnakeForm
+from apps.events.models import Event, Team
+from apps.ui.forms import AccountForm, GameForm, EventRegistrationForm, SnakeForm
 
 
 logger = logging.getLogger(__name__)
@@ -113,6 +114,47 @@ class CreateSnakeView(LoginRequiredMixin, View):
             )
             return redirect(f"/u/{request.user.username}")
         return render(request, "ui/pages/create_snake.html", {"form": form})
+
+
+class EventRegistrationView(View):
+    def get(self, request, event_slug):
+        event = get_object_or_404(Event, slug=event_slug)
+        if not request.user.is_authenticated:
+            return render(request, "ui/pages/event_registration.html", {"event": event})
+
+        if event.is_account_registered(request.user.account):
+            team = Team.objects.get(event=event, accounts=request.user.account)
+            return render(
+                request,
+                "ui/pages/event_registration.html",
+                {"event": event, "team": team},
+            )
+
+        form = EventRegistrationForm(event=event, account=request.user.account)
+        return render(
+            request, "ui/pages/event_registration.html", {"event": event, "form": form}
+        )
+
+    def post(self, request, event_slug):
+        event = get_object_or_404(Event, slug=event_slug)
+        if not request.user.is_authenticated:
+            return redirect(request.path)
+
+        if event.is_account_registered(request.user.account):
+            return redirect(request.path)
+
+        form = EventRegistrationForm(
+            event=event, account=request.user.account, data=request.POST
+        )
+        if not form.is_valid():
+            return render(
+                request,
+                "ui/pages/event_registration.html",
+                {"event": event, "form": form},
+            )
+
+        _ = form.save()  # Creates Team object
+        return redirect(request.path)
 
 
 class SettingsView(LoginRequiredMixin, View):

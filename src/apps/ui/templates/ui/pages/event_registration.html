@@ -1,0 +1,85 @@
+{% extends 'ui/layouts/base.html' %}
+
+{% block content %}
+
+<header class="page-header">
+    <h1>{{ event.name }}</h2>
+    <p class="text-secondary">{{ event.date }}, {{ event.location }}</p>
+</header>
+
+{% if not user.is_authenticated %}
+
+<div class="row">
+    <div class="col">
+        <div class="card">
+            <div class="card-body text-center">
+                <p>You must be logged in to register for this event.</p>
+                <p class="text-center m-t-20">
+                    <a href="{% url 'login' %}" class="btn btn-accent btn-rounded">
+                        Login with GitHub
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% else %}
+
+    {% if team %}
+
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="text-success">You are registered for this event!</h3>
+                    <hr>
+                    <p><strong>Team Name</strong></p>
+                    <p>{{ team.name }}</p>
+                    <p><strong>Snake</strong></p>
+                    <p>{{ team.snake }}</p>
+                    <p><strong>Biography and Backstory</strong></p>
+                    <p>{{ team.bio }}</p>
+                    <p><strong>Profile Picture</strong></p>
+                    <img src="{{ team.profile_pic_url }}"/>
+                </div>
+                <div class="card-footer">
+                    <p>
+                        Is something incorrect?
+                        <a href="mailto:events@battlesnake.com">Let us know and we'll get it fixed.</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% else %}
+
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="card-body">
+                        <h3>Registration Form</h3>
+                        <hr>
+                        {% include "ui/includes/forms/field.html" with field=form.team_name label="Team Name" %}
+                        {% include "ui/includes/forms/field.html" with field=form.snake label="Choose Your Snake" help_text="Enter your snake's name. Your snake must belong to one of the team members." %}
+                        {% include "ui/includes/forms/field.html" with field=form.team_bio label="Your Biography and Backstory" help_text="Tell us about you, your team, your snake, what you had for breakfast, etc." %}
+                        {% include "ui/includes/forms/field.html" with field=form.team_profile_pic_url label="Profile Picture (URL)" help_text="Example: https://placekitten.com/200/200" %}
+                    </div>
+                    <div class="card-footer bg-light">
+                        <button type="submit" class="btn btn-primary">Register Team</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    {% endif %}
+
+{% endif %}
+
+
+
+{% endblock %}
