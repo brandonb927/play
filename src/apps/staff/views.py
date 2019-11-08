@@ -87,5 +87,4 @@ def metrics(request):
 @admin_required
 def users(request):
     users = User.objects.all().order_by("username").only("username", "email", "created")
-    users = list(users) + list(users) + list(users)
     return render(request, "staff/users.html", {"users": users})
