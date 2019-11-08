@@ -109,6 +109,7 @@ class SnakeForm(forms.ModelForm):
 
 class EventRegistrationForm(forms.Form):
     snake = forms.ModelChoiceField(queryset=None, empty_label=None)
+    division = forms.ChoiceField(choices=Team.DIVISION_CHOICES)
 
     team_name = forms.CharField(max_length=100)
     team_bio = forms.CharField(widget=forms.Textarea)
@@ -124,11 +125,12 @@ class EventRegistrationForm(forms.Form):
 
     def save(self):
         team = Team.objects.create(
+            event=self.event,
+            snake=self.cleaned_data["snake"],
+            division=self.cleaned_data["division"],
             name=self.cleaned_data["team_name"],
             bio=self.cleaned_data["team_bio"],
             profile_pic_url=self.cleaned_data["team_profile_pic_url"],
-            snake=self.cleaned_data["snake"],
-            event=self.event,
         )
         team.accounts.add(self.account)
 

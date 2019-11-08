@@ -34,14 +34,13 @@
                 <div class="card-body">
                     <h3 class="text-success">You are registered for this event!</h3>
                     <hr>
-                    <p><strong>Team Name</strong></p>
-                    <p>{{ team.name }}</p>
-                    <p><strong>Snake</strong></p>
-                    <p>{{ team.snake }}</p>
-                    <p><strong>Biography and Backstory</strong></p>
-                    <p>{{ team.bio }}</p>
-                    <p><strong>Profile Picture</strong></p>
-                    <img src="{{ team.profile_pic_url }}"/>
+                    <ul class="list-reset p-t-10">
+                        <li class="p-b-10"><span class="w-150 d-inline-block"><strong>Team Name</strong></span><span>{{ team.name }}</span></li>
+                        <li class="p-b-10"><span class="w-150 d-inline-block"><strong>Snake</strong></span><span>{{ team.snake }}</span></li>
+                        <li class="p-b-10"><span class="w-150 d-inline-block"><strong>Division</strong></span><span>{{ team.division }}</span></li>
+                        <li class="p-b-10"><span class="w-150 d-inline-block"><strong>Backstory</strong></span><span>{{ team.bio }}</span></li>
+                        <li class="p-b-10"><span class="w-150 d-inline-block"><strong>Profile Picture</strong></span><span><img width="100" height="100" src="{{ team.profile_pic_url }}"/></span></li>
+                    </ul>
                 </div>
                 <div class="card-footer">
                     <p>
@@ -65,6 +64,7 @@
                         <hr>
                         {% include "ui/includes/forms/field.html" with field=form.team_name label="Team Name" %}
                         {% include "ui/includes/forms/field.html" with field=form.snake label="Choose Your Snake" help_text="Enter your snake's name. Your snake must belong to one of the team members." %}
+                        {% include "ui/includes/forms/field.html" with field=form.division label="Choose Your Division" help_text="Rookie is intended for first time and novice competitors. If you've competed in a Battlesnake event previously we ask that you choose Veteran." %}
                         {% include "ui/includes/forms/field.html" with field=form.team_bio label="Your Biography and Backstory" help_text="Tell us about you, your team, your snake, what you had for breakfast, etc." %}
                         {% include "ui/includes/forms/field.html" with field=form.team_profile_pic_url label="Profile Picture (URL)" help_text="Example: https://placekitten.com/200/200" %}
                     </div>

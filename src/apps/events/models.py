@@ -60,6 +60,10 @@ class Team(BaseModel):
     accounts = models.ManyToManyField(Account)
     snake = models.ForeignKey(Snake, on_delete=models.DO_NOTHING)
 
+    # bvanvugt: This is jankily hardcoded for now
+    DIVISION_CHOICES = [("Rookie", "Rookie"), ("Veteran", "Veteran")]
+    division = models.CharField(max_length=32, choices=DIVISION_CHOICES)
+
     bio = models.TextField(default="", blank=True)
     profile_pic_url = models.URLField(default="", blank=True)
     profile_pic_approved = models.BooleanField(default=False)
