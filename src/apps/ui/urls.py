@@ -12,12 +12,14 @@ from apps.ui.views import public
 class EXTERNAL_URLS:
     BLOG = "https://medium.com/battlesnake"
     DOCS = "https://docs.battlesnake.com"
+    FACEBOOK = "https://www.facebook.com/Battlesnake-109244433855215/"
     FAQ = "https://docs.battlesnake.com/faq"
     GITHUB = "https://github.com/battlesnakeio"
     HIGHLIGHTS = "https://www.youtube.com/watch?v=d9ARbSzBKxc"
+    INSTAGRAM = "https://www.instagram.com/battlesnakeofficial/"
     SLACK = "https://join.slack.com/t/battlesnake/shared_invite/enQtNzM4NDQ3MjgyMjI0LWJkZGJkOTg3NTAyNjg2MWVhMzk5OTVlMjk2ZjIzMWUxMWQ3MzYxN2I4YTY4YTE0YTI0MmQ4MzdiODNiZTgyZGE"
     TWITTER = "https://twitter.com/battlesnakeio"
-    TWITCH = "https://twitch.tv/battlesnakeio"
+    TWITCH = "https://twitch.tv/BattlesnakeOfficial"
     YOUTUBE = "https://www.youtube.com/channel/UClaK3LSm3OfsOgfyjWG6SMw"
 
 
@@ -71,7 +73,9 @@ urlpatterns = [
     path("blog/", external(EXTERNAL_URLS.BLOG), name="external-blog"),
     path("docs/", external(EXTERNAL_URLS.DOCS), name="external-docs"),
     path("faq/", external(EXTERNAL_URLS.FAQ), name="external-faq"),
+    path("facebook/", external(EXTERNAL_URLS.FACEBOOK), name="external-facebook"),
     path("github/", external(EXTERNAL_URLS.GITHUB), name="external-github"),
+    path("instagram/", external(EXTERNAL_URLS.INSTAGRAM), name="external-instagram"),
     path("highlights/", external(EXTERNAL_URLS.HIGHLIGHTS), name="external-highlights"),
     path("slack/", external(EXTERNAL_URLS.SLACK), name="external-slack"),
     path("twitch/", external(EXTERNAL_URLS.TWITCH), name="external-twitch"),
