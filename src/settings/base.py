@@ -52,7 +52,6 @@ INSTALLED_APPS = [
     "apps.authentication",
     "apps.jobs",
     "apps.core",
-    "apps.event",
     "apps.events",
     "apps.leaderboard",
     "apps.ui",
