@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from apps.event.models import OldEvent as Event
+from apps.events.models import Event
 from apps.common.models import BaseModelAdmin
 
 

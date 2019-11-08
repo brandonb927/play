@@ -5,7 +5,7 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.views import View
 
 from apps.core.models import Account, Game, Snake
-from apps.event.models import Event
+from apps.event.models import OldEvent as Event
 from apps.jobs.models import JobPost
 import util.time
 

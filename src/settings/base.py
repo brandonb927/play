@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     "apps.jobs",
     "apps.core",
     "apps.event",
+    "apps.events",
     "apps.leaderboard",
     "apps.ui",
     "apps.staff",

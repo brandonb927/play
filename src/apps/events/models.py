@@ -15,7 +15,7 @@ class EventManager(BaseManager):
         return self.get_queryset().filter(is_listed=True)
 
 
-class OldEvent(BaseModel):
+class Event(BaseModel):
     id = ShortUUIDField(prefix="evt", max_length=128, primary_key=True)
 
     name = models.CharField(max_length=100)
