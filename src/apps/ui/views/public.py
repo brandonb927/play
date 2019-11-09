@@ -47,10 +47,14 @@ class EventsView(View):
             return render(request, "ui/pages/event.html", {"event": event})
 
         events = Event.objects.get_listed_events().order_by("-date")
+
         upcoming_events = [e for e in events if e.date is None] + [
             e for e in events if e.date and e.date >= util.time.today()
         ]
+        upcoming_events.reverse()
+
         past_events = [e for e in events if e.date and e.date < util.time.today()]
+
         return render(
             request,
             "ui/pages/events.html",

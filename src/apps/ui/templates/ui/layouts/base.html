@@ -15,32 +15,35 @@
   {% endif %}
 
   <meta charset="utf-8">
-  <title>Battlesnake</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Bringing developers of all skill levels together in a friendly, co-operative environment. Our goal is to provide educational resources to developers and grow the tech community through collaboration and competition.">
 
+  {% block meta %}
+  <title>{{ title|default:'Battlesnake' }}</title>
+  <meta name="description" content="{{ description|default:'Bringing developers of all skill levels together in a friendly, co-operative environment. Our goal is to make programming fun, accessible, and entertaining for everyone!' }}">
   <link rel="shortcut icon" href="{% static 'ui/favicon.ico' %}" />
 
-  <meta property="og:title" content="Battlesnake">
-  <meta property="og:description" content="Bringing developers of all skill levels together in a friendly, co-operative environment. Our goal is to provide educational resources to developers and grow the tech community through collaboration and competition.">
+  <meta property="og:title" content="{{ title|default:'Battlesnake' }}">
+  <meta property="og:description" content="{{ description|default:'Bringing developers of all skill levels together in a friendly, co-operative environment. Our goal is to make programming fun, accessible, and entertaining for everyone!' }}">
   <meta property="og:url" content="{{ request.build_absolute_uri }}">
 
   {% if game_image %}
     <meta property="og:image" content="{{ game_image }}">
   {% else %}
-    <meta property="og:image" content="{% static 'ui/img/social-banner.png' %}">
+    <meta property="og:image" content="{% static 'ui/img/social-banner.jpg' %}">
   {% endif %}
 
-  <meta name="twitter:title" content="Battlesnake">
-  <meta name="twitter:description" content="Bringing developers of all skill levels together in a friendly, co-operative environment. Our goal is to provide educational resources to developers and grow the tech community through collaboration and competition.">
+  <meta name="twitter:title" content="{{ title|default:'Battlesnake' }}">
+  <meta name="twitter:description" content="{{ description|default:'Bringing developers of all skill levels together in a friendly, co-operative environment. Our goal is to make programming fun, accessible, and entertaining for everyone!' }}">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@battlesnakeio">
 
   {% if game_image %}
     <meta name="twitter:image" content="{{ game_image }}">
   {% else %}
-    <meta name="twitter:image" content="{% static 'ui/img/social-banner.png' %}">
+    <meta name="twitter:image" content="{% static 'ui/img/social-banner.jpg' %}">
   {% endif %}
+
+  {% endblock meta %}
 
   <meta name='theme-color' content='#F64A91'>
 
