@@ -14,5 +14,6 @@ class EventAdmin(BaseModelAdmin):
 @admin.register(Team)
 class TeamAdmin(BaseModelAdmin):
     readonly_fields = BaseModelAdmin.readonly_fields + ("id",)
+    raw_id_fields = ("accounts",)  # For Performance
     list_display = ("name", "event")
     ordering = ("name",)
