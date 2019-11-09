@@ -1,7 +1,7 @@
 {% extends 'ui/layouts/base.html' %}
 
 {% block meta %}
-    {% with title=event.name description=event.date|date:"l F d, Y"|add:" - "|add:event.location %}
+    {% with title=event.name description=event.date|date:"l F d, Y"|add:" - "|add:event.location banner='ui/img/social-banner-bwc-2019.png'%}
         {{ block.super }}
     {% endwith %}
 {% endblock meta %}
