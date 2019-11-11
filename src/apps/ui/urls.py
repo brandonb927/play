@@ -61,7 +61,7 @@ urlpatterns = [
         "account/snakes/<snake_id>/", account.EditSnakeView.as_view(), name="edit-snake"
     ),
     path(
-        "account/snakes/<snake_id>/delete",
+        "account/snakes/<snake_id>/delete/",
         account.DeleteSnakeView.as_view(),
         name="delete-snake",
     ),
