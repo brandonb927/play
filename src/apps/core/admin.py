@@ -17,7 +17,8 @@ class ContentReportAdmin(BaseModelAdmin):
 
 @admin.register(Game)
 class GameAdmin(BaseModelAdmin):
-    list_display = ("engine_id", "width", "height", "status", "turn")
+    list_display = ("engine_id", "width", "height", "status", "turn", "created")
+    ordering = ("-created",)
     search_fields = ("engine_id", "id")
 
 

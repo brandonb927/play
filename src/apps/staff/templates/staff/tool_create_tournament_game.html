@@ -1,0 +1,26 @@
+{% extends "staff/base.html" %}
+
+{% block content %}
+
+<h3>Create Tournament Game</h3>
+
+{% if game %}
+<hr>
+<div class="alert alert-success">
+    <p><strong>Created Game: "{{ form.title.value }}</strong></p>
+    <p>{{ game.snakes.count }} Snake(s)<br>{{ game.id }}<br>{{ game.engine_id }}</p>
+    <a href="{% url 'game' game.engine_id %}" target="_blank" class="btn btn-success">Webview URL</a>
+    <a href="{{ game.get_board_url }}&hideMediaControls=true&boardTheme=dark&frameRate=6&title={{ form.title.value }}" target="_blank" class="btn btn-secondary">Broadcast URL</a>
+</div>
+<hr>
+
+{% endif %}
+
+<form method="POST">
+    {% csrf_token %}
+    {% include "ui/includes/forms/field.html" with field=form.title label="Game Title" %}
+    {% include "ui/includes/forms/field.html" with field=form.teams label="Teams" %}
+    <button type="submit" class="btn btn-secondary">Create Tournament Game</button>
+</form>
+
+{% endblock content %}

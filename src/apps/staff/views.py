@@ -8,6 +8,7 @@ from apps.authentication.decorators import admin_required
 from apps.authentication.models import User
 from apps.core.models import Account, Game, Snake
 from apps.events.models import Team
+from apps.staff.forms import CreateTournamentGameForm
 import util.time
 
 
@@ -26,6 +27,28 @@ def index(request):
             "num_games": num_games,
         },
     )
+
+
+@admin_required
+def dump_teams(request):
+    title = "Dump Teams"
+    rows = [("name", "division", "snake_name", "snake_url", "bio")] + list(
+        Team.objects.all()
+        .order_by("division", "name")
+        .values_list("name", "division", "snake__name", "snake__url", "bio")
+    )
+    return render(request, "staff/dump.html", {"title": title, "rows": rows})
+
+
+@admin_required
+def dump_users(request):
+    title = "Dump Users"
+    rows = [("username", "email", "created")] + list(
+        User.objects.all()
+        .order_by("username")
+        .values_list("username", "email", "created")
+    )
+    return render(request, "staff/dump.html", {"title": title, "rows": rows})
 
 
 @admin_required
@@ -59,22 +82,14 @@ def histograms(request):
 
 
 @admin_required
-def dump_teams(request):
-    title = "Dump Teams"
-    rows = [("name", "division", "snake_name", "snake_url", "bio")] + list(
-        Team.objects.all()
-        .order_by("division", "name")
-        .values_list("name", "division", "snake__name", "snake__url", "bio")
+def tool_create_tournament_game(request):
+    if request.method == "POST":
+        form = CreateTournamentGameForm(request.POST)
+        if form.is_valid():
+            game = form.save()
+    else:
+        form = CreateTournamentGameForm()
+        game = None
+    return render(
+        request, "staff/tool_create_tournament_game.html", {"form": form, "game": game}
     )
-    return render(request, "staff/dump.html", {"title": title, "rows": rows})
-
-
-@admin_required
-def dump_users(request):
-    title = "Dump Users"
-    rows = [("username", "email", "created")] + list(
-        User.objects.all()
-        .order_by("username")
-        .values_list("username", "email", "created")
-    )
-    return render(request, "staff/dump.html", {"title": title, "rows": rows})
