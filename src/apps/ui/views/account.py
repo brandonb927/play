@@ -103,7 +103,11 @@ class CreateContentReportView(LoginRequiredMixin, View):
 class CreateSnakeView(LoginRequiredMixin, View):
     def get(self, request):
         form = SnakeForm(request.user.account)
-        return render(request, "ui/pages/create_snake.html", {"form": form})
+        return render(
+            request,
+            "ui/pages/create_snake.html",
+            {"form_title": "Create New Snake", "form": form},
+        )
 
     def post(self, request):
         form = SnakeForm(request.user.account, request.POST)
@@ -113,7 +117,43 @@ class CreateSnakeView(LoginRequiredMixin, View):
                 request, messages.SUCCESS, f"{snake.name} created successfully"
             )
             return redirect(f"/u/{request.user.username}")
-        return render(request, "ui/pages/create_snake.html", {"form": form})
+        return render(
+            request,
+            "ui/pages/create_snake.html",
+            {"form_title": "Create New Snake", "form": form},
+        )
+
+
+class EditSnakeView(LoginRequiredMixin, View):
+    def get(self, request, snake_id):
+        snake = get_object_or_404(Snake, id=snake_id, account=request.user.account)
+        form = SnakeForm(request.user.account, instance=snake)
+        return render(
+            request,
+            "ui/pages/create_snake.html",
+            {"form_title": "Edit Snake", "form": form},
+        )
+
+    def post(self, request, snake_id):
+        snake = get_object_or_404(Snake, id=snake_id, account=request.user.account)
+        form = SnakeForm(request.user.account, instance=snake, data=request.POST)
+        if form.is_valid():
+            form.save()
+            messages.add_message(request, messages.SUCCESS, f"Updated {snake.name}.")
+            return redirect(f"/u/{request.user.username}")
+        return render(
+            request,
+            "ui/pages/create_snake.html",
+            {"form_title": "Edit Snake", "form": form},
+        )
+
+
+class DeleteSnakeView(LoginRequiredMixin, View):
+    def post(self, request, snake_id):
+        snake = get_object_or_404(Snake, id=snake_id, account=request.user.account)
+        snake.delete()
+        messages.add_message(request, messages.INFO, f"Deleted {snake.name}.")
+        return redirect(f"/u/{request.user.username}")
 
 
 class EventRegistrationView(View):

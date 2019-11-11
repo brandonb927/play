@@ -58,6 +58,14 @@ urlpatterns = [
     path("account/report/", account.CreateContentReportView.as_view()),
     path("account/snakes/create/", account.CreateSnakeView.as_view(), name="new_snake"),
     path(
+        "account/snakes/<snake_id>/", account.EditSnakeView.as_view(), name="edit-snake"
+    ),
+    path(
+        "account/snakes/<snake_id>/delete",
+        account.DeleteSnakeView.as_view(),
+        name="delete-snake",
+    ),
+    path(
         "events/<slug:event_slug>/register/",
         account.EventRegistrationView.as_view(),
         name="event-registration",

@@ -41,120 +41,45 @@
   <div class="col-md-9">
     <div class="card">
       <div class="card-header">
+        <h3 class="m-t-5">Snakes</h3>
         {% if account.user == user %}
-        <a class="btn btn-primary pull-right" href="{% url 'new_snake' %}">Add a Snake</a>
+        <ul class="actions top-right">
+          <li><a href="{% url 'new_snake' %}" class="btn btn-primary btn-sm">Create New Snake</a></li>
+        </ul>
         {% endif %}
-        <h2>Snakes</h2>
       </div>
-      {% include "ui/includes/snakes.html" with snakes=account.snakes.all %}
+      <div class="card-body p-0">
+          <ul class="list-group list-group-flush">
+            {% for snake in account.snakes.all %}
+            <li class="list-group-item">
+              <a href="{% url 'snake' snake_id=snake.id %}">{{ snake.name }}</a>
+              {% if account.user == user %}
+              <form style="display:inline;" action="{% url 'delete-snake' snake.id %}" method="POST">
+                {% csrf_token %}
+                <button type="submit" class="pull-right btn btn-inline btn-danger btn-outline btn-sm m-l-10">Delete</button>
+              </form>
+              <a href="{% url 'edit-snake' snake.id %}" class="pull-right btn btn-primary btn-outline btn-sm">Edit</a>
+              {% endif %}
+            </li>
+            {% empty %}
+            <li class="list-group-item">
+              <p>No snakes here yet{% if account.user == user %} — <a href="{% url 'external-docs' %}">Learn how to make one</a>!{% endif %}</p>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
     </div>
     <div class="card">
       <div class="card-header">
+        <h3 class="m-t-5">Recent Games</h3>
         {% if account.user == user %}
-        <a class="btn btn-primary pull-right" href="{% url 'new_game' %}">Start a Game</a>
+        <ul class="actions top-right">
+            <li><a href="{% url 'new_game' %}"" class="btn btn-primary btn-sm">Create New Game</a></li>
+          </ul>
         {% endif %}
-        <h2>Games</h2>
       </div>
       {% include "ui/includes/games.html" with games=games %}
     </div>
   </div>
 </div>
-
 {% endblock %}
-
-{% block js_dom_ready %}
-$(document).on('click', '.popover .close', function () {
-$(this).parents('.popover').popover('dispose')
-})
-
-function validateSnake(snakeUrl, button, callback){
-var engineUrl = window.__battlesnake.settings.ENGINE_URL
-$.ajax({
-async: true,
-dataType: 'json',
-url: engineUrl + '/validateSnake?url=' + snakeUrl,
-})
-.done(callback)
-.fail(function(xhr, message, error) {
-console.error(`Snake validation resposne failed: ${message} ${error}`)
-changeInfoButtonState(button, 'btn-danger')
-snakeStatuses[snakeUrl] = status('Could not contact engine to validate snake', 'danger')
-})
-}
-
-var snakeStatuses = []
-
-$('.js-show-snake-status').on('click', function (event) {
-event.preventDefault()
-var $elem = $(this)
-var snakeUrl = $elem.data('snake-url')
-
-$('.popover').popover('dispose')
-
-$elem.popover({
-placement: 'right',
-trigger: 'click',
-title: 'Snake API Validation <button type="button" class="close" aria-label="Close" style="line-height: .6;"><span
-    aria-hidden="true">&times;</span></button>',
-html: true,
-content: snakeStatuses[snakeUrl] || status('Snake is currently being validated ...', 'info')
-})
-$elem.popover('show')
-})
-
-function status(message, type) {
-return `<div class="alert alert-${type} text-center">${message}</div>`
-}
-
-function changeInfoButtonState(button, state) {
-button.removeClass('btn-success')
-button.removeClass('btn-light')
-button.removeClass('btn-danger')
-button.addClass(state)
-}
-
-function updateAllSnakeStatusLabels() {
-$('.js-show-snake-status').each(function(index,currentSnake){
-var $elem = $(this)
-var snakeUrl = $elem.data('snake-url')
-validateSnake(snakeUrl, $elem, function(data){
-var hasErrors = false
-
-var scoreTotal = 0
-var scorePassedTotal = 0
-var html = '';
-for (var key of Object.keys(data)) {
-var item = data[key]
-scoreTotal += (item.score.checksPassed + item.score.checksFailed)
-scorePassedTotal += item.score.checksPassed
-
-html += '<h3>' + key + '</h3>' +
-'<p>' +
-  'Status: <span class="badge badge-sm ' + (item.statusCode !== 200 ? 'badge-danger' : 'badge-success') + '">' +
-    item.statusCode + '</span><br />' +
-  'Checks: <span class="badge badge-success badge-sm">' + item.score.checksPassed + ' passed</span>' +
-  (item.score.checksFailed !== 0 ? ' / <span class="badge badge-danger badge-sm">' + item.score.checksFailed + '
-    failed</span>' : '') + '<br />' +
-  'Message: ' + item.Message +
-  '</p>'
-
-if (item.Errors.length) {
-hasErrors = true
-}
-
-html += hasErrors ? '<p>
-  <ul>' : ''
-    for (var errIndex in item.Errors) {
-    html += '<li class="text-danger">Error: ' + item.Errors[errIndex] + '</li>'
-    }
-    html += hasErrors ? '</ul>
-</p>' : ''
-}
-
-if (!hasErrors) {
-html = status('No errors!', 'success') + html
-}
-
-if (scorePassedTotal < scoreTotal) { changeInfoButtonState($elem, 'btn-danger' ) } else {
-  changeInfoButtonState($elem, 'btn-success' ) } snakeStatuses[snakeUrl]=html }); }) } updateAllSnakeStatusLabels();
-  setInterval(updateAllSnakeStatusLabels, 5000); {% endblock %}
