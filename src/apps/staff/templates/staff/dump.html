@@ -1,0 +1,12 @@
+{% extends "staff/base.html" %}
+
+{% block content %}
+
+<h3>{{ title }}</h3>
+<div>
+<pre><code>
+{% for row in rows %}{% for col in row %}"{{ col|addslashes }}"{% if not forloop.last %},{% endif %}{% endfor %}
+{% endfor %}
+</code></pre>
+</div>
+{% endblock content %}

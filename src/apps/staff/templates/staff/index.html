@@ -1,18 +1,30 @@
 {% extends "staff/base.html" %}
+{% load humanize %}
 
 {% block content %}
 
+<h3>Metrics</h3>
+<ul>
+    <li>Accounts: {{ num_accounts|intcomma }}</li>
+    <li>Snakes: {{ num_snakes|intcomma }}</li>
+    <li>Games: {{ num_games|intcomma }}</li>
+</ul>
+
 <h3>Useful Links</h3>
 <ul>
-    <li><a href="{% url 'home' %}" title="Battlesnake">Homepage</a></li>
-    <li><a href="{% url 'admin:index' %}" title="Battlesnake">Django Admin</a></li>
+    <li><a href="{% url 'home' %}">Homepage</a></li>
+    <li><a href="{% url 'admin:index' %}">Django Admin</a></li>
 </ul>
 
 <h3>Analytics</h3>
 <ul>
     <li><a href="{% url 'staff:histograms' %}">Histograms</a></li>
-    <li><a href="{% url 'staff:metrics' %}">Metrics</a></li>
-    <li><a href="{% url 'staff:users' %}">Users</a></li>
+</ul>
+
+<h3>Data Dumps</h3>
+<ul>
+    <li><a href="{% url 'staff:dump-teams' %}">Dump Teams</a></li>
+    <li><a href="{% url 'staff:dump-users' %}">Dump Users</a></li>
 </ul>
 
 {% endblock content %}

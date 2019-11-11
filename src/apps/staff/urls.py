@@ -7,6 +7,6 @@ app_name = "staff"
 urlpatterns = [
     path("", views.index, name="index"),
     path("histograms/", views.histograms, name="histograms"),
-    path("metrics/", views.metrics, name="metrics"),
-    path("users/", views.users, name="users"),
+    path("dump/teams/", views.dump_teams, name="dump-teams"),
+    path("dump/users/", views.dump_users, name="dump-users"),
 ]

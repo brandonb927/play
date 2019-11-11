@@ -7,19 +7,24 @@ from pytz import utc
 from apps.authentication.decorators import admin_required
 from apps.authentication.models import User
 from apps.core.models import Account, Game, Snake
+from apps.events.models import Team
 import util.time
 
 
 @admin_required
 def index(request):
-    num_users = User.objects.all().count()
+    num_accounts = Account.objects.all().count()
     num_snakes = Snake.objects.all().count()
     num_games = Game.objects.all().count()
 
     return render(
         request,
         "staff/index.html",
-        {"num_users": num_users, "num_snakes": num_snakes, "num_games": num_games},
+        {
+            "num_accounts": num_accounts,
+            "num_snakes": num_snakes,
+            "num_games": num_games,
+        },
     )
 
 
@@ -39,52 +44,37 @@ def histograms(request):
     ]
     account_created_histogram = Counter()
 
-    user_createds = [
-        dt.strftime("%Y-%m")
-        for dt in User.objects.all()
-        .order_by("created")
-        .values_list("created", flat=True)
-    ]
-    user_created_histogram = Counter()
-
     dt = util.time.from_unix_timestamp(1546300800)  # Jan 1 2019
     while dt < now():
         dt_str = dt.strftime("%Y-%m")
         account_created_histogram[dt_str] = account_createds.count(dt_str)
-        user_created_histogram[dt_str] = user_createds.count(dt_str)
 
         dt = floor_to_month(dt + timedelta(days=32))
 
     return render(
         request,
         "staff/histograms.html",
-        {
-            "account_created": list(account_created_histogram.items()),
-            "user_created": list(user_created_histogram.items()),
-        },
+        {"account_created": list(account_created_histogram.items())},
     )
 
 
 @admin_required
-def metrics(request):
-    num_users = User.objects.all().count()
-    num_accounts = Account.objects.all().count()
-    num_snakes = Snake.objects.all().count()
-    num_games = Game.objects.all().count()
-
-    return render(
-        request,
-        "staff/metrics.html",
-        {
-            "num_users": num_users,
-            "num_accounts": num_accounts,
-            "num_snakes": num_snakes,
-            "num_games": num_games,
-        },
+def dump_teams(request):
+    title = "Dump Teams"
+    rows = [("name", "division", "snake_name", "snake_url", "bio")] + list(
+        Team.objects.all()
+        .order_by("division", "name")
+        .values_list("name", "division", "snake__name", "snake__url", "bio")
     )
+    return render(request, "staff/dump.html", {"title": title, "rows": rows})
 
 
 @admin_required
-def users(request):
-    users = User.objects.all().order_by("username").only("username", "email", "created")
-    return render(request, "staff/users.html", {"users": users})
+def dump_users(request):
+    title = "Dump Users"
+    rows = [("username", "email", "created")] + list(
+        User.objects.all()
+        .order_by("username")
+        .values_list("username", "email", "created")
+    )
+    return render(request, "staff/dump.html", {"title": title, "rows": rows})
