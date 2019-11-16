@@ -13,7 +13,15 @@ class EventAdmin(BaseModelAdmin):
 
 @admin.register(Team)
 class TeamAdmin(BaseModelAdmin):
+    list_display = ("name", "display_event_name", "division")
+    list_filter = ("division",)
+    ordering = ("name",)
+    search_fields = ("name", "division")
+
     readonly_fields = BaseModelAdmin.readonly_fields + ("id",)
     raw_id_fields = ("accounts",)  # For Performance
-    list_display = ("name", "event")
-    ordering = ("name",)
+
+    def display_event_name(self, obj):
+        return obj.event.name
+
+    display_event_name.short_description = "Event"
