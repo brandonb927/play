@@ -72,10 +72,10 @@ urlpatterns = [
         name="event-registration",
     ),
     # Static Content URLs
+    path("about/contact/", template("ui/pages/contact.html"), name="contact"),
     path("about/conduct/", template("ui/pages/conduct.html"), name="conduct"),
     path("about/diversity/", template("ui/pages/diversity.html"), name="diversity"),
     path("about/mission/", template("ui/pages/mission.html"), name="mission"),
-    path("help/", template("ui/pages/help.html"), name="help"),
     path("privacy/", template("ui/pages/privacy.html"), name="privacy"),
     path("terms/", template("ui/pages/terms.html"), name="terms"),
     # Exernal Redirect URLs
