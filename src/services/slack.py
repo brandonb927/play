@@ -24,7 +24,7 @@ class SlackClient:
                     as_user=False,
                     icon_emoji=":printer:",
                     username=f"battlesnake/play:v.{settings.APP_VERSION}",
-                    channel="#play-events",
+                    channel="#play-event-log",
                     text=text,
                 )
                 response.validate()
