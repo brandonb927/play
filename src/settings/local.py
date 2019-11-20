@@ -14,3 +14,6 @@ DATABASES = {
 
 SOCIAL_AUTH_GITHUB_KEY = get_environment_variable("GITHUB_CLIENT_ID")
 SOCIAL_AUTH_GITHUB_SECRET = get_environment_variable("GITHUB_CLIENT_SECRET")
+
+# This dumps EVERY SQL statement run to stdout
+# LOGGING["loggers"]["django.db.backends"] = {"handlers": ["console"], "level": "DEBUG", "propagate": False}

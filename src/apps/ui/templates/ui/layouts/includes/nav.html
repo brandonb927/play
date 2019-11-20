@@ -33,22 +33,27 @@
                     <a class="dropdown-item" href="{% url 'mission' %}">Our Mission</a>
                     <a class="dropdown-item" href="{% url 'conduct' %}">Code of Conduct</a>
                     <a class="dropdown-item" href="{% url 'diversity' %}">Diversity</a>
-                    <a class="dropdown-item" href="{% url 'external-faq' %}">FAQ</a>
+                    <a class="dropdown-item" href="{% url 'contact' %}">Contact Us</a>
                   </div>
                 </li>
                 <li class="nav-item">
-                  <a href="{% url 'external-blog' %}">
-                    Blog
+                  <a href="{% url 'external-docs' %}">
+                    Docs
                   </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{% url 'events' %}">
-                      Events
-                    </a>
-                  </li>
+                  <a href="{% url 'events' %}">
+                    Events
+                  </a>
+                </li>
                 <li class="nav-item">
-                  <a href="{% url 'external-docs' %}">
-                    Docs
+                  <a href="{% url 'external-faq' %}">
+                    FAQ
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="{% url 'external-store' %}">
+                    Store
                   </a>
                 </li>
                 {% if user.is_authenticated %}
@@ -75,11 +80,6 @@
                       <i class="icon dripicons-gear"></i>
                       Settings
                     </a>
-                    <a class="dropdown-item" href="{% url 'help' %}">
-                      <i class="icon dripicons-question"></i>
-                      Get Help
-                    </a>
-                    <div class="dropdown-divider"></div>
                     <a href="#report-modal" data-toggle="modal" data-target="#report-modal" class="dropdown-item">
                       <i class="icon dripicons-flag"></i>
                       Report Concern

@@ -1,0 +1,61 @@
+{% extends 'ui/layouts/base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="offset-md-1 col-md-10">
+        <header class="page-header">
+            <h1>Contact</h1>
+        </header>
+    </div>
+</div>
+
+<div class="row">
+    <div class="offset-md-1 col-md-6">
+        <div class="card">
+            <iframe height="450" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q=place_id:ChIJA0Y6H4N0j1QRZXGKMMBcZZ4&key=AIzaSyBrnpMmy5MsAp97DXL5ltL7CDHOIXY3oCM" allowfullscreen></iframe>
+            <div class="card-body">
+                <h5 class="card-title">Battlesnake HQ</h5>
+                <p class="card-text">
+                    1824 Store St. 2nd Floor
+                    Victoria, BC V8T 4R4
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h3>Looking to get in touch?</h3>
+            </div>
+            <div class="card-body">
+
+                <h5 class="card-title">Ideas & Feature Requests</h5>
+                <p class="card-text">
+                    Have a cool idea for making Battlesnake better?
+                    <br><a href="{% url 'external-slack' %}">Tell us about it on Slack</a>
+                </p>
+                <h5 class="card-title">Live Events</h5>
+                <p class="card-text">
+                    Interested in organizing or hosting a Battlesnake event?
+                    <br><a href="mailto:events@battlesnake.com">events@battlesnake.com</a>
+                </p>
+                <h5 class="card-title">Sponsorship</h5>
+                <p class="card-text">
+                    Looking to engage with our audience?
+                    <br><a href="mailto:sponsors@battlesnake.com">sponsors@battlesnake.com</a>
+                </p>
+                <h5 class="card-title">Careers</h5>
+                <p class="card-text">
+                    Want to work with us?
+                    <br><a href="{% url 'jobs' %}">Visit open positions</a>
+                </p>
+                <h5 class="card-title">Something Else?</h5>
+                <p class="card-text">
+                    Have something else to say, or just want to say hi?
+                    <br><a href="mailto:hello@battlesnake.com">hello@battlesnake.com</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

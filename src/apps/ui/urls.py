@@ -18,6 +18,7 @@ class EXTERNAL_URLS:
     HIGHLIGHTS = "https://www.youtube.com/watch?v=d9ARbSzBKxc"
     INSTAGRAM = "https://www.instagram.com/battlesnakeofficial/"
     SLACK = "https://join.slack.com/t/battlesnake/shared_invite/enQtNzM4NDQ3MjgyMjI0LWJkZGJkOTg3NTAyNjg2MWVhMzk5OTVlMjk2ZjIzMWUxMWQ3MzYxN2I4YTY4YTE0YTI0MmQ4MzdiODNiZTgyZGE"
+    STORE = "https://shop.spreadshirt.com/battlesnake"
     TWITTER = "https://twitter.com/battlesnakeio"
     TWITCH = "https://twitch.tv/BattlesnakeOfficial"
     YOUTUBE = "https://www.youtube.com/channel/UClaK3LSm3OfsOgfyjWG6SMw"
@@ -71,10 +72,10 @@ urlpatterns = [
         name="event-registration",
     ),
     # Static Content URLs
+    path("about/contact/", template("ui/pages/contact.html"), name="contact"),
     path("about/conduct/", template("ui/pages/conduct.html"), name="conduct"),
     path("about/diversity/", template("ui/pages/diversity.html"), name="diversity"),
     path("about/mission/", template("ui/pages/mission.html"), name="mission"),
-    path("help/", template("ui/pages/help.html"), name="help"),
     path("privacy/", template("ui/pages/privacy.html"), name="privacy"),
     path("terms/", template("ui/pages/terms.html"), name="terms"),
     # Exernal Redirect URLs
@@ -86,6 +87,7 @@ urlpatterns = [
     path("instagram/", external(EXTERNAL_URLS.INSTAGRAM), name="external-instagram"),
     path("highlights/", external(EXTERNAL_URLS.HIGHLIGHTS), name="external-highlights"),
     path("slack/", external(EXTERNAL_URLS.SLACK), name="external-slack"),
+    path("store/", external(EXTERNAL_URLS.STORE), name="external-store"),
     path("twitch/", external(EXTERNAL_URLS.TWITCH), name="external-twitch"),
     path("twitter/", external(EXTERNAL_URLS.TWITTER), name="external-twitter"),
     path("youtube/", external(EXTERNAL_URLS.YOUTUBE), name="external-youtube"),
