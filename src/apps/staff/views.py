@@ -76,7 +76,7 @@ def dump_users_csvfile(request):
 
     rows = [("username", "email", "created")] + list(
         User.objects.all()
-        .order_by("username")
+        .order_by("-created")
         .values_list("username", "email", "created")
     )
 
