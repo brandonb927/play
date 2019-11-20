@@ -10,7 +10,7 @@
     <p><strong>Created Game: "{{ form.title.value }}</strong></p>
     <p>{{ game.snakes.count }} Snake(s)<br>{{ game.id }}<br>{{ game.engine_id }}</p>
     <a href="{% url 'game' game.engine_id %}" target="_blank" class="btn btn-success">Webview URL</a>
-    <a href="{{ game.get_board_url }}&hideMediaControls=true&boardTheme=dark&frameRate=6&title={{ form.title.value }}" target="_blank" class="btn btn-secondary">Broadcast URL</a>
+    <a href="{{ game.get_board_url }}&hideMediaControls=true&frameRate=6&title={{ form.title.value }}" target="_blank" class="btn btn-secondary">Broadcast URL</a>
 </div>
 <hr>
 

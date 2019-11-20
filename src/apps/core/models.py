@@ -8,6 +8,8 @@ from django.db import models, transaction
 from django.db.models import Q
 from django.utils.http import urlquote
 
+import services.slack
+
 from apps.common.fields import ShortUUIDField
 from apps.common.models import BaseModel
 
@@ -19,7 +21,11 @@ logger = logging.getLogger(__name__)
 
 class AccountManager(models.Manager):
     def create_for_user(self, user):
-        return self.get_or_create(user=user)
+        account, created = self.get_or_create(user=user)
+        if created:
+            services.slack.SlackClient().send_message(
+                f"<https://github.com/{user.username}|{user.username}> signed up"
+            )
 
 
 class Account(BaseModel):

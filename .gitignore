@@ -17,3 +17,4 @@ cypress/output
 .cmd
 .docker-data
 venv*
+.DS_Store

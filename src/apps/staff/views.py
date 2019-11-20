@@ -64,7 +64,7 @@ def dump_users(request):
     title = "Dump Users"
     rows = [("username", "email", "created")] + list(
         User.objects.all()
-        .order_by("username")
+        .order_by("-created")
         .values_list("username", "email", "created")
     )
     return render(request, "staff/dump.html", {"title": title, "rows": rows})
