@@ -28,8 +28,8 @@
 
 <h3>Data Dumps</h3>
 <ul>
-    <li><a href="{% url 'staff:dump-teams' %}">Dump Teams</a></li>
-    <li><a href="{% url 'staff:dump-users' %}">Dump Users</a></li>
+    <li><a href="{% url 'staff:dump-teams' %}">Dump Teams</a> [<a href="{% url 'staff:dump-teams-csv' %}">CSV File</a>] </li>
+    <li><a href="{% url 'staff:dump-users' %}">Dump Users</a> [<a href="{% url 'staff:dump-users-csv' %}">CSV File</a>]</li>
 </ul>
 
 {% endblock content %}

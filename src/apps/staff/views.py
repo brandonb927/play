@@ -10,6 +10,8 @@ from apps.core.models import Account, Game, Snake
 from apps.events.models import Team
 from apps.staff.forms import CreateTournamentGameForm
 import util.time
+import csv
+from django.http import HttpResponse
 
 
 @admin_required
@@ -28,7 +30,6 @@ def index(request):
         },
     )
 
-
 @admin_required
 def dump_teams(request):
     title = "Dump Teams"
@@ -38,6 +39,24 @@ def dump_teams(request):
         .values_list("name", "division", "snake__name", "snake__url", "bio")
     )
     return render(request, "staff/dump.html", {"title": title, "rows": rows})
+
+@admin_required
+def dump_teams_csvfile(request):
+    # Create the HttpResponse object with the appropriate CSV header.
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="team_dump.csv"'
+
+    rows = [("name", "division", "snake_name", "snake_url", "bio")] + list(
+        Team.objects.all()
+        .order_by("division", "name")
+        .values_list("name", "division", "snake__name", "snake__url", "bio")
+    )
+
+    writer = csv.writer(response)
+    for row in rows:
+        writer.writerow(row)
+
+    return response
 
 
 @admin_required
@@ -50,6 +69,22 @@ def dump_users(request):
     )
     return render(request, "staff/dump.html", {"title": title, "rows": rows})
 
+@admin_required
+def dump_users_csvfile(request):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="user_dump.csv"'
+
+    rows = [("username", "email", "created")] + list(
+        User.objects.all()
+        .order_by("username")
+        .values_list("username", "email", "created")
+    )
+
+    writer = csv.writer(response)
+    for row in rows:
+        writer.writerow(row)
+
+    return response
 
 @admin_required
 def histograms(request):
