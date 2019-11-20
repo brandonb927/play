@@ -23,7 +23,7 @@ class SlackClient:
                 response = self.web_client.chat_postMessage(
                     as_user=False,
                     icon_emoji=":printer:",
-                    username=f"battlesnake/play:v.{settings.APP_VERSION}",
+                    username=f"battlesnake/play:{settings.APP_VERSION}",
                     channel="#play-event-log",
                     text=text,
                 )

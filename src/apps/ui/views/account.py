@@ -1,7 +1,5 @@
 import logging
 
-import services.slack
-
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -9,6 +7,8 @@ from django.db import transaction
 from django.http import Http404, HttpResponseForbidden, JsonResponse
 from django.shortcuts import get_object_or_404, render, redirect
 from django.views import View
+
+import services.slack
 
 from apps.core.models import Account, ContentReport, Snake
 from apps.events.models import Event, Team
@@ -197,7 +197,11 @@ class EventRegistrationView(View):
                 {"event": event, "form": form},
             )
 
-        _ = form.save()  # Creates Team object
+        team = form.save()  # Creates Team object
+        services.slack.SlackClient().send_message(
+            f'<https://github.com/{request.user.username}|{request.user.username}> registered for {event.name} as "{team.name}"'
+        )
+
         return redirect(request.path)
 
 

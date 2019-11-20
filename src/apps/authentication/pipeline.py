@@ -5,7 +5,12 @@ from apps.core.models import Account
 
 def blacklist_usernames(backend, details, response, *args, **kwargs):
     # We reserve these usernames for our own purposes.
-    if kwargs.get("username") in ["battlesnake", "battlesnakeio", "battle-snake"]:
+    if kwargs.get("username") in [
+        "battle-snake",
+        "battlesnake",
+        "battlesnakeio",
+        "battlesnakeofficial",
+    ]:
         raise AuthForbidden(backend)
 
 
