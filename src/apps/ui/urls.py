@@ -78,6 +78,8 @@ urlpatterns = [
     path("about/mission/", template("ui/pages/mission.html"), name="mission"),
     path("privacy/", template("ui/pages/privacy.html"), name="privacy"),
     path("terms/", template("ui/pages/terms.html"), name="terms"),
+    # Tracked Landing URLs
+    path("reinvent/", template("ui/pages/reinvent.html"), name="landing-reinvent"),
     # Exernal Redirect URLs
     path("blog/", external(EXTERNAL_URLS.BLOG), name="external-blog"),
     path("docs/", external(EXTERNAL_URLS.DOCS), name="external-docs"),
