@@ -29,7 +29,7 @@
   {% if game_image %}
     <meta property="og:image" content="{{ game_image }}">
   {% else %}
-    <meta property="og:image" content="{% static banner|default:'ui/img/social-banner.jpg' %}">
+    <meta property="og:image" content="{{ banner|default:'/static/ui/img/social-banner.jpg' }}">
   {% endif %}
 
   <meta name="twitter:title" content="{{ title|default:'Battlesnake' }}">
@@ -40,7 +40,7 @@
   {% if game_image %}
     <meta name="twitter:image" content="{{ game_image }}">
   {% else %}
-    <meta name="twitter:image" content="{% static banner|default:'ui/img/social-banner.jpg' %}">
+    <meta name="twitter:image" content="{{ banner|default:'/static/ui/img/social-banner.jpg' }}">
   {% endif %}
 
   {% endblock meta %}
