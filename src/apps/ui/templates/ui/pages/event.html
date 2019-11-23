@@ -1,7 +1,7 @@
 {% extends 'ui/layouts/base.html' %}
 
 {% block meta %}
-    {% with title=event.name description=event.date|date:"l F d, Y"|add:" - "|add:event.location banner='ui/img/social-banner-bwc-2019.png'%}
+    {% with title=event.name description=event.date|date:"l F d, Y"|add:" - "|add:event.location banner=event.banner_image_url|default:"" %}
         {{ block.super }}
     {% endwith %}
 {% endblock meta %}
@@ -18,6 +18,9 @@
         <div class="card">
             <div class="card-body">
                 <div class="card-text">
+                    {% if event.banner_image_url %}
+                        <p><img src="{{ event.banner_image_url }}" style="width: 100%"/></p>
+                    {% endif %}
                     {{ event.description|markdown }}
                 </div>
                 {% if event.allow_registration %}

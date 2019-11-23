@@ -22,6 +22,9 @@
             </div>
             <div class="card-body">
                 <div class="card-text">
+                    {% if event.banner_image_url %}
+                        <p><img src="{{ event.banner_image_url }}" style="width: 100%"/></p>
+                    {% endif %}
                     {{ event.tldr|default:event.description|markdown }}
                 </div>
             </div>
