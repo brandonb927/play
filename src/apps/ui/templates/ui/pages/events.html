@@ -71,6 +71,9 @@
             </div>
             <div class="card-body">
                 <div class="card-text">
+                    {% if event.banner_image_url %}
+                        <p><img src="{{ event.banner_image_url }}" style="width: 100%"/></p>
+                    {% endif %}
                     {{ event.description|markdown }}
                 </div>
             </div>
