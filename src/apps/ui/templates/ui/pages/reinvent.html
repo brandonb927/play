@@ -17,67 +17,81 @@
 </div>
 
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-xl-8">
         <div class="card">
             <div class="card-body">
-                <p class="card-text lead">Battlesnake is a fun way to learn and practice new technologies.</p>
-                <h5 class="card-title text-info">Write Code</h5>
+                <p class="card-text text-info lead">Battlesnake is a fun way for developers to practice new technologies.</p>
+                <h5 class="card-title">Write Code</h5>
                 <p class="card-text">
-                    Developers build and deploy a web server that responds to the <a href="TODO">Official Battlesnake API</a>.
-                    You can use any language and technologies you want - you just need a web server that can receive and respond to HTTP requests.
-                    Once your web server is running <a href="TODO">create your snake</a> and start playing games.
+                    Battlesnake developers build and deploy a web server that implements the <a href="https://docs.battlesnake.com/snake-api">Official Battlesnake API</a>.
+                    You can use any language and any technology you want - all you need to play is a web server that can receive and respond to HTTP requests.
                 </p>
-                <h5 class="card-title text-info">Compete in Online Events</h5>
+                <h5 class="card-title">Compete Online</h5>
                 <p class="card-text">
-                    You can create Battlesnake games against other developers, track wins and losses, and climb the ranks of the Battlesnake Arena.
-                    We also regularly host <a href="TODO">online and live events</a> with hundreds of participants.
+                    Create games against your friends and colleagues, track wins and losses, and climb the ranks of the
+                    <a href="{% url 'leaderboard' %}">Battlesnake Arena</a>.
+                    We also regularly host <a href="{% url 'events' %}">online and live events</a> with hundreds of participants.
                 </p>
-                <h5 class="card-title text-info">Want to get started?</h5>
+                <h5 class="card-title">Upcoming Events</h5>
+                <ul>
+                    <li><a href="https://play.battlesnake.com/events/winter-classic-2019/">Battlesnake Winter Classic</a> - Dec 14th, 2019 on <a href="{% url 'external-twitch' %}">Twitch.tv</a></li>
+                    <li><a href="https://play.battlesnake.com/events/battlesnake-victoria-2020/">Battlesnake Victoria 2020</a> - Mar 15th, 2020 in Victoria BC</li>
+                </ul>
+                <h5 class="card-title">Want to get started?</h5>
                 <p class="card-text">
-                    <a href="TODO">Read the Battlesnake Docs</a> to get started building your snake.
+                    <a href="https://docs.batlesnake.com">Read the Battlesnake Docs</a> to get started building your snake.
                 </p>
                 <p class="card-text"></p>
-                    <a href="TODO" class="btn btn-primary">Create New Account</a>
+                    <a href="{% url 'login' %}" class="btn btn-primary">Login with GitHub</a>
                 </p>
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-body icon-set lines">
-                <p class="card-text lead">Follow us for new event and updates.</p>
-                <div class="row">
-                    <div class="icon col-xs-6 col-md-2">
-                        <a href="javascript:void(0)" class="tile-primary"><i class="la la-twitch"></i> Twitch</a>
-                    </div>
-                    <div class="icon col-xs-6 col-md-2">
-                        <a href="javascript:void(0)" class="tile-primary"><i class="la la-youtube"></i> YouTube</a>
-                    </div>
-                    <div class="icon col-xs-6 col-md-2">
-                        <a href="javascript:void(0)" class="tile-primary"><i class="la la-facebook"></i> Facebook</a>
-                    </div>
-                    <div class="icon col-xs-6 col-md-2">
-                        <a href="javascript:void(0)" class="tile-primary"><i class="la la-github"></i> GitHub</a>
-                    </div>
-                    <div class="icon col-xs-6 col-md-2">
-                        <a href="javascript:void(0)" class="tile-primary"><i class="la la-instagram"></i> Instagram</a>
-                    </div>
-                    <div class="icon col-xs-6 col-md-2">
-                        <a href="javascript:void(0)" class="tile-primary"><i class="la la-twitter"></i> Twitter</a>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
-    <div class="col-md-6">
+    <div class="col-xl-4">
         <div class="card">
             <div class="card-content">
                 <img class="card-img-top img-fluid" src="{% static 'ui/img/social-banner-bwc-2019.png' %}">
                 <div class="card-body">
-                    <h4 class="card-title">Register now for the Battlesnake Winter Classic</h4>
+                    <h4 class="card-title">Register for the Battlesnake Winter Classic</h4>
                     <p class="card-text">
                         Join developers all over the world this holiday season in a of online Battlesnake tournaments.
                         Every game with broadcast live on <a href="{% url 'external-twitch' %}">Twitch.tv</a> and the winners will be eligible to receive Limited Edition Battlesnake Prize Packs.
                     </p>
                     <a href="/events/winter-classic-2019/" class="btn btn-primary">Learn More and Register</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col">
+        <div class="card">
+            <div class="row">
+                <div class="offset-xl-3 col-xl-6">
+                    <div class="card-body icon-set lines">
+                        <p class="card-text text-center lead">Follow us for future events and updates.</p>
+                        <div class="row">
+                            <div class="icon col-xs-6 col-md-2">
+                                <a href="{% url 'external-twitch' %}" class="tile-primary"><i class="la la-twitch"></i> Twitch</a>
+                            </div>
+                            <div class="icon col-xs-6 col-md-2">
+                                <a href="{% url 'external-youtube' %}" class="tile-primary"><i class="la la-youtube"></i> YouTube</a>
+                            </div>
+                            <div class="icon col-xs-6 col-md-2">
+                                <a href="{% url 'external-facebook' %}" class="tile-primary"><i class="la la-facebook"></i> Facebook</a>
+                            </div>
+                            <div class="icon col-xs-6 col-md-2">
+                                <a href="{% url 'external-github' %}" class="tile-primary"><i class="la la-github"></i> GitHub</a>
+                            </div>
+                            <div class="icon col-xs-6 col-md-2">
+                                <a href="{% url 'external-instagram' %}" class="tile-primary"><i class="la la-instagram"></i> Instagram</a>
+                            </div>
+                            <div class="icon col-xs-6 col-md-2">
+                                <a href="{% url 'external-twitter' %}" class="tile-primary"><i class="la la-twitter"></i> Twitter</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
