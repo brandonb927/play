@@ -9,6 +9,7 @@ from apps.events.models import Event
 from apps.jobs.models import JobPost
 import util.time
 
+import services.segment
 
 logger = logging.getLogger(__name__)
 
@@ -112,6 +113,11 @@ class GameView(View):
         frame_rate = request.GET.get("frameRate")
         if frame_rate:
             game_board_url = f"{game_board_url}&frameRate={frame_rate}"
+
+        account = None
+        if request.user.is_authenticated:
+            account = request.user.account
+        services.segment.SegmentClient().game_watched(account, game)
 
         return render(
             request,

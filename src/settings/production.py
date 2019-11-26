@@ -48,6 +48,8 @@ sentry_sdk.init(
 # --- Slack Messaging ---
 SLACK_API_TOKEN = get_environment_variable("SLACK_API_TOKEN")
 
+# --- Segment Analytics ---
+SEGMENT_API_KEY = get_environment_variable("SEGMENT_API_KEY")
 
 # --- Social Auth Config ---
 SOCIAL_AUTH_GITHUB_KEY = get_environment_variable("GITHUB_CLIENT_ID")

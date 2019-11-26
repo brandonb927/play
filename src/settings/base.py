@@ -230,3 +230,6 @@ SLACK_API_TOKEN = None
 
 # Google Analytics
 GOOGLE_ANALYTICS_ID = None
+
+# Segment Analytics Service
+SEGMENT_API_KEY = None

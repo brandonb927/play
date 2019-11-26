@@ -9,6 +9,7 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.views import View
 
 import services.slack
+import services.segment
 
 from apps.core.models import Account, ContentReport, Snake
 from apps.events.models import Event, Team
@@ -34,6 +35,9 @@ class CreateGameView(LoginRequiredMixin, View):
                 game.create()
                 game.gamesnake_set.add()
                 game.run()
+                services.segment.SegmentClient().game_started(
+                    request.user.account, game
+                )
             return redirect(f"/g/{game.engine_id}")
         return render(request, "ui/pages/create_game.html", {"form": form}, status=400)
 
@@ -113,6 +117,7 @@ class CreateSnakeView(LoginRequiredMixin, View):
         form = SnakeForm(request.user.account, request.POST)
         if form.is_valid():
             snake = form.save()
+            services.segment.SegmentClient().snake_created(request.user.account, snake)
             messages.add_message(
                 request, messages.SUCCESS, f"{snake.name} created successfully"
             )
@@ -139,6 +144,7 @@ class EditSnakeView(LoginRequiredMixin, View):
         form = SnakeForm(request.user.account, instance=snake, data=request.POST)
         if form.is_valid():
             form.save()
+            services.segment.SegmentClient().snake_updated(request.user.account, snake)
             messages.add_message(request, messages.SUCCESS, f"Updated {snake.name}.")
             return redirect(f"/u/{request.user.username}")
         return render(
@@ -152,6 +158,7 @@ class DeleteSnakeView(LoginRequiredMixin, View):
     def post(self, request, snake_id):
         snake = get_object_or_404(Snake, id=snake_id, account=request.user.account)
         snake.delete()
+        services.segment.SegmentClient().snake_deleted(request.user.account, snake)
         messages.add_message(request, messages.INFO, f"Deleted {snake.name}.")
         return redirect(f"/u/{request.user.username}")
 
@@ -198,6 +205,9 @@ class EventRegistrationView(View):
             )
 
         team = form.save()  # Creates Team object
+        services.segment.SegmentClient().event_registration(
+            request.user.account, event, team
+        )
         services.slack.SlackClient().send_message(
             f'<https://github.com/{request.user.username}|{request.user.username}> registered for {event.name} as "{team.name}"'
         )
