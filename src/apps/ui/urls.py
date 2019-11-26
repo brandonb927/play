@@ -22,6 +22,7 @@ class EXTERNAL_URLS:
     TWITTER = "https://twitter.com/battlesnakeio"
     TWITCH = "https://twitch.tv/BattlesnakeOfficial"
     YOUTUBE = "https://www.youtube.com/channel/UClaK3LSm3OfsOgfyjWG6SMw"
+    ZOOM = "https://zoom.us/j/8867080744"
 
 
 def external(path):
@@ -93,6 +94,7 @@ urlpatterns = [
     path("twitch/", external(EXTERNAL_URLS.TWITCH), name="external-twitch"),
     path("twitter/", external(EXTERNAL_URLS.TWITTER), name="external-twitter"),
     path("youtube/", external(EXTERNAL_URLS.YOUTUBE), name="external-youtube"),
+    path("zoom/", external(EXTERNAL_URLS.ZOOM), name="external-zoom"),
     # Helpful Debug Pages
     path("debug/403/", error.force_403),
     path("debug/404/", error.force_404),
