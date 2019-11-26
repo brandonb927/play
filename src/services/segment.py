@@ -102,7 +102,7 @@ class SegmentClient:
             SegmentClient.EVENTS.GAME_STARTED,
             {
                 "category": SegmentClient.EVENT_CATEGORIES.GAMES,
-                "label": game.engine_id,
+                "label": game.id,
                 "value": "1",
                 "snakes": str(game.snakes.count()),
                 "boardWidth": str(game.width),
