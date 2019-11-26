@@ -6,13 +6,17 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('jobs', '0003_auto_20191017_1741'),
+        ("jobs", "0003_auto_20191017_1741"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='jobpost',
-            name='is_active',
-            field=models.BooleanField(default=False, verbose_name='Make this job post visible on the careers page'),
+            model_name="jobpost",
+            name="is_active",
+            field=models.BooleanField(
+                default=False,
+                verbose_name="Make this job post visible on the careers page",
+            ),
         ),
     ]
+
