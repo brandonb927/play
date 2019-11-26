@@ -27,7 +27,7 @@ class AccountManager(models.Manager):
             services.slack.SlackClient().send_message(
                 f"<https://github.com/{user.username}|{user.username}> signed up"
             )
-        services.segment.SegmentClient().identify_user(user, account)
+        services.segment.SegmentClient().identify(account)
 
 
 class Account(BaseModel):

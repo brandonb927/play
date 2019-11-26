@@ -29,11 +29,16 @@ class SegmentClient:
             analytics.write_key = settings.SEGMENT_API_KEY
             self.tracking_enabled = True
 
-    def identify_user(self, user, account):
+    def identify(self, account):
         if self.tracking_enabled:
-            analytics.identify(
-                account.id, {"email": user.email, "username": account.username}
-            )
+            try:
+                # Make sure analytics tracking can't crash the triggering action
+                analytics.identify(
+                    account.id,
+                    {"email": account.user.email, "username": account.user.username},
+                )
+            except Exception as e:
+                logger.exception("Failed to write BI identify %s" % account, e)
 
     def __track(self, account, event, payload):
         if self.tracking_enabled:
