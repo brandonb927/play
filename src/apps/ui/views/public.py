@@ -66,11 +66,12 @@ class EventsView(View):
 class JobsView(View):
     def get(self, request, job_post_id=None):
         if job_post_id:
-            job_post = get_object_or_404(JobPost, id=job_post_id)
+            job_post = get_object_or_404(JobPost, id=job_post_id, is_active=True)
             return render(request, "ui/pages/job_post.html", {"job_post": job_post})
 
         # Return listing page
-        job_posts = JobPost.objects.all().order_by("role")
+        job_posts = JobPost.objects.filter(is_active=True).order_by("role")
+
         return render(request, "ui/pages/jobs.html", {"job_posts": job_posts})
 
 

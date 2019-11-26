@@ -24,5 +24,8 @@ class JobPost(BaseModel):
     description = models.TextField(
         default="", blank=True, help_text="This field supports Markdown."
     )
+    is_active = models.BooleanField(
+        default=False, verbose_name="Make this job post visible on the careers page"
+    )
 
     objects = JobPostManager()
