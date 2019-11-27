@@ -54,8 +54,7 @@ class Account(BaseModel):
 
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     display_name = models.CharField(max_length=100, default="")
-    # TODO: change this to unique once migrations are released
-    profile_slug = models.SlugField(blank=True)
+    profile_slug = models.SlugField(unique=True)
 
     # a code that defines where this user came from
     source = models.CharField(max_length=30, default="")
