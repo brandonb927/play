@@ -31,9 +31,9 @@
   <div class="card">
     <h5 class="card-header">About Me</h5>
     <div class="card-body">
-      {% include "ui/includes/forms/field.html" with field=form.display_name label="Display Name" help_text="The public name used on the site" %}
+      {% include "ui/includes/forms/field.html" with field=form.display_name label="Display Name" help_text="You name, as show publically on your Profile" %}
       {% include "ui/includes/forms/field.html" with field=form.email label="Email Address" %}
-      {% include "ui/includes/forms/field.html" with field=form.profile_slug label="Profile Page Slug" help_text="Used for your profile page URL: play.battlesnake.com/profile/&lt;slug&gt;/" %}
+      {% include "ui/includes/forms/field.html" with field=form.profile_slug label="Profile Page" help_text="Used for your profile page URL: play.battlesnake.com/profile/<u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>/" %}
       {% include "ui/includes/forms/field.html" with field=form.bio label="What is your story?" help_text="Tell us about yourself" %}
       {% include "ui/includes/forms/field.html" with field=form.country label="Where are you from?" %}
       {% include "ui/includes/forms/field.html" with field=form.years_programming label="How long have you been programming?" %}

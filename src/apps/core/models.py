@@ -10,10 +10,10 @@ from django.utils.http import urlquote
 from django.utils.text import slugify
 
 import services.slack
-import apps.common.countries
 
 from apps.common.fields import ShortUUIDField
 from apps.common.models import BaseModel
+from apps.common.countries import COUNTRIES
 
 from . import engine
 
@@ -60,10 +60,7 @@ class Account(BaseModel):
     # a code that defines where this user came from
     source = models.CharField(max_length=30, default="")
     country = models.CharField(
-        max_length=2,
-        default="",
-        choices=apps.common.countries.CountryData.COUNTRIES_LIST,
-        blank=True,
+        max_length=2, default="", choices=COUNTRIES.LIST, blank=True,
     )
 
     years_programming = models.CharField(

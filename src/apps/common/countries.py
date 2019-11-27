@@ -3,9 +3,9 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-class CountryData:
+class COUNTRIES:
     # Nicely titled (and translatable) country names.
-    COUNTRIES_MAP = {
+    MAP = {
         "AF": "Afghanistan",
         "AX": "Åland Islands",
         "AL": "Albania",
@@ -257,7 +257,7 @@ class CountryData:
         "ZW": "Zimbabwe",
     }
 
-    COUNTRIES_LIST = [
+    LIST = [
         ("AF", "Afghanistan"),
         ("AX", "Åland Islands"),
         ("AL", "Albania"),
