@@ -35,9 +35,7 @@ class CreateGameView(LoginRequiredMixin, View):
                 game.create()
                 game.gamesnake_set.add()
                 game.run()
-                services.segment.SegmentClient().game_started(
-                    request.user.account, game
-                )
+                services.segment.SegmentClient().game_started(request.account, game)
             return redirect(f"/g/{game.engine_id}")
         return render(request, "ui/pages/create_game.html", {"form": form}, status=400)
 
@@ -89,7 +87,7 @@ class CreateContentReportView(LoginRequiredMixin, View):
         text = request.POST.get("report_content", "")
 
         report = ContentReport.objects.create(
-            account=request.user.account, url=url, text=text
+            account=request.account, url=url, text=text
         )
 
         messages.add_message(
@@ -106,7 +104,7 @@ class CreateContentReportView(LoginRequiredMixin, View):
 
 class CreateSnakeView(LoginRequiredMixin, View):
     def get(self, request):
-        form = SnakeForm(request.user.account)
+        form = SnakeForm(request.account)
         return render(
             request,
             "ui/pages/create_snake.html",
@@ -114,14 +112,14 @@ class CreateSnakeView(LoginRequiredMixin, View):
         )
 
     def post(self, request):
-        form = SnakeForm(request.user.account, request.POST)
+        form = SnakeForm(request.account, request.POST)
         if form.is_valid():
             snake = form.save()
-            services.segment.SegmentClient().snake_created(request.user.account, snake)
+            services.segment.SegmentClient().snake_created(request.account, snake)
             messages.add_message(
                 request, messages.SUCCESS, f"{snake.name} created successfully"
             )
-            return redirect(f"/profile/{request.account.profile_slug}")
+            return redirect("profile", request.account.profile_slug)
 
         return render(
             request,
@@ -132,8 +130,8 @@ class CreateSnakeView(LoginRequiredMixin, View):
 
 class EditSnakeView(LoginRequiredMixin, View):
     def get(self, request, snake_id):
-        snake = get_object_or_404(Snake, id=snake_id, account=request.user.account)
-        form = SnakeForm(request.user.account, instance=snake)
+        snake = get_object_or_404(Snake, id=snake_id, account=request.account)
+        form = SnakeForm(request.account, instance=snake)
         return render(
             request,
             "ui/pages/create_snake.html",
@@ -141,13 +139,13 @@ class EditSnakeView(LoginRequiredMixin, View):
         )
 
     def post(self, request, snake_id):
-        snake = get_object_or_404(Snake, id=snake_id, account=request.user.account)
-        form = SnakeForm(request.user.account, instance=snake, data=request.POST)
+        snake = get_object_or_404(Snake, id=snake_id, account=request.account)
+        form = SnakeForm(request.account, instance=snake, data=request.POST)
         if form.is_valid():
             form.save()
-            services.segment.SegmentClient().snake_updated(request.user.account, snake)
+            services.segment.SegmentClient().snake_updated(request.account, snake)
             messages.add_message(request, messages.SUCCESS, f"Updated {snake.name}.")
-            return redirect(f"/profile/{request.account.profile_slug}")
+            return redirect("profile", request.account.profile_slug)
         return render(
             request,
             "ui/pages/create_snake.html",
@@ -157,11 +155,11 @@ class EditSnakeView(LoginRequiredMixin, View):
 
 class DeleteSnakeView(LoginRequiredMixin, View):
     def post(self, request, snake_id):
-        snake = get_object_or_404(Snake, id=snake_id, account=request.user.account)
+        snake = get_object_or_404(Snake, id=snake_id, account=request.account)
         snake.delete()
-        services.segment.SegmentClient().snake_deleted(request.user.account, snake)
+        services.segment.SegmentClient().snake_deleted(request.account, snake)
         messages.add_message(request, messages.INFO, f"Deleted {snake.name}.")
-        return redirect(f"/profile/{request.account.profile_slug}")
+        return redirect("profile", request.account.profile_slug)
 
 
 class EventRegistrationView(View):
@@ -172,15 +170,15 @@ class EventRegistrationView(View):
         if not request.user.is_authenticated:
             return render(request, "ui/pages/event_registration.html", {"event": event})
 
-        if event.is_account_registered(request.user.account):
-            team = Team.objects.get(event=event, accounts=request.user.account)
+        if event.is_account_registered(request.account):
+            team = Team.objects.get(event=event, accounts=request.account)
             return render(
                 request,
                 "ui/pages/event_registration.html",
                 {"event": event, "team": team},
             )
 
-        form = EventRegistrationForm(event=event, account=request.user.account)
+        form = EventRegistrationForm(event=event, account=request.account)
         return render(
             request, "ui/pages/event_registration.html", {"event": event, "form": form}
         )
@@ -192,11 +190,11 @@ class EventRegistrationView(View):
         if not request.user.is_authenticated:
             return redirect(request.path)
 
-        if event.is_account_registered(request.user.account):
+        if event.is_account_registered(request.account):
             return redirect(request.path)
 
         form = EventRegistrationForm(
-            event=event, account=request.user.account, data=request.POST
+            event=event, account=request.account, data=request.POST
         )
         if not form.is_valid():
             return render(
@@ -207,7 +205,7 @@ class EventRegistrationView(View):
 
         team = form.save()  # Creates Team object
         services.segment.SegmentClient().event_registration(
-            request.user.account, event, team
+            request.account, event, team
         )
         services.slack.SlackClient().send_message(
             f'<https://github.com/{request.user.username}|{request.user.username}> registered for {event.name} as "{team.name}"'
