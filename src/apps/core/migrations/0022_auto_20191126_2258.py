@@ -9,6 +9,7 @@ def forward_migration(apps, schema_editor):
 
     for account in Account.objects.filter(profile_slug=""):
         account.profile_slug = slugify(account.user.username)
+        # if the display name just happens to be empty or whitespace, set it to the username
         if not account.display_name.strip():
             account.display_name = account.user.username
         account.save()
