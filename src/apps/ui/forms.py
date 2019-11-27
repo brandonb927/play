@@ -13,12 +13,12 @@ logger = logging.getLogger(__name__)
 
 class AccountForm(forms.ModelForm):
     email = forms.CharField(required=True, widget=forms.EmailInput)
-    profile_slug = forms.SlugField(required=True)
 
     class Meta:
         model = Account
         fields = [
             "display_name",
+            "profile_slug",
             "country",
             "years_programming",
             "bio",
@@ -30,14 +30,9 @@ class AccountForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields["email"].initial = self.instance.user.email
-        self.fields["profile_slug"].initial = self.instance.profile_slug
 
     def save(self, *args, **kwargs):
         account = super().save(*args, **kwargs)
-        account.profile_slug = slugify(self.cleaned_data["profile_slug"])
-        # REVIEW - this feels like a hack, shouldn't I be able to update the account object before it saves earlier on?
-        # Also why isn't a SlugField slugifying itself automatically?  maybe I'm missing a step
-        account.save()
         account.user.email = self.cleaned_data["email"]
         account.user.save()
         return account
