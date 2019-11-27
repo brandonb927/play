@@ -2,7 +2,6 @@ import logging
 
 from django import forms
 from django.db.models import Q
-from django.utils.text import slugify
 
 from apps.core.models import Account, Game, GameSnake, Snake
 from apps.events.models import Event, Team
