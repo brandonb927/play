@@ -121,7 +121,8 @@ class CreateSnakeView(LoginRequiredMixin, View):
             messages.add_message(
                 request, messages.SUCCESS, f"{snake.name} created successfully"
             )
-            return redirect(f"/u/{request.user.username}")
+            return redirect(f"/profile/{request.account.profile_slug}")
+
         return render(
             request,
             "ui/pages/create_snake.html",
@@ -146,7 +147,7 @@ class EditSnakeView(LoginRequiredMixin, View):
             form.save()
             services.segment.SegmentClient().snake_updated(request.user.account, snake)
             messages.add_message(request, messages.SUCCESS, f"Updated {snake.name}.")
-            return redirect(f"/u/{request.user.username}")
+            return redirect(f"/profile/{request.account.profile_slug}")
         return render(
             request,
             "ui/pages/create_snake.html",
@@ -160,7 +161,7 @@ class DeleteSnakeView(LoginRequiredMixin, View):
         snake.delete()
         services.segment.SegmentClient().snake_deleted(request.user.account, snake)
         messages.add_message(request, messages.INFO, f"Deleted {snake.name}.")
-        return redirect(f"/u/{request.user.username}")
+        return redirect(f"/profile/{request.account.profile_slug}")
 
 
 class EventRegistrationView(View):
@@ -229,10 +230,11 @@ class SettingsView(LoginRequiredMixin, View):
     def post(self, request):
         account = get_object_or_404(Account, user=request.user)
         form = AccountForm(request.POST, instance=account)
+
         if form.is_valid():
             form.save()
-            messages.add_message(request, messages.INFO, "Account updated!")
-            return redirect("u", account.user.username)
+            messages.add_message(request, messages.INFO, "Profile updated!")
+            return redirect("profile", account.profile_slug)
         return render(
             request,
             "ui/pages/account_settings.html",

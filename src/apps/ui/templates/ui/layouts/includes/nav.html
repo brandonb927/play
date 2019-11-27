@@ -78,7 +78,10 @@
                     </div>
                     <a class="dropdown-item" href="{% url 'settings' %}">
                       <i class="icon dripicons-gear"></i>
-                      Settings
+                      My Profile
+                      {% if request.account.profile_needs_update %}
+                      <i class="zmdi zmdi-assignment-alert"></i>
+                      {% endif %}
                     </a>
                     <a href="#report-modal" data-toggle="modal" data-target="#report-modal" class="dropdown-item">
                       <i class="icon dripicons-flag"></i>
@@ -149,7 +152,8 @@
           <!-- Temporary Winter Classic Callout -->
           <li>
             <a href="/events/winter-classic-2019/" class="text-accent">
-              <i class="text-accent icon dripicons-trophy"></i><span class="hide-menu">Participate in the 2019 Battlesnake Winter Classic!</span>
+              <i class="text-accent icon dripicons-trophy"></i><span class="hide-menu">Participate in the 2019
+                Battlesnake Winter Classic!</span>
             </a>
           </li>
 

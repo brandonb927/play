@@ -7,8 +7,10 @@ from django.core.validators import MinLengthValidator, MaxLengthValidator
 from django.db import models, transaction
 from django.db.models import Q
 from django.utils.http import urlquote
+from django.utils.text import slugify
 
 import services.slack
+import apps.common.countries
 
 from apps.common.fields import ShortUUIDField
 from apps.common.models import BaseModel
@@ -27,16 +29,57 @@ class AccountManager(models.Manager):
             services.slack.SlackClient().send_message(
                 f"<https://github.com/{user.username}|{user.username}> signed up"
             )
+            account.display_name = user.username
+            account.profile_slug = slugify(user.username)
+            account.save()
+
         services.segment.SegmentClient().identify(account)
 
 
 class Account(BaseModel):
+    class EXPERIENCE:
+        NOVICE = "0-2"
+        JUNIOR = "2-5"
+        INTERMEDIATE = "6-10"
+        VETERAN = "10+"
+
+        CHOICES = [
+            (NOVICE, "0-2 years"),
+            (JUNIOR, "2-5 years"),
+            (INTERMEDIATE, "6-10 years"),
+            (VETERAN, "10+ years"),
+        ]
+
     id = ShortUUIDField(prefix="act", max_length=128, primary_key=True)
 
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    display_name = models.CharField(max_length=100, default="")
+    # TODO: change this to unique once migrations are released
+    profile_slug = models.SlugField(blank=True)
+
+    # a code that defines where this user came from
+    source = models.CharField(max_length=30, default="")
+    country = models.CharField(
+        max_length=2,
+        default="",
+        choices=apps.common.countries.CountryData.COUNTRIES_LIST,
+        blank=True,
+    )
+
+    years_programming = models.CharField(
+        max_length=5, default="", choices=EXPERIENCE.CHOICES, blank=True
+    )
+    bio = models.TextField(default="", blank=True)
+
+    # notification flags
     marketing_optin = models.BooleanField(default=True, null=False)
+    system_updates_optin = models.BooleanField(default=True, null=False)
+    event_updates_optin = models.BooleanField(default=True, null=False)
 
     objects = AccountManager()
+
+    def profile_needs_update(self):
+        return self.bio.strip() == ""
 
 
 class ContentReport(BaseModel):

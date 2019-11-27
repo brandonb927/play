@@ -32,6 +32,8 @@ class UserFactory:
         user = User(username=username, email=email)
         if commit:
             user.account = Account.objects.create(user=user)
+            user.account.profile_slug = username
+            user.account.save()
             user.save()
         return user
 

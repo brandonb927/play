@@ -17,7 +17,7 @@
             {% endif %}
           </div>
 
-          <h5>{{ account.user.username }}</h5>
+          <h5>{{ account.display_name }}</h5>
 
           <ul class="list-unstyled">
             <li>
@@ -29,10 +29,9 @@
               {% endif %}
             </li>
           </ul>
-
           {% if account.user == user %}
           <hr />
-          <a class="btn btn-secondary btn-block" href="{% url 'settings' %}">Edit</a>
+          <a class="btn btn-secondary btn-block" href="{% url 'settings' %}">Edit Profile</a>
           {% endif %}
         </div>
       </div>
@@ -49,33 +48,35 @@
         {% endif %}
       </div>
       <div class="card-body p-0">
-          <ul class="list-group list-group-flush">
-            {% for snake in account.snakes.all %}
-            <li class="list-group-item">
-              <a href="{% url 'snake' snake_id=snake.id %}">{{ snake.name }}</a>
-              {% if account.user == user %}
-              <form style="display:inline;" action="{% url 'delete-snake' snake.id %}" method="POST">
-                {% csrf_token %}
-                <button type="submit" class="pull-right btn btn-inline btn-danger btn-outline btn-sm m-l-10">Delete</button>
-              </form>
-              <a href="{% url 'edit-snake' snake.id %}" class="pull-right btn btn-primary btn-outline btn-sm">Edit</a>
-              {% endif %}
-            </li>
-            {% empty %}
-            <li class="list-group-item">
-              <p>No snakes here yet{% if account.user == user %} — <a href="{% url 'external-docs' %}">Learn how to make one</a>!{% endif %}</p>
-            </li>
-            {% endfor %}
-          </ul>
-        </div>
+        <ul class="list-group list-group-flush">
+          {% for snake in account.snakes.all %}
+          <li class="list-group-item">
+            <a href="{% url 'snake' snake_id=snake.id %}">{{ snake.name }}</a>
+            {% if account.user == user %}
+            <form style="display:inline;" action="{% url 'delete-snake' snake.id %}" method="POST">
+              {% csrf_token %}
+              <button type="submit"
+                class="pull-right btn btn-inline btn-danger btn-outline btn-sm m-l-10">Delete</button>
+            </form>
+            <a href="{% url 'edit-snake' snake.id %}" class="pull-right btn btn-primary btn-outline btn-sm">Edit</a>
+            {% endif %}
+          </li>
+          {% empty %}
+          <li class="list-group-item">
+            <p>No snakes here yet{% if account.user == user %} — <a href="{% url 'external-docs' %}">Learn how to make
+                one</a>!{% endif %}</p>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
     </div>
     <div class="card">
       <div class="card-header">
         <h3 class="m-t-5">Recent Games</h3>
         {% if account.user == user %}
         <ul class="actions top-right">
-            <li><a href="{% url 'new_game' %}"" class="btn btn-primary btn-sm">Create New Game</a></li>
-          </ul>
+          <li><a href="{% url 'new_game' %}"" class=" btn btn-primary btn-sm">Create New Game</a></li>
+        </ul>
         {% endif %}
       </div>
       {% include "ui/includes/games.html" with games=games %}
