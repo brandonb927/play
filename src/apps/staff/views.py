@@ -34,10 +34,28 @@ def index(request):
 @admin_required
 def dump_teams(request):
     title = "Dump Teams"
-    rows = [("name", "division", "snake_name", "snake_url", "bio")] + list(
+    rows = [
+        (
+            "name",
+            "division",
+            "snake_name",
+            "snake_url",
+            "bio",
+            "user",
+            "internal_username",
+        )
+    ] + list(
         Team.objects.all()
         .order_by("division", "name")
-        .values_list("name", "division", "snake__name", "snake__url", "bio")
+        .values_list(
+            "name",
+            "division",
+            "snake__name",
+            "snake__url",
+            "bio",
+            "accounts__display_name",
+            "accounts__user__username",
+        )
     )
     return render(request, "staff/dump.html", {"title": title, "rows": rows})
 
@@ -48,10 +66,28 @@ def dump_teams_csvfile(request):
     response = HttpResponse(content_type="text/csv")
     response["Content-Disposition"] = 'attachment; filename="team_dump.csv"'
 
-    rows = [("name", "division", "snake_name", "snake_url", "bio")] + list(
+    rows = [
+        (
+            "name",
+            "division",
+            "snake_name",
+            "snake_url",
+            "bio",
+            "user",
+            "internal_username",
+        )
+    ] + list(
         Team.objects.all()
         .order_by("division", "name")
-        .values_list("name", "division", "snake__name", "snake__url", "bio")
+        .values_list(
+            "name",
+            "division",
+            "snake__name",
+            "snake__url",
+            "bio",
+            "accounts__display_name",
+            "accounts__user__username",
+        )
     )
 
     writer = csv.writer(response)
