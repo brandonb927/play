@@ -31,7 +31,11 @@
           </ul>
           {% if account.user == user %}
           <hr />
-          <a class="btn btn-secondary btn-block" href="{% url 'settings' %}">Edit Profile</a>
+          <a class="btn btn-secondary btn-block" href="{% url 'settings' %}">Edit Profile
+            {% if account.profile_needs_update %}
+            <i class="zmdi zmdi-assignment-alert"></i>
+            {% endif %}
+          </a>
           {% endif %}
         </div>
       </div>

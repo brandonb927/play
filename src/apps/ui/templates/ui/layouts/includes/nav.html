@@ -62,6 +62,9 @@
                     aria-haspopup="true" aria-expanded="false">
                     <img src="https://github.com/{{ user.username }}.png?size=64" class="w-35 rounded-circle"
                       alt="{{ user.username }}">
+                    {% if request.account.profile_needs_update %}
+                    <i class="zmdi zmdi-assignment-alert"></i>
+                    {% endif %}
                   </a>
                   <div class="dropdown-menu dropdown-menu-right dropdown-menu-accout">
                     <div class="dropdown-header pb-3">
