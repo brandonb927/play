@@ -69,3 +69,10 @@ class ShortUUIDField(models.CharField):
 
     def to_python(self, value):
         return value
+
+
+class LowercaseSlugField(models.SlugField):
+    def pre_save(self, model_instance, add):
+        lowercase_value = getattr(model_instance, self.attname).lower()
+        setattr(model_instance, self.attname, lowercase_value)
+        return lowercase_value
