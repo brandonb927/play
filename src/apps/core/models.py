@@ -11,7 +11,7 @@ from django.utils.text import slugify
 
 import services.slack
 
-from apps.common.fields import ShortUUIDField
+from apps.common.fields import LowercaseSlugField, ShortUUIDField
 from apps.common.models import BaseModel
 from apps.common.countries import COUNTRIES
 
@@ -54,10 +54,10 @@ class Account(BaseModel):
 
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     display_name = models.CharField(max_length=100, default="")
-    profile_slug = models.SlugField(unique=True)
+    profile_slug = LowercaseSlugField(unique=True)
 
     # a code that defines where this user came from
-    source = models.CharField(max_length=30, default="")
+    source = models.CharField(max_length=30, default="", blank=True)
     country = models.CharField(
         max_length=2, default="", choices=COUNTRIES.LIST, blank=True,
     )
