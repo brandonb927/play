@@ -50,9 +50,7 @@ urlpatterns = [
     path("g/<engine_id>/", public.GameView.as_view(), name="game"),
     path("g/<engine_id>/gif/", public.GameGIFView.as_view(), name="game_gif"),
     path("s/<snake_id>/", public.SnakeView.as_view(), name="snake"),
-    # TODO - remove this one to replace with profile slug URL
-    path("u/<username>/", public.AccountView.as_view(), name="u"),
-    path("profile/<slug:username>/", public.ProfileView.as_view(), name="profile"),
+    path("u/<slug:username>/", public.ProfileView.as_view(), name="profile"),
     # Account Specific URLs
     path("account/settings/", account.SettingsView.as_view(), name="settings"),
     path("account/games/create/", account.CreateGameView.as_view(), name="new_game"),

@@ -63,12 +63,13 @@
                     <img src="https://github.com/{{ user.username }}.png?size=64" class="w-35 rounded-circle"
                       alt="{{ user.username }}">
                     {% if request.account.needs_attention %}
-                    <span style="top:-10px;left:-15px;position:relative;" class="badge badge-pill badge-danger">&nbsp;!&nbsp;</span>
+                    <span style="top:-10px;left:-15px;position:relative;"
+                      class="badge badge-pill badge-danger">&nbsp;!&nbsp;</span>
                     {% endif %}
                   </a>
                   <div class="dropdown-menu dropdown-menu-right dropdown-menu-accout">
                     <div class="dropdown-header pb-3">
-                      <a href="{% url 'u' username=request.account.username %}">
+                      <a href="{% url 'profile' username=request.account.username %}">
                         <div class="media d-user">
                           <img src="https://github.com/{{ user.username }}.png?size=64"
                             class="align-self-center mr-3 w-40 rounded-circle" alt="{{ user.username }}">
@@ -79,13 +80,14 @@
                         </div>
                       </a>
                     </div>
-                    <a class="dropdown-item" href="{% url 'u' request.account.username %}">
+                    <a class="dropdown-item" href="{% url 'profile' request.account.username %}">
                       View Profile
                     </a>
                     <a class="dropdown-item" href="{% url 'settings' %}">
                       Account Settings
                       {% if request.account.needs_attention %}
-                      <span style="top:-2px;position:relative;" class="badge badge-pill badge-danger">&nbsp;!&nbsp;</span>
+                      <span style="top:-2px;position:relative;"
+                        class="badge badge-pill badge-danger">&nbsp;!&nbsp;</span>
                       {% endif %}
                     </a>
                     <a href="#report-modal" data-toggle="modal" data-target="#report-modal" class="dropdown-item">
@@ -136,7 +138,7 @@
           </li>
           {% if not request.user.is_anonymous %}
           <li>
-            <a href="{% url 'u' username=user.username %}">
+            <a href="{% url 'profile' username=request.account.username %}">
               <i class="icon dripicons-view-apps"></i><span class="hide-menu">My Snakes</span>
             </a>
           </li>

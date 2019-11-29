@@ -75,27 +75,6 @@ class JobsView(View):
         return render(request, "ui/pages/jobs.html", {"job_posts": job_posts})
 
 
-# DEPRECATED - remove once we migrate fully to profile slugs for users
-class AccountView(View):
-    def get(self, request, username):
-        # Case-insensitive lookup, redirects to correct URL
-        account = get_object_or_404(Account, user__username__iexact=username)
-        if account.user.username != username:
-            return redirect("u", account.user.username)
-
-        games = (
-            Game.objects.filter(snakes__account=account)
-            .watchable()
-            .order_by("-created")
-            .prefetch_related("gamesnake_set__snake")
-            .distinct()[:10]
-        )
-
-        return render(
-            request, "ui/pages/account.html", {"account": account, "games": games}
-        )
-
-
 class ProfileView(View):
     def get(self, request, username):
         account = get_object_or_404(Account, username__iexact=username)

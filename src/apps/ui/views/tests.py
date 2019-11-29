@@ -44,19 +44,19 @@ class AccountViewTestCase(TestCase):
         self.user = self.user_factory.basic(commit=True)
 
     def test_get(self):
-        response = self.client.get(f"/profile/{self.user.account.username}/")
+        response = self.client.get(f"/u/{self.user.account.username}/")
 
         self.assertEqual(response.status_code, 200)
 
     def test_get_case_insensitive(self):
-        response = self.client.get(f"/profile/{self.user.account.username.upper()}/")
+        response = self.client.get(f"/u/{self.user.account.username.upper()}/")
 
         self.assertEqual(response.status_code, 302)
-        self.assertEqual(response.url, f"/profile/{self.user.account.username}/")
+        self.assertEqual(response.url, f"/u/{self.user.account.username}/")
 
     def test_snakes_are_returned_in_response(self):
         Snake.objects.create(account=self.user.account, name="My Snake")
-        response = self.client.get(f"/profile/{self.user.account.username}/")
+        response = self.client.get(f"/u/{self.user.account.username}/")
 
         self.assertEqual(
             response.context[-1]["account"].user.account.snakes.all()[:1].get().name,
@@ -442,7 +442,7 @@ class CreateSnakeViewTestCase(TestCase):
         )
 
         self.assertEqual(response.status_code, 302)
-        self.assertIn(f"/profile/{user.account.username}", response.url)
+        self.assertIn(f"/u/{user.account.username}", response.url)
 
         snakes = Snake.objects.filter(account=user.account)
         self.assertEqual(snakes.count(), 1)

@@ -5,7 +5,7 @@
   <div class="d-flex align-items-center">
     <div class="mr-auto">
       <h1>
-        <a href="{% url 'u' username=snake.account.user.username %}">
+        <a href="{% url 'profile' username=snake.account.username %}">
           {{ snake.account.user.username }}
         </a> / {{ snake.name }}
       </h1>

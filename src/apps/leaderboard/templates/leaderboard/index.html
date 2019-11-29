@@ -18,7 +18,7 @@
       {% for item in leaderboard %}
       <li class="list-group-item list-group-item-action">
         {{ forloop.counter }}.
-        <a href="{% url 'u' item.snake.account.user.username %}">{{ item.snake.account.user.username }}</a> / <a
+        <a href="{% url 'profile' item.snake.account.username %}">{{ item.snake.account.username }}</a> / <a
           href="{% url 'snake' item.snake.id %}">{{ item.snake.name }}</a>
         <a href="#{{ item.id }}-games" data-toggle="modal" data-target="#{{ item.id }}-games"
           class="badge badge-secondary badge-pill pull-right ml-2">Games</a>
