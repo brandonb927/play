@@ -8,7 +8,7 @@
       <div class="card-body">
         <div class="profile-card text-center">
           <div class="thumb-xl member-thumb m-b-10 center-block">
-            <img src="https://github.com/{{ account.user.username }}.png?size=150" class="rounded-circle img-thumbnail" alt="profile-image" />
+            <img src="https://github.com/{{ account.github_username }}.png?size=150" class="rounded-circle img-thumbnail" alt="profile-image" />
           </div>
 
           <h5>{{ account.display_name }}</h5>
@@ -16,7 +16,7 @@
           <ul class="list-unstyled">
             <li>
               <i class="la la-github"></i>
-              <a target="_blank" href="https://github.com/{{ account.user.username }}">GitHub</a>
+              <a target="_blank" href="https://github.com/{{ account.github_username }}">GitHub</a>
             </li>
           </ul>
           {% if account == request.account %}

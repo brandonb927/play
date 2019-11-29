@@ -103,7 +103,7 @@ class SnakeForm(forms.ModelForm):
                 snakes = snakes.exclude(id=self.instance.id)
             if snakes.count() > 0:
                 raise forms.ValidationError(
-                    f"{self.account.user.username}/{name} already exists."
+                    f"{self.account.username}/{name} already exists."
                 )
         except Snake.DoesNotExist:
             pass

@@ -208,7 +208,7 @@ class EventRegistrationView(View):
             request.account, event, team
         )
         services.slack.SlackClient().send_message(
-            f'<https://github.com/{request.user.username}|{request.user.username}> registered for {event.name} as "{team.name}"'
+            f'<https://play.battlesnake.com/u/{request.account.username}/|{request.account.username}> registered for {event.name} as "{team.name}"'
         )
 
         return redirect(request.path)

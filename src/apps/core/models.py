@@ -26,12 +26,14 @@ class AccountManager(models.Manager):
     def create_for_user(self, user):
         account, created = self.get_or_create(user=user)
         if created:
-            services.slack.SlackClient().send_message(
-                f"<https://github.com/{user.username}|{user.username}> signed up"
-            )
-            account.display_name = user.username
             account.username = slugify(user.username)
+            account.display_name = user.username
+            account.github_username = user.username
             account.save()
+
+            services.slack.SlackClient().send_message(
+                f"<https://play.battlesnake.com/u/{account.username}|{account.username}> signed up"
+            )
 
         services.segment.SegmentClient().identify(account)
 
@@ -54,14 +56,18 @@ class Account(BaseModel):
 
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     username = LowercaseSlugField(unique=True)
-    display_name = models.CharField(max_length=100, default="")
+    display_name = models.CharField(max_length=100)
 
     # a code that defines where this user came from
     source = models.CharField(max_length=30, default="", blank=True)
+
+    # social connect stuff
+    github_username = models.CharField(max_length=100, default="", blank=True)
+
+    # optional profile things
     country = models.CharField(
         max_length=2, default="", choices=COUNTRIES.LIST, blank=True,
     )
-
     years_programming = models.CharField(
         max_length=5, default="", choices=EXPERIENCE.CHOICES, blank=True
     )
@@ -146,7 +152,7 @@ class Snake(BaseModel):
 
     @property
     def public_name(self):
-        return f"{self.account.user.username} / {self.name}"
+        return f"{self.account.username} / {self.name}"
 
     def update_healthy(self):
         url = str(self.url)

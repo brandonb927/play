@@ -35,7 +35,7 @@ class SegmentClient:
                 # Make sure analytics tracking can't crash the triggering action
                 analytics.identify(
                     account.id,
-                    {"email": account.user.email, "username": account.user.username},
+                    {"email": account.user.email, "username": account.username},
                 )
             except Exception as e:
                 logger.exception("Failed to write BI identify %s" % account, e)
