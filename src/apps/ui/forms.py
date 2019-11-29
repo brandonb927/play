@@ -17,7 +17,7 @@ class AccountForm(forms.ModelForm):
         model = Account
         fields = [
             "display_name",
-            "profile_slug",
+            "username",
             "country",
             "years_programming",
             "bio",
