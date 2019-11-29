@@ -3,6 +3,19 @@
 from django.db import migrations
 
 
+def forward_migration(apps, schema_editor):
+    """ Populate Account.github_username with User.username """
+    Account = apps.get_model("core", "Account")
+
+    for account in Account.objects.filter(github_username=""):
+        account.github_username = account.user.username
+        account.save()
+
+
+def reverse_migration(apps, schema_editor):
+    pass
+
+
 class Migration(migrations.Migration):
 
     dependencies = [
@@ -10,16 +23,3 @@ class Migration(migrations.Migration):
     ]
 
     operations = [migrations.RunPython(forward_migration, reverse_migration)]
-
-
-def forward_migration(apps, schema_editor):
-    """ Populate Account.github_username with User.username """
-    Account = apps.get_model("core", "Account")
-
-    for account in Account.objects.filter(profile_slug=""):
-        account.github_username = account.user.username
-        account.save()
-
-
-def reverse_migration(apps, schema_editor):
-    pass
