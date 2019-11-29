@@ -144,19 +144,31 @@ def histograms(request):
         .order_by("created")
         .values_list("created", flat=True)
     ]
+    snake_createds = [
+        dt.strftime("%Y-%m")
+        for dt in Snake.objects.all()
+        .order_by("created")
+        .values_list("created", flat=True)
+    ]
+
     account_created_histogram = Counter()
+    snake_created_histogram = Counter()
 
     dt = util.time.from_unix_timestamp(1546300800)  # Jan 1 2019
     while dt < now():
         dt_str = dt.strftime("%Y-%m")
-        account_created_histogram[dt_str] = account_createds.count(dt_str)
-
         dt = floor_to_month(dt + timedelta(days=32))
+
+        account_created_histogram[dt_str] = account_createds.count(dt_str)
+        snake_created_histogram[dt_str] = snake_createds.count(dt_str)
 
     return render(
         request,
         "staff/histograms.html",
-        {"account_created": list(account_created_histogram.items())},
+        {
+            "account_created": list(account_created_histogram.items()),
+            "snake_created": list(snake_created_histogram.items()),
+        },
     )
 
 
