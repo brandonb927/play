@@ -43,6 +43,7 @@ def dump_teams(request):
             "bio",
             "user",
             "internal_username",
+            "register_date",
         )
     ] + list(
         Team.objects.all()
@@ -55,6 +56,7 @@ def dump_teams(request):
             "bio",
             "accounts__display_name",
             "accounts__user__username",
+            "created",
         )
     )
     return render(request, "staff/dump.html", {"title": title, "rows": rows})
@@ -75,6 +77,7 @@ def dump_teams_csvfile(request):
             "bio",
             "user",
             "internal_username",
+            "register_date",
         )
     ] + list(
         Team.objects.all()
@@ -87,6 +90,7 @@ def dump_teams_csvfile(request):
             "bio",
             "accounts__display_name",
             "accounts__user__username",
+            "created",
         )
     )
 
