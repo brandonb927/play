@@ -97,11 +97,12 @@ class AccountView(View):
 
 
 class ProfileView(View):
-    def get(self, request, profile_slug):
-        account = get_object_or_404(Account, profile_slug__iexact=profile_slug)
+    def get(self, request, username):
+        account = get_object_or_404(Account, username__iexact=username)
 
-        if account.profile_slug != profile_slug:
-            return redirect("profile", account.profile_slug)
+        # Redirect to the exact username
+        if account.username != username:
+            return redirect("profile", account.username)
 
         games = (
             Game.objects.filter(snakes__account=account)

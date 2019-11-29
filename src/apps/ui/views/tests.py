@@ -44,21 +44,19 @@ class AccountViewTestCase(TestCase):
         self.user = self.user_factory.basic(commit=True)
 
     def test_get(self):
-        response = self.client.get(f"/profile/{self.user.account.profile_slug}/")
+        response = self.client.get(f"/profile/{self.user.account.username}/")
 
         self.assertEqual(response.status_code, 200)
 
     def test_get_case_insensitive(self):
-        response = self.client.get(
-            f"/profile/{self.user.account.profile_slug.upper()}/"
-        )
+        response = self.client.get(f"/profile/{self.user.account.username.upper()}/")
 
         self.assertEqual(response.status_code, 302)
-        self.assertEqual(response.url, f"/profile/{self.user.account.profile_slug}/")
+        self.assertEqual(response.url, f"/profile/{self.user.account.username}/")
 
     def test_snakes_are_returned_in_response(self):
         Snake.objects.create(account=self.user.account, name="My Snake")
-        response = self.client.get(f"/profile/{self.user.account.profile_slug}/")
+        response = self.client.get(f"/profile/{self.user.account.username}/")
 
         self.assertEqual(
             response.context[-1]["account"].user.account.snakes.all()[:1].get().name,
@@ -444,7 +442,7 @@ class CreateSnakeViewTestCase(TestCase):
         )
 
         self.assertEqual(response.status_code, 302)
-        self.assertIn(f"/profile/{user.account.profile_slug}", response.url)
+        self.assertIn(f"/profile/{user.account.username}", response.url)
 
         snakes = Snake.objects.filter(account=user.account)
         self.assertEqual(snakes.count(), 1)
@@ -478,7 +476,7 @@ class SettingsViewTestCase(TestCase):
             {
                 "email": "test@battlesnake.com",
                 "display_name": "Test User Primo",
-                "profile_slug": "NEW-PROFILE-SLUG",
+                "username": "NEW-USer-NaMe",
                 "country": "DE",
                 "bio": "my new bio",
                 "years_programming": "0-2",
@@ -489,7 +487,7 @@ class SettingsViewTestCase(TestCase):
         account = Account.objects.get(user=user)
         self.assertEqual(account.user.email, "test@battlesnake.com")
         self.assertEqual(account.display_name, "Test User Primo")
-        self.assertEqual(account.profile_slug, "new-profile-slug")
+        self.assertEqual(account.username, "new-user-name")
         self.assertEqual(account.country, "DE")
         self.assertEqual(account.bio, "my new bio")
         self.assertEqual(account.years_programming, "0-2")

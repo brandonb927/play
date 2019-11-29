@@ -56,43 +56,43 @@
                     Store
                   </a>
                 </li>
-                {% if user.is_authenticated %}
+                {% if request.account %}
                 <li class="nav-item dropdown dropdown-menu-lg">
                   <a class="nav-link nav-pill user-avatar" data-toggle="dropdown" href="#" role="button"
                     aria-haspopup="true" aria-expanded="false">
                     <img src="https://github.com/{{ user.username }}.png?size=64" class="w-35 rounded-circle"
                       alt="{{ user.username }}">
-                    {% if request.account.profile_needs_update %}
-                    <i class="zmdi zmdi-assignment-alert"></i>
+                    {% if request.account.needs_attention %}
+                    <span style="top:-10px;left:-15px;position:relative;" class="badge badge-pill badge-danger">&nbsp;!&nbsp;</span>
                     {% endif %}
                   </a>
                   <div class="dropdown-menu dropdown-menu-right dropdown-menu-accout">
                     <div class="dropdown-header pb-3">
-                      <a href="{% url 'u' username=user.username %}">
+                      <a href="{% url 'u' username=request.account.username %}">
                         <div class="media d-user">
                           <img src="https://github.com/{{ user.username }}.png?size=64"
                             class="align-self-center mr-3 w-40 rounded-circle" alt="{{ user.username }}">
                           <div class="media-body">
-                            <h5 class="mt-0 mb-0 text-dark">{{ user.username }}</h5>
-                            <span>{{ user.email }}</span>
+                            <h5 class="mt-0 mb-0 text-dark">{{ request.account.display_name }}</h5>
+                            <span class="text-dark">{{ request.account.username }}</span>
                           </div>
                         </div>
                       </a>
                     </div>
+                    <a class="dropdown-item" href="{% url 'u' request.account.username %}">
+                      View Profile
+                    </a>
                     <a class="dropdown-item" href="{% url 'settings' %}">
-                      <i class="icon dripicons-gear"></i>
-                      My Profile
-                      {% if request.account.profile_needs_update %}
-                      <i class="zmdi zmdi-assignment-alert"></i>
+                      Account Settings
+                      {% if request.account.needs_attention %}
+                      <span style="top:-2px;position:relative;" class="badge badge-pill badge-danger">&nbsp;!&nbsp;</span>
                       {% endif %}
                     </a>
                     <a href="#report-modal" data-toggle="modal" data-target="#report-modal" class="dropdown-item">
-                      <i class="icon dripicons-flag"></i>
                       Report Concern
                     </a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="{% url 'logout' %}">
-                      <i class="icon dripicons-power"></i>
                       Sign Out
                     </a>
                   </div>

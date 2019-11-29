@@ -8,13 +8,7 @@
       <div class="card-body">
         <div class="profile-card text-center">
           <div class="thumb-xl member-thumb m-b-10 center-block">
-            {% if account.user.username == 'battlesnake' %}
-            <img src="{% static 'ui/img/battlesnake-thumb.png' %}" class="rounded-circle img-thumbnail"
-              alt="profile-image" />
-            {% else %}
-            <img src="https://github.com/{{ account.user.username }}.png?size=150" class="rounded-circle img-thumbnail"
-              alt="profile-image" />
-            {% endif %}
+            <img src="https://github.com/{{ account.user.username }}.png?size=150" class="rounded-circle img-thumbnail" alt="profile-image" />
           </div>
 
           <h5>{{ account.display_name }}</h5>
@@ -22,20 +16,20 @@
           <ul class="list-unstyled">
             <li>
               <i class="la la-github"></i>
-              {% if account.user.username == 'battlesnake' %}
-              <a target="_blank" href="https://github.com/battlesnakeio/community">GitHub</a>
-              {% else %}
               <a target="_blank" href="https://github.com/{{ account.user.username }}">GitHub</a>
-              {% endif %}
             </li>
           </ul>
-          {% if account.user == user %}
+          {% if account == request.account %}
           <hr />
-          <a class="btn btn-secondary btn-block" href="{% url 'settings' %}">Edit Profile
-            {% if account.profile_needs_update %}
-            <i class="zmdi zmdi-assignment-alert"></i>
+            {% if account.needs_attention %}
+            <a class="btn btn-primary btn-block" href="{% url 'settings' %}">
+              <i class="zmdi zmdi-alert-triangle text-white"></i> Update Profile
+            </a>
+            {% else %}
+            <a class="btn btn-secondary btn-block" href="{% url 'settings' %}">
+              Edit Profile
+            </a>
             {% endif %}
-          </a>
           {% endif %}
         </div>
       </div>
@@ -45,7 +39,7 @@
     <div class="card">
       <div class="card-header">
         <h3 class="m-t-5">Snakes</h3>
-        {% if account.user == user %}
+        {% if account == request.account %}
         <ul class="actions top-right">
           <li><a href="{% url 'new_snake' %}" class="btn btn-primary btn-sm">Create New Snake</a></li>
         </ul>
@@ -56,7 +50,7 @@
           {% for snake in account.snakes.all %}
           <li class="list-group-item">
             <a href="{% url 'snake' snake_id=snake.id %}">{{ snake.name }}</a>
-            {% if account.user == user %}
+            {% if account == request.account %}
             <form style="display:inline;" action="{% url 'delete-snake' snake.id %}" method="POST">
               {% csrf_token %}
               <button type="submit"
@@ -67,8 +61,10 @@
           </li>
           {% empty %}
           <li class="list-group-item">
-            <p>No snakes here yet{% if account.user == user %} — <a href="{% url 'external-docs' %}">Learn how to make
-                one</a>!{% endif %}</p>
+            <p>
+              This account has no snakes. <br>
+              {% if account == request.account %}<a href="{% url 'external-docs' %}">Get started here!</a>{% endif %}
+            </p>
           </li>
           {% endfor %}
         </ul>
@@ -77,7 +73,7 @@
     <div class="card">
       <div class="card-header">
         <h3 class="m-t-5">Recent Games</h3>
-        {% if account.user == user %}
+        {% if account == request.account %}
         <ul class="actions top-right">
           <li><a href="{% url 'new_game' %}"" class=" btn btn-primary btn-sm">Create New Game</a></li>
         </ul>

@@ -30,7 +30,7 @@ class AccountManager(models.Manager):
                 f"<https://github.com/{user.username}|{user.username}> signed up"
             )
             account.display_name = user.username
-            account.profile_slug = slugify(user.username)
+            account.username = slugify(user.username)
             account.save()
 
         services.segment.SegmentClient().identify(account)
@@ -53,8 +53,8 @@ class Account(BaseModel):
     id = ShortUUIDField(prefix="act", max_length=128, primary_key=True)
 
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    username = LowercaseSlugField(unique=True)
     display_name = models.CharField(max_length=100, default="")
-    profile_slug = LowercaseSlugField(unique=True)
 
     # a code that defines where this user came from
     source = models.CharField(max_length=30, default="", blank=True)
@@ -74,8 +74,8 @@ class Account(BaseModel):
 
     objects = AccountManager()
 
-    def profile_needs_update(self):
-        return self.bio.strip() == ""
+    def needs_attention(self):
+        return self.bio.strip() == "" or self.display_name.strip() == ""
 
 
 class ContentReport(BaseModel):
